@@ -7,6 +7,12 @@
     <h4>Jeg er en h4</h4>
     <h5>Jeg er en h5</h5>
     <hr />
+    <div>Parameter variant:</div>
+    <pre>{{ variant }}</pre>
+    <div class="pt-5 pb-5 align-text-center" :style="{ 'background-color': variantColor }">
+      Baggrundsfarven bestemmes af parameter varianten ({{ variantNavn }})
+    </div>
+    <hr />
     Tid lige nu: {{ currentTime }}
     <hr />
     Dynamisk komponent:
@@ -51,10 +57,19 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-property-decorator';
 import axios from 'axios';
 import { DateTime } from 'luxon';
 import * as DKFDS from 'dkfds';
+
+interface Variant {
+  navn: string;
+  aktiv: boolean;
+  parametre: {
+    parameternavn: string;
+    parametervaerdi: string;
+  }[];
+}
 
 const dynamicComponent = {
   template: '<div>{{text}}</div>',
@@ -74,7 +89,18 @@ export default class Applikation extends Vue {
   private loadingResponse = false;
   private date = '';
 
-  mounted() {
+  @Prop()
+  private variant?: Variant;
+
+  private get variantColor(): string {
+    return this.variant?.parametre[0].parametervaerdi ?? '#C0C0C0';
+  }
+
+  private get variantNavn(): string {
+    return this.variant?.navn ?? 'default';
+  }
+
+  private mounted(): void {
     this.currentTime = DateTime.local().toISO();
     this.loadingResponse = true;
     this.callExternalApi();
@@ -83,7 +109,7 @@ export default class Applikation extends Vue {
     this.date = DateTime.local().toFormat('yyyy-MM-dd');
   }
 
-  private async callExternalApi() {
+  private async callExternalApi(): Promise<void> {
     axios
       .get('https://httpbin.org/get')
       .then((rsp: any) => {
