@@ -1,56 +1,69 @@
 <template>
   <div class="applikation-container">
-    <div>Headers</div>
-    <h1>Jeg er en h1</h1>
-    <h2>Jeg er en h2</h2>
-    <h3>Jeg er en h3</h3>
-    <h4>Jeg er en h4</h4>
-    <h5>Jeg er en h5</h5>
-    <hr />
-    <div>Parameter variant:</div>
+    <h4>Du er nu på side {{ trin }}/{{ maxTrin }}</h4>
+    <div v-if="trin === maxTrin">
+      <div class="alert alert-info">
+        <div class="alert-body">
+          <p class="alert-heading">Sidste trin</p>
+          <p class="alert-text">Du har nået sidste trin i guiden ...</p>
+        </div>
+      </div>
+    </div>
+    <div v-else>Der er flere trin ...</div>
+    <h4>Navigation</h4>
+    <div>
+      <button v-for="index in maxTrin" :key="index" class="button button-primary" @click="navigateTo(index)">Trin #{{ index }}</button>
+    </div>
+    <h4>Parameter variant:</h4>
     <pre>{{ variant }}</pre>
     <div class="pt-5 pb-5 align-text-center" :style="{ 'background-color': variantColor }">
       Baggrundsfarven bestemmes af parameter varianten ({{ variantNavn }})
     </div>
-    <hr />
+    <h4>NPM modul (luxon)</h4>
     Tid lige nu: {{ currentTime }}
-    <hr />
-    Dynamisk komponent:
-    <dynamic-component text="Jeg er en dynamisk komponent"></dynamic-component>
-    <hr />
-    <a href="http://www.google.com" target="_blank">Link til Google</a>
-    <hr />
-    Datepicker
+
+    <h4>Dynamisk komponent:</h4>
+    <dynamic-component text="Dette er et dynamisk komponent"></dynamic-component>
+
+    <h4>Link:</h4>
+    <a href="http://www.google.com" target="_blank">Link til Google (med _blank target)</a>
+
+    <h4>API:</h4>
+    <div>
+      <div v-if="pending" class="spinner" aria-label="Henter indhold" />
+      <div v-if="error" class="alert alert-error" role="alert" aria-atomic="true">
+        <div class="alert-body">
+          <p class="alert-heading">Fejl</p>
+          <p class="alert-text">API request failed</p>
+        </div>
+      </div>
+      <pre v-else>{{ response }}</pre>
+      <button class="button button-primary" @click="callExternalApi()">API kald</button>
+      <button class="button button-primary" @click="callExternalApi(true)">API kald med fejl</button>
+    </div>
+
+    <h3>Det Fælles Designsystem (DKFDS)</h3>
+    <h4>Datepicker komponent:</h4>
     <div class="date-picker mb-305" :data-default-date="date">
       <input class="form-input" :value="date" required type="text" />
     </div>
-    <hr />
-    <div>Response fra axios</div>
-    <div v-if="loadingResponse" class="spinner" aria-label="Henter indhold" />
-    {{ response }}
-    <hr />
-    <button class="button button-primary">Jeg er en knap</button>
-    <hr />
+
+    <h4>Layout:</h4>
     <div class="row">
       <div class="col-md-6 col-xs-12">Eksempel på grid: Venstre kolonne</div>
       <div class="col-md-6 col-xs-12">Eksempel på grid: Højre kolonne</div>
     </div>
-    <hr />
+
+    <h4>Card:</h4>
     <div class="card">
       <div class="card-header">
         <h3 class="header-title">Eksempel på card-komponenten</h3>
       </div>
       <div class="card-text">
         <p>
-          Du kan bruge cards til at gruppere funktionalitet, der adskiller sig fra sidens øvrige indhold. Cards kan placeres i et
-          <a href="#">grid</a>, således at de står side om side.
+          Du kan bruge cards til at gruppere funktionalitet, der adskiller sig fra sidens øvrige indhold. Cards kan placeres i et grid således at de
+          står side om side.
         </p>
-      </div>
-
-      <div class="card-footer card-action">
-        <div class="action-links">
-          <a href="#">Gå til komponent</a>
-        </div>
       </div>
     </div>
   </div>
@@ -71,6 +84,13 @@ interface Variant {
   }[];
 }
 
+interface Todo {
+  userId: string;
+  id: number;
+  title: string;
+  completed: boolean;
+}
+
 const dynamicComponent = {
   template: '<div>{{text}}</div>',
   props: ['text']
@@ -83,11 +103,13 @@ const dynamicComponent = {
   }
 })
 export default class Applikation extends Vue {
-  private currentTime = '';
-  private response = {};
-  private error = {};
-  private loadingResponse = false;
+  private currentTime = DateTime.local().toISO();
+  private response: Partial<Todo> = {};
+  private error = false;
+  private pending = false;
   private date = '';
+  private trin = 1;
+  private maxTrin = 3;
 
   @Prop()
   private variant?: Variant;
@@ -101,25 +123,33 @@ export default class Applikation extends Vue {
   }
 
   private mounted(): void {
-    this.currentTime = DateTime.local().toISO();
-    this.loadingResponse = true;
     this.callExternalApi();
 
     DKFDS.datePicker.on(document.body);
     this.date = DateTime.local().toFormat('yyyy-MM-dd');
   }
 
-  private async callExternalApi(): Promise<void> {
+  private navigateTo(trin: number): void {
+    this.trin = trin;
+  }
+
+  private async callExternalApi(fail = false): Promise<void> {
+    this.pending = true;
+    this.error = false;
+    const id = fail ? 'NaN' : 1;
     axios
-      .get('https://httpbin.org/get')
-      .then((rsp: any) => {
-        this.response = rsp;
-        this.loadingResponse = false;
+      .get(`https://jsonplaceholder.typicode.com/todos/${id}`)
+      .then(({ data }) => {
+        this.response = data;
       })
-      .catch((error: any) => {
-        this.error = error;
+      .catch(() => {
+        this.error = true;
+      })
+      .finally(() => {
+        this.pending = false;
       });
   }
 }
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>
