@@ -1,5 +1,5 @@
 const path = require('path');
-
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const options = {
@@ -18,7 +18,8 @@ const options = {
       filename: 'build.js'
     },
     plugins: [
-      new LodashModuleReplacementPlugin()
+      new LodashModuleReplacementPlugin(),
+      //new BundleAnalyzerPlugin()
     ],
     optimization: {
       minimize: true

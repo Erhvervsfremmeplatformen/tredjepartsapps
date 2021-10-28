@@ -3,12 +3,12 @@ module.exports = {
     [
       '@vue/app',
       {
-        useBuiltIns: 'entry',
-        polyfills: ['es6.map', 'es6.symbol', 'es6.array.iterator', 'es6.promise', 'es6.object.assign', 'es7.promise.finally']
+        useBuiltIns: 'usage',
+        debug: false
       }
     ]
   ],
-  plugins: ['lodash', '@babel/syntax-dynamic-import'],
+  plugins: ['@babel/plugin-proposal-optional-chaining','@babel/plugin-proposal-nullish-coalescing-operator'],
   env: {
     test: {
       plugins: ['dynamic-import-node']

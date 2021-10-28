@@ -70,86 +70,71 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
 import axios from 'axios';
 //import { DateTime } from 'luxon';
 import * as DKFDS from 'dkfds';
-
-interface Variant {
-  navn: string;
-  aktiv: boolean;
-  parametre: {
-    parameternavn: string;
-    parametervaerdi: string;
-  }[];
-}
-
-interface Todo {
-  userId: string;
-  id: number;
-  title: string;
-  completed: boolean;
-}
 
 const dynamicComponent = {
   template: '<div>{{text}}</div>',
   props: ['text']
 };
 
-@Component({
+export default {
   name: 'Applikation',
   components: {
     dynamicComponent
-  }
-})
-export default class Applikation extends Vue {
-  //private currentTime = DateTime.local().toISO();
-  private response: Partial<Todo> = {};
-  private error = false;
-  private pending = false;
-  private date = '';
-  private trin = 1;
-  private maxTrin = 3;
-
-  @Prop()
-  private variant?: Variant;
-
-  private get variantColor(): string {
-    return this.variant?.parametre[0].parametervaerdi ?? '#C0C0C0';
-  }
-
-  private get variantNavn(): string {
-    return this.variant?.navn ?? 'default';
-  }
-
-  private mounted(): void {
+  },
+  props: ['variant'],
+  data() {
+    return {
+      //currentTime: DateTime.local().toISO(),
+      response: {},
+      error: false,
+      pending: false,
+      date: '',
+      trin: 1,
+      maxTrin: 3
+    };
+  },
+  mounted() {
     this.callExternalApi();
-
     DKFDS.datePicker.on(document.body);
-    //this.date = DateTime.local().toFormat('yyyy-MM-dd');
-  }
+  },
+  methods: {
+    callExternalApi(fail: boolean) {
+      this.pending = true;
+      this.error = false;
+      const id = fail ? 'NaN' : 1;
+      axios
+        .get(`https://jsonplaceholder.typicode.com/todos/${id}`)
+        .then(({ data }) => {
+          this.response = data;
+        })
+        .catch(() => {
+          this.error = true;
+        })
+        .finally(() => {
+          this.pending = false;
+        });
+    },
+    navigateTo(trin: number) {
+      this.trin = trin;
+    }
+  },
 
-  private navigateTo(trin: number): void {
-    this.trin = trin;
+  computed: {
+    // a computed getter
+    variantColor: function () {
+      // `this` points to the vm instance
+      return this.variant?.parametre[0].parametervaerdi ?? '#C0C0C0';
+    },
+    variantNavn: function () {
+      // `this` points to the vm instance
+      return this.variant?.navn ?? 'default';
+    }
   }
-
-  private async callExternalApi(fail = false): Promise<void> {
-    this.pending = true;
-    this.error = false;
-    const id = fail ? 'NaN' : 1;
-    axios
-      .get(`https://jsonplaceholder.typicode.com/todos/${id}`)
-      .then(({ data }) => {
-        this.response = data;
-      })
-      .catch(() => {
-        this.error = true;
-      })
-      .finally(() => {
-        this.pending = false;
-      });
-  }
-}
+};
 </script>
+
 <style lang="scss" scoped>
 </style>

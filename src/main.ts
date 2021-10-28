@@ -1,7 +1,5 @@
-import 'core-js';
-import 'dkfds/dist/css/dkfds.css';
-
 import axios from 'axios';
+import 'dkfds/dist/css/dkfds.min.css';
 import Vue from 'vue';
 import VueAxios from 'vue-axios';
 
