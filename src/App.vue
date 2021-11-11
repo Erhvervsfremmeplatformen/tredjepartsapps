@@ -16,7 +16,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import GlobalNav from '@/components/GlobalNav.vue';
 import GlobalFooter from '@/components/GlobalFooter.vue';
 import * as DKFDS from 'dkfds';
-import Applikation from '@/components/Applikation3.vue';
+import Applikation from '@/components/Applikation.vue';
 import GlobalSvgIcons from '@/components/GlobalSvgIcons.vue';
 
 @Component({

@@ -22,6 +22,9 @@
     <h4>NPM modul (luxon)</h4>
     <!-- Tid lige nu: {{ currentTime }} -->
 
+    <h4>Eksternt komponent:</h4>
+    <ExternalComponent title="test af mulitple komponent" />
+
     <h4>Dynamisk komponent:</h4>
     <dynamic-component text="Dette er et dynamisk komponent"></dynamic-component>
 
@@ -74,6 +77,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import axios from 'axios';
 //import { DateTime } from 'luxon';
 import * as DKFDS from 'dkfds';
+import ExternalComponent from './ExternalComponent.vue';
 
 interface Variant {
   navn: string;
@@ -99,7 +103,8 @@ const dynamicComponent = {
 @Component({
   name: 'Applikation',
   components: {
-    dynamicComponent
+    dynamicComponent,
+    ExternalComponent
   }
 })
 export default class Applikation extends Vue {
