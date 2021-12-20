@@ -15,3 +15,4 @@ module.exports = {
     }
   }
 };
+// TODO: AJP - cleanup and sync with virksomhedsguide (check with existing leverandør apps)

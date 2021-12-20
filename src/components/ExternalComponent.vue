@@ -1,18 +1,21 @@
+<!-- Example of a Vue component that is located in a separated file -->
 <template>
-  <div class="external">EXTERN komponent {{ title }}</div>
+  <div>
+    <div class="external">{{ title }}</div>
+  </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-
-@Component({
-  name: 'ExternalComponent'
-})
-export default class ExternalComponent extends Vue {
-  @Prop()
-  title!: string;
-}
+export default {
+  name: 'ExternalApplikation',
+  props: {
+    title: {
+      type: String,
+      required: true
+    }
+  }
+};
 </script>
 <style lang="scss" scoped>
-@import '@/styles/components/_external.scss';
+@import '../styles/components/_external.scss';
 </style>
