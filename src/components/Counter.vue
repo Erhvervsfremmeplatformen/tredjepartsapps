@@ -1,4 +1,4 @@
-<!-- Vuex underkomponent, som bruge den injected 'reactivyKey' til at vise reaktiv state fra Vuex store  -->
+<!-- Vuex underkomponent, som bruger den injected 'reactivyKey' til at vise reaktiv state fra Vuex store  -->
 <template>
   <div>
     <div class="mt-5">
