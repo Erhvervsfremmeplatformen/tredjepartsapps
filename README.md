@@ -31,7 +31,7 @@ npm run transpile-test
 
 ## Nuværende NPM moduler
 
-Nuværende NPM moduler og versioner, som kan bruges af leverandør-applikationer. Ved behov for andre NPM moduler refereres der til den tekniske vejledning afsnit 3.2.3
+Nuværende NPM moduler og versioner, som kan bruges af leverandør-applikationer der ikke er angivet i _package.json_ filen. Ved behov for andre NPM moduler, refereres der til den tekniske vejledning afsnit 3.2.3
 
 * "contentful-rich-text-vue-renderer": "1.1.5",
 * "tiny-emitter": "2.1.0",
