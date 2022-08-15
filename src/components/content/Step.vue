@@ -19,9 +19,9 @@
       </fieldset>
     </div>
     <div class="mt-4">
-      <button class="button button-tertiary" @click="$emit('back')">{{ $t('vaelg-virksomhedsform.sporgsmaal.step.frem') }}</button>
+      <button class="button button-tertiary" @click="$emit('back')">{{ $t('vaelg-virksomhedsform.sporgsmaal.step.tilbage') }}</button>
       <button class="button button-primary" :disabled="!chosen" @click="$emit('forward', chosen)">
-        {{ $t('vaelg-virksomhedsform.sporgsmaal.step.tilbage') }}
+        {{ $t('vaelg-virksomhedsform.sporgsmaal.step.frem') }}
       </button>
     </div>
   </div>
