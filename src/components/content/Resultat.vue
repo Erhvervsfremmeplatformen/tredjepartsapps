@@ -1,6 +1,6 @@
 <template>
   <div class="reultat col-lg-7">
-    <a href="" @click="$emit('reset')">
+    <a href="javascript:;" @click="$emit('reset')">
       <svg class="icon-svg">
         <use xlink:href="#arrow-left" /></svg
       >{{ $t('vaelg-virksomhedsform.sporgsmaal.resultat.forfra') }}</a
