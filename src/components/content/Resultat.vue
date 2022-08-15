@@ -32,8 +32,8 @@ export default {
       switch (JSON.stringify(this.answers)) {
         case JSON.stringify([GuideAnswer.FIRST, GuideAnswer.FIRST, GuideAnswer.FIRST]):
           return {
-            title: 'vaelg-virksomhedsform.sporgsmaal.resultat.emkeltmand.title',
-            text: 'vaelg-virksomhedsform.sporgsmaal.resultat.emkeltmand.text'
+            title: 'vaelg-virksomhedsform.sporgsmaal.resultat.enkeltmand.title',
+            text: 'vaelg-virksomhedsform.sporgsmaal.resultat.enkeltmand.text'
           };
         case JSON.stringify([GuideAnswer.FIRST, GuideAnswer.FIRST, GuideAnswer.SECOND]):
           return { title: 'vaelg-virksomhedsform.sporgsmaal.resultat.pmv.title', text: 'vaelg-virksomhedsform.sporgsmaal.resultat.pmv.text' };
@@ -49,8 +49,8 @@ export default {
           return { title: 'vaelg-virksomhedsform.sporgsmaal.resultat.as.title', text: 'vaelg-virksomhedsform.sporgsmaal.resultat.as.text' };
         default:
           return {
-            title: 'vaelg-virksomhedsform.sporgsmaal.resultat.emkeltmand.title',
-            text: 'vaelg-virksomhedsform.sporgsmaal.resultat.emkeltmand.text'
+            title: 'vaelg-virksomhedsform.sporgsmaal.resultat.enkeltmand.title',
+            text: 'vaelg-virksomhedsform.sporgsmaal.resultat.enkeltmand.text'
           };
       }
     }
