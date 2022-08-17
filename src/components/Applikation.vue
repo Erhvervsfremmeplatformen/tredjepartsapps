@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import * as DataEvent from '@erst-vg/piwik-event-wrapper';
+import { emitPageViewEvent } from '@erst-vg/piwik-event-wrapper';
 import Forside from './content/Forside.vue';
 import Resultat from './content/Resultat.vue';
 import Step from './content/Step.vue';
@@ -77,7 +77,7 @@ export default {
     async emitPiwikEvent(title: string) {
       window.location.hash = title;
       await Vue.nextTick();
-      DataEvent.emitPageViewEvent(this);
+      emitPageViewEvent(this);
     }
   }
 };
