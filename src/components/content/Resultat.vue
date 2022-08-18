@@ -9,7 +9,9 @@
       <h2 class="h1 mb-8" data-testid="title">{{ $t(content.title) }}</h2>
       <div data-testid="text" v-html="$t(content.text)" />
     </div>
-    <button class="mt-8 button button-tertiary" @click="$emit('reset')">{{ $t('vaelg-virksomhedsform.sporgsmaal.resultat.forfra') }}</button>
+    <button class="mt-8 button button-tertiary" data-testid="reset-button" @click="$emit('reset')">
+      {{ $t('vaelg-virksomhedsform.sporgsmaal.resultat.forfra') }}
+    </button>
   </div>
 </template>
 
@@ -28,36 +30,39 @@ export default {
   },
 
   computed: {
-    content() {
+    content(): { title: string; text: string } {
       switch (JSON.stringify(this.answers)) {
         case JSON.stringify([GuideAnswer.FIRST, GuideAnswer.FIRST, GuideAnswer.FIRST]):
-          return {
-            title: 'vaelg-virksomhedsform.sporgsmaal.resultat.enkeltmand.title',
-            text: 'vaelg-virksomhedsform.sporgsmaal.resultat.enkeltmand.text'
-          };
+          return this.getTextKeys('enkeltmand');
         case JSON.stringify([GuideAnswer.FIRST, GuideAnswer.FIRST, GuideAnswer.SECOND]):
-          return { title: 'vaelg-virksomhedsform.sporgsmaal.resultat.pmv.title', text: 'vaelg-virksomhedsform.sporgsmaal.resultat.pmv.text' };
+          return this.getTextKeys('pmv');
         case JSON.stringify([GuideAnswer.FIRST, GuideAnswer.SECOND, GuideAnswer.FIRST]):
-          return { title: 'vaelg-virksomhedsform.sporgsmaal.resultat.aps.title', text: 'vaelg-virksomhedsform.sporgsmaal.resultat.aps.text' };
+          return this.getTextKeys('aps');
         case JSON.stringify([GuideAnswer.FIRST, GuideAnswer.SECOND, GuideAnswer.SECOND]):
-          return { title: 'vaelg-virksomhedsform.sporgsmaal.resultat.as.title', text: 'vaelg-virksomhedsform.sporgsmaal.resultat.as.text' };
+          return this.getTextKeys('as');
         case JSON.stringify([GuideAnswer.SECOND, GuideAnswer.FIRST]):
-          return { title: 'vaelg-virksomhedsform.sporgsmaal.resultat.is.title', text: 'vaelg-virksomhedsform.sporgsmaal.resultat.is.text' };
+          return this.getTextKeys('is');
         case JSON.stringify([GuideAnswer.SECOND, GuideAnswer.SECOND, GuideAnswer.FIRST]):
-          return { title: 'vaelg-virksomhedsform.sporgsmaal.resultat.aps.title', text: 'vaelg-virksomhedsform.sporgsmaal.resultat.aps.text' };
+          return this.getTextKeys('aps');
         case JSON.stringify([GuideAnswer.SECOND, GuideAnswer.SECOND, GuideAnswer.SECOND]):
-          return { title: 'vaelg-virksomhedsform.sporgsmaal.resultat.as.title', text: 'vaelg-virksomhedsform.sporgsmaal.resultat.as.text' };
+          return this.getTextKeys('as');
         default:
-          return {
-            title: 'vaelg-virksomhedsform.sporgsmaal.resultat.enkeltmand.title',
-            text: 'vaelg-virksomhedsform.sporgsmaal.resultat.enkeltmand.text'
-          };
+          return this.getTextKeys('enkeltmand');
       }
     }
   },
 
-  created() {
+  created(): void {
     this.$emit('emitPiwikEvent', this.$t(this.content.title));
+  },
+
+  methods: {
+    getTextKeys(resultType: string): { title: string; text: string } {
+      return {
+        title: `vaelg-virksomhedsform.sporgsmaal.resultat.${resultType}.title`,
+        text: `vaelg-virksomhedsform.sporgsmaal.resultat.${resultType}.text`
+      };
+    }
   }
 };
 </script>

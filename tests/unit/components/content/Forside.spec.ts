@@ -1,4 +1,3 @@
-import Applikation from '@/components/Applikation.vue';
 import Forside from '@/components/content/Forside.vue';
 import { shallowMount, Wrapper } from '@vue/test-utils';
 
@@ -8,7 +7,7 @@ describe('Forside.vue tests', () => {
     const wrapper = mountComponent();
 
     // ACT
-    wrapper.find('button').trigger('click');
+    wrapper.find(getTestId('start-button')).trigger('click');
 
     // ASSERT
     expect(wrapper.emitted('start')).toBeDefined();
@@ -18,17 +17,9 @@ describe('Forside.vue tests', () => {
 /* Helpers */
 
 function mountComponent(): Wrapper<Forside> {
-  return shallowMount(Forside, {
-    mocks: {
-      $t: (key: string) => key
-    }
-  });
+  return shallowMount(Forside);
 }
 
-function mountComponent2(): Wrapper<Applikation> {
-  return shallowMount(Applikation, {
-    mocks: {
-      $t: (key: string) => key
-    }
-  });
+function getTestId(id: string): string {
+  return `[data-testid="${id}"]`;
 }

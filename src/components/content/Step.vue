@@ -5,11 +5,19 @@
       <fieldset>
         <ul class="nobullet-list">
           <li v-for="answer in guideAnswer" :id="`li-${answer}`" :key="answer" class="mt-3">
-            <div class="form-group-radio">
-              <input :id="`radio-${answer}`" type="radio" name="radio" :value="answer" class="form-radio radio-large" @click="chosen = answer" />
+            <div class="form-group-radio" data-testid="form-group-radio">
+              <input
+                :id="`radio-${answer}`"
+                type="radio"
+                name="radio"
+                :value="answer"
+                class="form-radio radio-large"
+                :data-testid="`radio-${answer}`"
+                @click="chosen = answer"
+              />
               <label :for="`radio-${answer}`">{{ $t(answers[step][answer]) }}</label>
               <div v-if="alerts[step][answer] && chosen === answer" role="alert" class="alert alert-info">
-                <div class="alert-body">
+                <div class="alert-body" data-testid="alert-body">
                   <p class="alert-text">{{ $t(alerts[step][answer]) }}</p>
                 </div>
               </div>
@@ -19,8 +27,10 @@
       </fieldset>
     </div>
     <div class="mt-4">
-      <button class="button button-tertiary" @click="$emit('back')">{{ $t('vaelg-virksomhedsform.sporgsmaal.step.tilbage') }}</button>
-      <button class="button button-primary" :disabled="!chosen" @click="$emit('forward', chosen)">
+      <button class="button button-tertiary" data-testid="back-button" @click="$emit('back')">
+        {{ $t('vaelg-virksomhedsform.sporgsmaal.step.tilbage') }}
+      </button>
+      <button class="button button-primary" :disabled="!chosen" data-testid="forward-button" @click="$emit('forward', chosen)">
         {{ $t('vaelg-virksomhedsform.sporgsmaal.step.frem') }}
       </button>
     </div>

@@ -10,7 +10,7 @@ describe('Step.vue tests', () => {
     const wrapper = mountComponent(GuideStep.STEP_1);
 
     // ASSERT
-    const radioButtons = wrapper.findAll('.form-group-radio');
+    const radioButtons = wrapper.findAll(getTestId('form-group-radio'));
     expect(radioButtons.at(0).text()).toEqual('vaelg-virksomhedsform.sporgsmaal.step-1.svar-a');
     expect(radioButtons.at(1).text()).toEqual('vaelg-virksomhedsform.sporgsmaal.step-1.svar-b');
   });
@@ -20,11 +20,11 @@ describe('Step.vue tests', () => {
     const wrapper = mountComponent(GuideStep.STEP_2_EN);
 
     // ACT
-    wrapper.find(`#radio-${GuideAnswer.FIRST}`).trigger('click');
+    wrapper.find(getTestId(`radio-${GuideAnswer.FIRST}`)).trigger('click');
     await flushPromises();
 
     // ASSERT
-    const allerts = wrapper.findAll('.alert-body');
+    const allerts = wrapper.findAll(getTestId('alert-body'));
     expect(allerts.length).toEqual(1);
     expect(allerts.at(0).text()).toEqual('vaelg-virksomhedsform.sporgsmaal.step-2-en.alert-a');
   });
@@ -34,9 +34,9 @@ describe('Step.vue tests', () => {
     const wrapper = mountComponent(GuideStep.STEP_3_JA);
 
     // ACT
-    wrapper.find(`#radio-${GuideAnswer.FIRST}`).trigger('click');
+    wrapper.find(getTestId(`radio-${GuideAnswer.FIRST}`)).trigger('click');
     await flushPromises();
-    wrapper.findAll('button').at(1).trigger('click');
+    wrapper.find(getTestId('forward-button')).trigger('click');
     await flushPromises();
 
     // ASSERT
@@ -48,7 +48,7 @@ describe('Step.vue tests', () => {
     const wrapper = mountComponent(GuideStep.STEP_3_JA);
 
     // ACT
-    wrapper.findAll('button').at(0).trigger('click');
+    wrapper.find(getTestId('back-button')).trigger('click');
 
     // ASSERT
     expect(wrapper.emitted('back')).toBeDefined();
@@ -61,9 +61,10 @@ function mountComponent(step: GuideStep): Wrapper<Step> {
   return shallowMount(Step, {
     propsData: {
       step
-    },
-    mocks: {
-      $t: (key: string) => key
     }
   });
+}
+
+function getTestId(id: string): string {
+  return `[data-testid="${id}"]`;
 }

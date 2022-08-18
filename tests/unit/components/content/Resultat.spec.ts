@@ -17,7 +17,7 @@ describe('Resultat.vue tests', () => {
     const wrapper = mountComponent([GuideAnswer.FIRST, GuideAnswer.FIRST, GuideAnswer.FIRST]);
 
     // ACT
-    wrapper.find('button').trigger('click');
+    wrapper.find(getTestId('reset-button')).trigger('click');
 
     // ASSERT
     expect(wrapper.emitted('reset')).toBeDefined();
@@ -30,9 +30,6 @@ function mountComponent(answers: GuideAnswer[]): Wrapper<Resultat> {
   return shallowMount(Resultat, {
     propsData: {
       answers
-    },
-    mocks: {
-      $t: (key: string) => key
     }
   });
 }

@@ -41,40 +41,40 @@ export default {
     };
   },
 
-  created() {
+  created(): void {
     window.location.hash = this.$t(titles[GuideStep.FORSIDE]);
   },
 
   methods: {
-    start() {
+    start(): void {
       this.steps.push(GuideStep.FORSIDE);
       this.currentStep = GuideStep.STEP_1;
-      this.tryEmitPiwikEvent();
+      this.handlePiwikEvent();
     },
-    stepBack() {
+    stepBack(): void {
       this.currentStep = (this.steps as GuideStep[]).pop() ?? GuideStep.FORSIDE;
       (this.answers as GuideAnswer[]).pop();
-      this.tryEmitPiwikEvent();
+      this.handlePiwikEvent();
     },
-    stepForward(answer: GuideAnswer) {
+    stepForward(answer: GuideAnswer): void {
       (this.steps as GuideStep[]).push(this.currentStep);
       (this.answers as GuideAnswer[]).push(answer);
       this.currentStep = this.stepGraph[this.currentStep][answer];
-      this.tryEmitPiwikEvent();
+      this.handlePiwikEvent();
     },
-    reset() {
+    reset(): void {
       this.currentStep = GuideStep.FORSIDE;
       this.steps = [];
       this.answers = [];
-      this.tryEmitPiwikEvent();
+      this.handlePiwikEvent();
     },
-    tryEmitPiwikEvent() {
+    handlePiwikEvent(): void {
       const title = this.$t(titles[this.currentStep as GuideStep]);
       if (title) {
         this.emitPiwikEvent(title);
       }
     },
-    async emitPiwikEvent(title: string) {
+    async emitPiwikEvent(title: string): Promise<void> {
       window.location.hash = title;
       await Vue.nextTick();
       emitPageViewEvent(this);
