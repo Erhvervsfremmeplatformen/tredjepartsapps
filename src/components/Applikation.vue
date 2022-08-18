@@ -62,12 +62,32 @@ export default {
       this.currentStep = this.stepGraph[this.currentStep][answer];
       this.handlePiwikEvent();
     },
-    async reset(): Promise<void> {
+    reset(): void {
       this.currentStep = GuideStep.FORSIDE;
       this.steps = [];
       this.answers = [];
-      await this.handlePiwikEvent();
-      window.scrollTo(0, 0);
+      this.handlePiwikEvent();
+      Vue.nextTick().then(() => {
+        Vue.nextTick().then(() => {
+          Vue.nextTick().then(() => {
+            Vue.nextTick().then(() => {
+              Vue.nextTick().then(() => {
+                Vue.nextTick().then(() => {
+                  Vue.nextTick().then(() => {
+                    Vue.nextTick().then(() => {
+                      Vue.nextTick().then(() => {
+                        Vue.nextTick().then(() => {
+                          window.scrollTo(0, 0);
+                        });
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
     },
     handlePiwikEvent(): void {
       const title = this.$t(titles[this.currentStep as GuideStep]);
