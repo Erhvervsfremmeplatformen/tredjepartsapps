@@ -26,7 +26,7 @@ describe('Resultat.vue tests', () => {
 
 /* Helpers */
 
-function mountComponent(answers: GuideAnswer[]): Wrapper<Resultat> {
+function mountComponent(answers: GuideAnswer[]): Wrapper<any> {
   return shallowMount(Resultat, {
     propsData: {
       answers

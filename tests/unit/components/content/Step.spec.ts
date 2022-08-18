@@ -57,7 +57,7 @@ describe('Step.vue tests', () => {
 
 /* Helpers */
 
-function mountComponent(step: GuideStep): Wrapper<Step> {
+function mountComponent(step: GuideStep): Wrapper<any> {
   return shallowMount(Step, {
     propsData: {
       step

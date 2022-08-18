@@ -16,7 +16,7 @@ describe('Forside.vue tests', () => {
 
 /* Helpers */
 
-function mountComponent(): Wrapper<Forside> {
+function mountComponent(): Wrapper<any> {
   return shallowMount(Forside);
 }
 

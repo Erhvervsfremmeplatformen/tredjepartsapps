@@ -96,6 +96,6 @@ describe('test Apllikation.vue', () => {
 
 /* Helpers */
 
-function mountComponent(): Wrapper<Applikation> {
+function mountComponent(): Wrapper<any> {
   return shallowMount(Applikation);
 }
