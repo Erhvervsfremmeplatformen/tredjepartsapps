@@ -3,6 +3,7 @@
     <Forside v-if="currentStep === guideStep.FORSIDE" @start="start" />
     <Resultat v-else-if="currentStep === guideStep.RESULTAT" :answers="answers" @reset="reset" @emitPiwikEvent="emitPiwikEvent" />
     <Step v-else :key="currentStep" :step="currentStep" @back="stepBack" @forward="stepForward" />
+    <input v-model="waitingTime" type="text" />
   </div>
 </template>
 
@@ -37,7 +38,8 @@ export default {
         [GuideStep.STEP_3_JA]: { [GuideAnswer.FIRST]: GuideStep.RESULTAT, [GuideAnswer.SECOND]: GuideStep.RESULTAT },
         [GuideStep.STEP_3_NEJ]: { [GuideAnswer.FIRST]: GuideStep.RESULTAT, [GuideAnswer.SECOND]: GuideStep.RESULTAT }
       },
-      titles
+      titles,
+      waitingTime: '3000'
     };
   },
 
@@ -69,7 +71,7 @@ export default {
       this.handlePiwikEvent();
       setTimeout(() => {
         window.scrollTo(0, 0);
-      }, 500);
+      }, parseInt(this.waitingTime, 10));
     },
     handlePiwikEvent(): void {
       const title = this.$t(titles[this.currentStep as GuideStep]);
