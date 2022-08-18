@@ -62,11 +62,11 @@ export default {
       this.currentStep = this.stepGraph[this.currentStep][answer];
       this.handlePiwikEvent();
     },
-    reset(): void {
+    async reset(): Promise<void> {
       this.currentStep = GuideStep.FORSIDE;
       this.steps = [];
       this.answers = [];
-      this.handlePiwikEvent();
+      await this.handlePiwikEvent();
       window.scrollTo(0, 0);
     },
     handlePiwikEvent(): void {
