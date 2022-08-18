@@ -1,5 +1,6 @@
 <template>
   <div class="row">
+    <div id="scroll-anker" />
     <Forside v-if="currentStep === guideStep.FORSIDE" @start="start" />
     <Resultat v-else-if="currentStep === guideStep.RESULTAT" :answers="answers" @reset="reset" @emitPiwikEvent="emitPiwikEvent" />
     <Step v-else :key="currentStep" :step="currentStep" @back="stepBack" @forward="stepForward" />
@@ -67,6 +68,9 @@ export default {
       this.steps = [];
       this.answers = [];
       this.handlePiwikEvent();
+      Vue.nextTick().then(() => {
+        document.getElementById('scroll-anker')?.scrollIntoView();
+      });
     },
     handlePiwikEvent(): void {
       const title = this.$t(titles[this.currentStep as GuideStep]);

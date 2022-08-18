@@ -6,7 +6,7 @@
       >{{ $t('vaelg-virksomhedsform.sporgsmaal.resultat.forfra') }}</a
     >
     <div>
-      <h2 class="h1 mb-8" data-testid="title">{{ $t(content.title) }}</h2>
+      <h2 class="h1 my-8" data-testid="title">{{ $t(content.title) }}</h2>
       <div data-testid="text" v-html="$t(content.text)" />
     </div>
     <button class="mt-8 button button-tertiary" data-testid="reset-button" @click="$emit('reset')">
