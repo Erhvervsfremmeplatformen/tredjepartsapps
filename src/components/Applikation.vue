@@ -67,27 +67,9 @@ export default {
       this.steps = [];
       this.answers = [];
       this.handlePiwikEvent();
-      Vue.nextTick().then(() => {
-        Vue.nextTick().then(() => {
-          Vue.nextTick().then(() => {
-            Vue.nextTick().then(() => {
-              Vue.nextTick().then(() => {
-                Vue.nextTick().then(() => {
-                  Vue.nextTick().then(() => {
-                    Vue.nextTick().then(() => {
-                      Vue.nextTick().then(() => {
-                        Vue.nextTick().then(() => {
-                          window.scrollTo(0, 0);
-                        });
-                      });
-                    });
-                  });
-                });
-              });
-            });
-          });
-        });
-      });
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 500);
     },
     handlePiwikEvent(): void {
       const title = this.$t(titles[this.currentStep as GuideStep]);
