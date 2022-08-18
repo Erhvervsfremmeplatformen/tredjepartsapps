@@ -67,9 +67,7 @@ export default {
       this.steps = [];
       this.answers = [];
       this.handlePiwikEvent();
-      const element = document.getElementById('scroll-anker');
-      console.log(element);
-      element?.scrollIntoView();
+      window.scrollTo(0, 0);
     },
     handlePiwikEvent(): void {
       const title = this.$t(titles[this.currentStep as GuideStep]);
