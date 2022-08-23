@@ -1,10 +1,7 @@
 // Simpel Vuex store med en tæller som state
-import Vue from 'vue';
-import Vuex from 'vuex';
+import { createStore } from 'vuex';
 
-Vue.use(Vuex);
-
-export const store = new Vuex.Store({
+export const store = createStore({
   state: {
     count: 0
   },
