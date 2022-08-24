@@ -6,7 +6,8 @@
     "lint": "eslint \"**/*.{ts,js,vue}\" --fix --format=pretty",
     "prettierfix": "prettier --write \"**/*.{vue,ts}\" ",
     "prettiercheck": "prettier --check \"**/*.{vue,ts}\" ",
-    "transpile-test": "cross-env VG_VUE_TRANSPILE=true vue-cli-service build --inline-vue --target lib --formats umd-min --dest build/transpiled --name=f957085aeab09f8d18000e98508c85b95655da84 src/components/Applikation.vue"
+    "transpile-test": "cross-env VG_VUE_TRANSPILE=true vue-cli-service build --inline-vue --target lib --formats umd-min --dest build/transpiled --name=f957085aeab09f8d18000e98508c85b95655da84 src/components/Applikation.vue",
+    "transpile-test-no-vue": "cross-env VG_VUE_TRANSPILE=true vue-cli-service build --target lib --formats umd-min --dest build/transpiled --name=f957085aeab09f8d18000e98508c85b95655da84 src/components/Applikation.vue"
   },
   "dependencies": {
     "@erst-vg/piwik-event-wrapper": "1.0.1",
