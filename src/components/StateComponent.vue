@@ -22,13 +22,18 @@
 
 <script lang="ts">
 import Counter from './Counter.vue';
-import { mapMutations } from 'vuex';
+import { store } from '../store';
 
 export default {
   components: { Counter },
   name: 'StateComponent',
+  beforeCreate() {
+    this.$store = store;
+  },
   methods: {
-    ...mapMutations(['change'])
+    change() {
+      this.$store.commit('increment');
+    }
   }
 };
 </script>

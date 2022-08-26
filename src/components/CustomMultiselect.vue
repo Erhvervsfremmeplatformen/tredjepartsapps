@@ -16,11 +16,11 @@
 </template>
 
 <script lang="ts">
-import Multiselect from 'vue-multiselect';
+import multiselect from 'vue-multiselect';
 
 export default {
   name: 'CustomMultiselect',
-  components: { Multiselect },
+  components: { multiselect },
   data() {
     return {
       value: null,
@@ -33,6 +33,6 @@ export default {
 <style lang="scss" scoped>
 >>> .custom-multiselect {
   // importering af vue-multiselect med scoped styling
-  @import 'vue-multiselect/dist/vue-multiselect.min';
+  @import '../../node_modules/vue-multiselect/dist/vue-multiselect.css';
 }
 </style>
