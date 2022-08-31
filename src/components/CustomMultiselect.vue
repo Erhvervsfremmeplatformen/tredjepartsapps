@@ -33,6 +33,6 @@ export default {
 <style lang="scss" scoped>
 >>> .custom-multiselect {
   // importering af vue-multiselect med scoped styling
-  @import '../../node_modules/vue-multiselect/dist/vue-multiselect.css';
+  @import '../styles/vue-multiselect.css';
 }
 </style>

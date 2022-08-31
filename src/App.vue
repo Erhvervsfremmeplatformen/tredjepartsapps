@@ -22,8 +22,8 @@
 
 <script lang="ts">
 // INFO: Bemærk ændringer til denne fil, vil ikke blive inkluderet i den endelige applikation
-import Applikation from './components/Applikation.vue';
 import * as DKFDS from 'dkfds';
+import Applikation from './components/Applikation.vue';
 
 // Hash værdi som VG sætter når login flow initieres, og når leverandør-applikationen vises igen efter successfuldt login
 const HASH_LOGIN_STRING = 'login_for_app';
