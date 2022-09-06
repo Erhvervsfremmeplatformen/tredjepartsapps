@@ -18,6 +18,6 @@ vue.$mount('#app');
 */
 
 const app = createApp(App);
-app.use(pinia);
+//app.use(pinia);
 //app.use(store);
 app.mount('#app');

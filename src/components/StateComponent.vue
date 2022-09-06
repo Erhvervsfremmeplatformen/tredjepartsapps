@@ -34,8 +34,9 @@ import VuexCounter from './VuexCounter.vue';
 export default {
   components: { VuexCounter, PiniaCounter },
   name: 'StateComponent',
-  beforeCreate() {
+  created() {
     this.$pinia = this.pinia;
+    console.log('StateComponent: ', this.$pinia);
     this.$store = store;
   },
   methods: {

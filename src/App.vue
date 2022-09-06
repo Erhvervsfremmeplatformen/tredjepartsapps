@@ -2,7 +2,6 @@
   <div>
     <div id="app" class="app-body" tabindex="-1">
       <div class="flexgrow container pt-8 pb-8">
-        xxx: {{ count }}
         <Applikation
           :variant="variant"
           :is-logged-in="isLoggedIn"

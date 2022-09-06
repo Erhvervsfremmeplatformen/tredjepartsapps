@@ -67,6 +67,7 @@ export default defineComponent({
     DKFDSComponent,
     DataCollector
   },
+
   provide() {
     const pinia = createPinia();
     Object.defineProperty(pinia, 'value', {
@@ -77,6 +78,18 @@ export default defineComponent({
       pinia
     };
   },
+  /*
+  provide() {
+    const pinia = createPinia();
+    Object.defineProperty(pinia, 'value', {
+      enumerable: true,
+      get: () => pinia
+    });
+    return {
+      pinia
+    };
+  },
+  */
   props: {
     variant: {
       type: Object as () => Variant,

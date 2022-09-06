@@ -8,16 +8,16 @@
 </template>
 
 <script lang="ts">
+import { mapGetters } from 'vuex';
 import { store } from '../store';
 
 export default {
   name: 'Counter',
   computed: {
-    count() {
-      return this.$store.getters['count'];
-    }
+    ...mapGetters(['count'])
   },
   beforeCreate() {
+    console.log('Using mapGetters in vuex');
     this.$store = store;
   }
 };

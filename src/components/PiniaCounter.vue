@@ -13,8 +13,9 @@ import { useCounterStore } from '../stores/counter';
 
 export default {
   name: 'PiniaCounter',
-  beforeCreate() {
+  created() {
     this.$pinia = this.pinia;
+    console.log('PiniaCounter: ', this.$pinia);
   },
   computed: {
     ...mapState(useCounterStore, ['counter'])
