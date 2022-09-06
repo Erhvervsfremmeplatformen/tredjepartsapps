@@ -12,37 +12,36 @@
       <strong>src/components/Applikation.vue</strong>, <strong>/components/StateComponent.vue</strong> og
       <strong>src/components/Counter.vue</strong> for detaljer om håndtering af manglende support af mapGetters.
     </div>
-
-    Pinia: {{ count }}
-
-    <Counter />
+    <VuexCounter />
     <div class="mt-5">
-      <button class="button button-primary" @click="increment">Pinia test</button>
+      <button class="button button-primary" @click="increment">Vuex test</button>
+    </div>
+    <PiniaCounter />
+    <div class="mt-5">
+      <button class="button button-primary" @click="incrementPinia">Pinia test</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { mapActions, mapState } from 'pinia';
+import { mapActions } from 'pinia';
+import { mapMutations } from 'vuex';
 import { store } from '../store';
 import { useCounterStore } from '../stores/counter';
-import Counter from './Counter.vue';
+import PiniaCounter from './PiniaCounter.vue';
+import VuexCounter from './VuexCounter.vue';
 
 export default {
-  components: { Counter },
+  components: { VuexCounter, PiniaCounter },
   name: 'StateComponent',
   beforeCreate() {
-    /*
-    const pinia = createPinia();
-    this.$pinia = pinia;
-    */
+    this.$pinia = this.pinia;
     this.$store = store;
-    console.log('A ', this.$store);
-    this.$store.commit('increment');
   },
-  computed: {
-    ...mapState(useCounterStore, ['count']),
-    ...mapActions(useCounterStore, ['increment'])
-  }
+  methods: {
+    ...mapActions(useCounterStore, ['incrementPinia']),
+    ...mapMutations(['increment'])
+  },
+  inject: ['pinia']
 };
 </script>

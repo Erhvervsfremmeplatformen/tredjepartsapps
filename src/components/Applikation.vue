@@ -34,6 +34,7 @@
 <script lang="ts">
 import * as DataEvent from '@erst-vg/piwik-event-wrapper';
 import * as DKFDS from 'dkfds';
+import { createPinia } from 'pinia';
 import { defineComponent } from 'vue';
 import { Bruger } from '../models/bruger.model';
 import { Variant } from '../models/variant.model';
@@ -65,6 +66,16 @@ export default defineComponent({
     Icons,
     DKFDSComponent,
     DataCollector
+  },
+  provide() {
+    const pinia = createPinia();
+    Object.defineProperty(pinia, 'value', {
+      enumerable: true,
+      get: () => pinia
+    });
+    return {
+      pinia
+    };
   },
   props: {
     variant: {
