@@ -13,27 +13,36 @@
       <strong>src/components/Counter.vue</strong> for detaljer om håndtering af manglende support af mapGetters.
     </div>
 
+    Pinia: {{ count }}
+
     <Counter />
     <div class="mt-5">
-      <button class="button button-primary" @click="change">Opdatér tæller i Vuex store</button>
+      <button class="button button-primary" @click="increment">Pinia test</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Counter from './Counter.vue';
+import { mapActions, mapState } from 'pinia';
 import { store } from '../store';
+import { useCounterStore } from '../stores/counter';
+import Counter from './Counter.vue';
 
 export default {
   components: { Counter },
   name: 'StateComponent',
   beforeCreate() {
+    /*
+    const pinia = createPinia();
+    this.$pinia = pinia;
+    */
     this.$store = store;
+    console.log('A ', this.$store);
+    this.$store.commit('increment');
   },
-  methods: {
-    change() {
-      this.$store.commit('increment');
-    }
+  computed: {
+    ...mapState(useCounterStore, ['count']),
+    ...mapActions(useCounterStore, ['increment'])
   }
 };
 </script>

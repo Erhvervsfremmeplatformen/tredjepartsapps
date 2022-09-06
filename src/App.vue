@@ -2,6 +2,7 @@
   <div>
     <div id="app" class="app-body" tabindex="-1">
       <div class="flexgrow container pt-8 pb-8">
+        xxx: {{ count }}
         <Applikation
           :variant="variant"
           :is-logged-in="isLoggedIn"
@@ -24,6 +25,7 @@
 // INFO: Bemærk ændringer til denne fil, vil ikke blive inkluderet i den endelige applikation
 import * as DKFDS from 'dkfds';
 import Applikation from './components/Applikation.vue';
+import { store } from './store';
 
 // Hash værdi som VG sætter når login flow initieres, og når leverandør-applikationen vises igen efter successfuldt login
 const HASH_LOGIN_STRING = 'login_for_app';
@@ -55,6 +57,9 @@ export default {
     isLoggedIn() {
       return !!this.token;
     },
+    count() {
+      return this.$store.getters['count'];
+    },
     bruger() {
       return this.token
         ? {
@@ -69,6 +74,10 @@ export default {
   },
   mounted() {
     DKFDS.init();
+  },
+  beforeCreate() {
+    this.$store = store;
+    this.$store.commit('increment');
   },
   created() {
     // Simulér bruger er kommet tilbage efter login, og har modtaget en token som prop

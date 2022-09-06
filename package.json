@@ -13,12 +13,13 @@
     "axios": "0.21.4",
     "dkfds": "8.0.1",
     "dkfds-plugins": "6.0.1",
+    "mitt": "^3.0.0",
+    "pinia": "^2.0.21",
     "runtime": "0.14.1",
     "vue": "3.2.37",
     "vue-axios": "3.4.1",
     "vue-multiselect": "3.0.0-alpha.2",
-    "vuex": "4.0.2",
-    "mitt": "^3.0.0"
+    "vuex": "4.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.10.4",
