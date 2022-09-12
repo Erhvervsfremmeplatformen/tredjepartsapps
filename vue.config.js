@@ -42,7 +42,7 @@ if (process.env.VG_VUE_TRANSPILE === 'true') {
   options.css.extract = false;
 
   options.configureWebpack.externals = {
-    vue: 'Vue'
+    vue: 'Vue',
   }
 }
 

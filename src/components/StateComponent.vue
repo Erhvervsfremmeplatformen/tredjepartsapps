@@ -36,7 +36,6 @@ export default {
   name: 'StateComponent',
   created() {
     this.$pinia = this.pinia;
-    console.log('StateComponent: ', this.$pinia);
     this.$store = store;
   },
   methods: {

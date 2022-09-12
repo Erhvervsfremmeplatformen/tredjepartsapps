@@ -1,4 +1,3 @@
-<!-- Vuex underkomponent, som bruger den injected 'reactivyKey' til at vise reaktiv state fra Vuex store  -->
 <template>
   <div>
     <div class="mt-5">
@@ -17,7 +16,6 @@ export default {
     ...mapGetters(['count'])
   },
   beforeCreate() {
-    console.log('Using mapGetters in vuex');
     this.$store = store;
   }
 };
