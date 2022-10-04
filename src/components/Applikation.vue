@@ -4,10 +4,11 @@
     <h1>Leverandør-applikation Sandkasse Miljø</h1>
     <div class="my-5">
       Denne applikation kan bruges som skabelon til udvikling af leverandør-applikation, der kan integreres i
-      <a href="https://www.virksomhedsguiden.dk" target="_blank">Virksomhedsguiden</a> som et Vue komponent. Siden indeholder desuden teknisk
+      <a href="https://www.virksomhedsguiden.dk" target="_blank">Virksomhedsguiden</a> som Vue 3 komponenter. Siden indeholder desuden teknisk
       information om forskellige aspekter af en leverandør-applikation. Se <strong>README.md</strong> for instruktioner. Der henvises desuden til den
       tekniske vejledning og design-vejledningen, som er blevet udleveret, for yderligere information.
     </div>
+    <API />
     <SvgIcons />
     <hr />
     <LoginDemo :token="token" :bruger="bruger" :is-logged-in="isLoggedIn" @requestToken="$emit('requestToken')" />
@@ -16,7 +17,7 @@
     <hr />
     <LoginComponent />
     <hr />
-    <API />
+    <ExternalAPI />
     <hr />
     <ParameterVariant :variant="variant" />
     <hr />
@@ -35,7 +36,7 @@
 </template>
 <script lang="ts">
 import * as DataEvent from '@erst-vg/piwik-event-wrapper';
-import * as DKFDS from 'dkfds';
+import { createPinia } from 'pinia';
 import { defineComponent } from 'vue';
 import { Bruger } from '../models/bruger.model';
 import { Variant } from '../models/variant.model';
@@ -43,6 +44,7 @@ import API from './API.vue';
 import CustomMultiselect from './CustomMultiselect.vue';
 import DataCollector from './DataCollector.vue';
 import DKFDSComponent from './DKFDSComponent.vue';
+import ExternalAPI from './ExternalAPI.vue';
 import Icons from './Icons.vue';
 import LoginComponent from './LoginComponent.vue';
 import LoginDemo from './LoginDemo.vue';
@@ -62,11 +64,19 @@ export default defineComponent({
     LoginDemo,
     Navigation,
     ParameterVariant,
-    API,
     Responsive,
     Icons,
     DKFDSComponent,
-    DataCollector
+    DataCollector,
+    ExternalAPI,
+    API
+  },
+  emits: ['requestToken', 'piwikPageView', 'piwikNaesteEvent', 'piwikForrigeEvent', 'piwikDownloadEvent', 'piwikCTAClickEvent', 'piwikFritekstEvent'],
+  provide() {
+    const pinia = createPinia();
+    return {
+      pinia
+    };
   },
   props: {
     variant: {
@@ -96,9 +106,6 @@ export default defineComponent({
       step: 1,
       maxStep: 3
     };
-  },
-  mounted() {
-    new DKFDS.Accordion(document.getElementById('accordion-element'));
   },
   created() {
     window.location.hash = '1';

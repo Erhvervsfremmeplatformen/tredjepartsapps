@@ -1,5 +1,4 @@
 const path = require('path');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const options = {
   css: {
@@ -14,10 +13,9 @@ const options = {
   },
   configureWebpack: {
     output: {
-      filename: 'build.js'
+      filename: "[name].[fullhash].js",
     },
     plugins: [
-      new LodashModuleReplacementPlugin()
     ],
     optimization: {
       minimize: true

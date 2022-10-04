@@ -3,6 +3,7 @@
     <div id="app" class="app-body" tabindex="-1">
       <div class="flexgrow container pt-8 pb-8">
         <Applikation
+          v-if="loaded"
           :variant="variant"
           :is-logged-in="isLoggedIn"
           :token="token"
@@ -38,6 +39,7 @@ export default {
   },
   data() {
     return {
+      loaded: false,
       token: '',
       variant: {
         navn: 'blå',
@@ -69,6 +71,11 @@ export default {
   },
   mounted() {
     DKFDS.init();
+    /**
+     * Flag der sørger for initialisering af DKFDS sker inden de resterende Vue komponenter loades.
+     * Dette gøres for at undgå dobbelt initialisering af DKFDS komponenter fx. når Accordions loades
+     */
+    this.loaded = true;
   },
   created() {
     // Simulér bruger er kommet tilbage efter login, og har modtaget en token som prop

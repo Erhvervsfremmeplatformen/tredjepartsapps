@@ -3,10 +3,10 @@ import { createStore } from 'vuex';
 
 export const store = createStore({
   state: {
-    count: 0
+    count: 3
   },
   mutations: {
-    increment(state) {
+    incrementVuex(state) {
       state.count++;
     }
   },

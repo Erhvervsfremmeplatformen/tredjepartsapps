@@ -40,10 +40,7 @@ Nuværende NPM moduler og versioner, som kan bruges af leverandør-applikationer
 * "sanity-blocks-vue-component": "1.0.1"
 * "vue-apexcharts": "1.6.2",
 * "apexcharts": "3.33.2",
-* "vue-simpleform": "1.0.5",
 * "vue-html2pdf": "1.8.0",
 * "humps": "2.0.1",
 * "ol": "6.13.0",
-* "tippy.js": "6.3.7",
-* "vue-multiselect": "2.1.6",
-* "vuex": "3.6.2"
+* "tippy.js": "6.3.7"
