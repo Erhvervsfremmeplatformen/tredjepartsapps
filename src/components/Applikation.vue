@@ -111,7 +111,7 @@ export default defineComponent({
     window.location.hash = '1';
     window.addEventListener('hashchange', this.updateStepFromHash);
   },
-  destroyed() {
+  unmounted() {
     window.removeEventListener('hashchange', this.updateStepFromHash);
   },
   methods: {
