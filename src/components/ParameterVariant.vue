@@ -26,10 +26,10 @@ export default defineComponent({
     }
   },
   computed: {
-    variantColor: function() {
+    variantColor: function () {
       return this.variant?.parametre[0].parametervaerdi ?? '#C0C0C0';
     },
-    variantName: function() {
+    variantName: function () {
       return this.variant?.navn ?? 'default';
     }
   },
