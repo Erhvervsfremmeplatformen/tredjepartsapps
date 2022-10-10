@@ -19,15 +19,16 @@ export default defineComponent({
   name: 'PiniaCounter',
   // Får Pinia instansen fra 'src/components/Applikation.vue' via provide/inject pattern
   inject: ['pinia'],
+  computed: {
+    ...mapState(useCounterStore, ['counter'])
+  },
   created() {
     // Da Pinia store ikke registreres globalt, skal dette gøres i hvert komponent, som skal tilgå stores
     this.$pinia = this.pinia;
   },
-  computed: {
-    ...mapState(useCounterStore, ['counter'])
-  },
   methods: {
     componentPath() {
+      /* eslint no-underscore-dangle: ["error", { "allow": ["__file"] }]*/
       return this.$options.__file;
     }
   }

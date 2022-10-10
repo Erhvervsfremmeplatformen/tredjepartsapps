@@ -71,7 +71,6 @@ export default defineComponent({
     ExternalAPI,
     API
   },
-  emits: ['requestToken', 'piwikPageView', 'piwikNaesteEvent', 'piwikForrigeEvent', 'piwikDownloadEvent', 'piwikCTAClickEvent', 'piwikFritekstEvent'],
   provide() {
     const pinia = createPinia();
     return {
@@ -100,7 +99,7 @@ export default defineComponent({
       required: false
     }
   },
-
+  emits: ['requestToken', 'piwikPageView', 'piwikNaesteEvent', 'piwikForrigeEvent', 'piwikDownloadEvent', 'piwikCTAClickEvent', 'piwikFritekstEvent'],
   data() {
     return {
       step: 1,

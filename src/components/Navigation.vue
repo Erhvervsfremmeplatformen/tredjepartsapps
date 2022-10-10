@@ -37,7 +37,6 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'Navigation',
-  emits: ['decreaseStep', 'increaseStep'],
   props: {
     step: {
       type: Number,
@@ -47,6 +46,7 @@ export default defineComponent({
       type: Number,
       required: true
     }
-  }
+  },
+  emits: ['decreaseStep', 'increaseStep']
 });
 </script>

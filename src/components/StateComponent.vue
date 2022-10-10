@@ -33,8 +33,9 @@ import PiniaCounter from './PiniaCounter.vue';
 import VuexCounter from './VuexCounter.vue';
 
 export default defineComponent({
-  components: { VuexCounter, PiniaCounter },
   name: 'StateComponent',
+  components: { VuexCounter, PiniaCounter },
+  inject: ['pinia'],
   created() {
     this.$pinia = this.pinia;
     this.$store = store;
@@ -42,7 +43,6 @@ export default defineComponent({
   methods: {
     ...mapActions(useCounterStore, ['incrementPinia']),
     ...mapMutations(['incrementVuex'])
-  },
-  inject: ['pinia']
+  }
 });
 </script>

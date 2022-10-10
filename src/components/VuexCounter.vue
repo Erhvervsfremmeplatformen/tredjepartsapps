@@ -30,6 +30,7 @@ export default defineComponent({
   },
   methods: {
     componentPath() {
+      /* eslint no-underscore-dangle: ["error", { "allow": ["__file"] }]*/
       return this.$options.__file;
     }
   }
