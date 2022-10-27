@@ -41,6 +41,8 @@ Nuværende NPM moduler og versioner, som kan bruges af leverandør-applikationer
 * "vue3-apexcharts": "1.4.1",
 * "apexcharts": "3.33.2",
 * "@erst-vg/vue3-html2pdf": "1.1.3",
+* "@contentful/rich-text-html-renderer": "15.13.1",
+* "@contentful/rich-text-types": "15.13.2",
 * "humps": "2.0.1",
 * "ol": "6.13.0",
 * "tippy.js": "6.3.7"
