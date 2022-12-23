@@ -156,9 +156,6 @@ export default defineComponent({
         maxStep: this.maxStep
       };
       DataEvent.emitFritekstEvent(this, 'eventType', JSON.stringify(data));
-    },
-    emitRequestToken() {
-      this.$emit('requestToken');
     }
   }
 });

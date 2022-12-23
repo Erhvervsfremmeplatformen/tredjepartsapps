@@ -17,6 +17,35 @@
           @requestToken="onRequestToken"
         />
       </div>
+      <div
+        class="fds-modal"
+        id="modal-rumlerille"
+        aria-hidden="true"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-rumlerille"
+        data-modal-forced-action
+      >
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">Du er nu ved at logge automatisk ind</h2>
+          </div>
+          <div class="modal-body">
+            <p>
+              Denne modal vises første gang en bruger forsøger at starte en leverandør-applikation, som kræver login. Dens formål er at gøre brugeren
+              opmærksom på, at leverandør-applikationen kan opsamle data om brugeren, og derfor først kan startes når brugeren accepterer dette.
+            </p>
+            <p>
+              Bemærk, leverandør-applikationen skal ikke selv implementere denne modal, da visning og dens logik styres af Virksomhedsguiden udenfor
+              leverandør-applikationen.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button class="button button-primary" id="button-modal-accept" @click="accept">Fortsæt</button
+            ><button class="button button-secondary" id="button-modal-cancel" @click="cancelTokenRequest">Fortryd</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -25,7 +54,7 @@
 // INFO: Bemærk ændringer til denne fil, vil ikke blive inkluderet i den endelige applikation
 import * as DKFDS from 'dkfds';
 import Applikation from './components/Applikation.vue';
-
+import { TokenStatus } from './enums/tokenStatus.enum';
 // Hash værdi som VG sætter når login flow initieres, og når leverandør-applikationen vises igen efter successfuldt login
 const HASH_LOGIN_STRING = 'login_for_app';
 // Gyldig, men udløbet access token som kun bør bruges til demo formål
@@ -41,6 +70,7 @@ export default {
     return {
       loaded: false,
       token: '',
+      modal: null,
       variant: {
         navn: 'blå',
         aktiv: true,
@@ -55,10 +85,13 @@ export default {
   },
   computed: {
     isLoggedIn() {
-      return !!this.token;
+      return !!this.token && !this.isTokenRequestCancelled;
+    },
+    isTokenRequestCancelled() {
+      return this.token === TokenStatus.CANCELLED;
     },
     bruger() {
-      return this.token
+      return this.isLoggedIn
         ? {
             navn: 'Jens Hansen',
             organisation: 'Demo Nation',
@@ -71,20 +104,31 @@ export default {
   },
   mounted() {
     DKFDS.init();
+    this.modal = new DKFDS.Modal(document.getElementById('modal-rumlerille'));
     /**
      * Flag der sørger for initialisering af DKFDS sker inden de resterende Vue komponenter loades.
      * Dette gøres for at undgå dobbelt initialisering af DKFDS komponenter fx. når Accordions loades
      */
     this.loaded = true;
-  },
-  created() {
-    // Simulér bruger er kommet tilbage efter login, og har modtaget en token som prop
+
+    // Simulér bruger er kommet tilbage efter login, og derfor skal vise rumlerille modal
     const { hash } = window.location;
     if (hash?.replaceAll('#', '') === HASH_LOGIN_STRING) {
-      this.token = DUMMY_TOKEN;
+      this.modal.show();
     }
   },
+  created() {},
   methods: {
+    // Brugeren har accepteret rumlerille modal og leverandør-applikation modtager en JWT token
+    accept() {
+      this.token = DUMMY_TOKEN;
+      this.modal.hide();
+    },
+    // Brugeren har ikke accepteret rumlerille modal, så leverandør-applikation modtager en annulleret token
+    cancelTokenRequest() {
+      this.token = TokenStatus.CANCELLED;
+      this.modal.hide();
+    },
     // Dummy metoder til at teste dataopsamling events. Disse events vil blive håndteret af Virksomhedsguiden.
     onPiwikPageView() {
       // eslint-disable-next-line no-console
