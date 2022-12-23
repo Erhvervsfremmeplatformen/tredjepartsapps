@@ -39,7 +39,7 @@
         <p class="alert-text">
           Hvis brugeren forsøger at starte leverandør-applikationen, men vælger ikke at acceptere opsamling af data om brugeren, så får token værdien:
           <i>cancelled</i>. Leverandør-applikationen kan reagerer på denne specielle værdi, og evt. visuelt vise brugeren hvorfor
-          leverandør-applikationen ikke blev startet.
+          leverandør-applikationen ikke blev startet, eller starte et flow, der ikke kræver login.
         </p>
       </div>
     </div>
