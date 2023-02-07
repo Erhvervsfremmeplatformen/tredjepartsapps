@@ -30,18 +30,18 @@
         </p>
       </div>
     </div>
-    <div v-if="!token || isTokenRequestCancelled" class="my-5">
-      <button class="button button-primary" @click="$emit('requestToken')">Anmod om token</button>
-    </div>
     <div class="alert alert-info">
       <div class="alert-body">
-        <p class="alert-heading">Informativ besked</p>
+        <p class="alert-heading">Bruger accept</p>
         <p class="alert-text">
           Hvis brugeren forsøger at starte leverandør-applikationen, men vælger ikke at acceptere opsamling af data om brugeren, så får token værdien:
           <i>cancelled</i>. Leverandør-applikationen kan reagerer på denne specielle værdi, og evt. visuelt vise brugeren hvorfor
           leverandør-applikationen ikke blev startet, eller starte et flow, der ikke kræver login.
         </p>
       </div>
+    </div>
+    <div v-if="!token || isTokenRequestCancelled" class="my-5">
+      <button class="button button-primary" @click="$emit('requestToken')">Anmod om token</button>
     </div>
   </div>
 </template>

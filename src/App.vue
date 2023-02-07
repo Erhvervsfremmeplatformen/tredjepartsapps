@@ -97,7 +97,8 @@ export default {
             organisation: 'Demo Nation',
             virksomhedsnavn: 'Business Demo',
             cvr: 12345678,
-            entityId: 'eid-CVR:12345678-RID:e4f13c3b-3c5a-459d-90a9-847ab9596157'
+            entityId: 'eid-CVR:12345678-RID:e4f13c3b-3c5a-459d-90a9-847ab9596157',
+            roller: ['ERF_LEVERANDOER']
           }
         : null;
     }
