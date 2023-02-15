@@ -14,6 +14,8 @@
           @piwikDownloadEvent="onPiwikDownloadEvent"
           @piwikCTAClickEvent="onPiwikCTAClickEvent"
           @piwikFritekstEvent="onPiwikFritekstEvent"
+          @piwikStartEvent="handlePiwikStartEvent"
+          @piwikSlutEvent="handlePiwikSlutEvent"
           @requestToken="onRequestToken"
         />
       </div>
@@ -150,6 +152,14 @@ export default {
     onPiwikCTAClickEvent() {
       // eslint-disable-next-line no-console
       console.log('EVENT: CTA', arguments);
+    },
+    handlePiwikStartEvent() {
+      // eslint-disable-next-line no-console
+      console.log('EVENT: Start', arguments);
+    },
+    handlePiwikSlutEvent() {
+      // eslint-disable-next-line no-console
+      console.log('EVENT: Slut', arguments);
     },
     onPiwikFritekstEvent() {
       // eslint-disable-next-line no-console
