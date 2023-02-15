@@ -31,7 +31,13 @@
     <hr />
     <StateComponent />
     <hr />
-    <DataCollector @download="emitDownloadEvent" @cTAClick="emitCTAClickEvent" @fritekst="emitFritekstEvent" />
+    <DataCollector
+      @download="emitDownloadEvent"
+      @cTAClick="emitCTAClickEvent"
+      @fritekst="emitFritekstEvent"
+      @start="emitStartEvent"
+      @slut="emitSlutEvent"
+    />
   </div>
 </template>
 <script lang="ts">
@@ -100,7 +106,17 @@ export default defineComponent({
       required: false
     }
   },
-  emits: ['requestToken', 'piwikPageView', 'piwikNaesteEvent', 'piwikForrigeEvent', 'piwikDownloadEvent', 'piwikCTAClickEvent', 'piwikFritekstEvent'],
+  emits: [
+    'requestToken',
+    'piwikPageView',
+    'piwikNaesteEvent',
+    'piwikForrigeEvent',
+    'piwikDownloadEvent',
+    'piwikCTAClickEvent',
+    'piwikFritekstEvent',
+    'piwikStartEvent',
+    'piwikSlutEvent'
+  ],
   data() {
     return {
       step: 1,
@@ -149,6 +165,12 @@ export default defineComponent({
     emitCTAClickEvent() {
       const [type, data] = arguments;
       DataEvent.emitCTAClickEvent(this, type, data);
+    },
+    emitStartEvent() {
+      DataEvent.emitStartEvent(this);
+    },
+    emitSlutEvent() {
+      DataEvent.emitSlutEvent(this);
     },
     emitFritekstEvent() {
       const data = {

@@ -18,6 +18,14 @@
       stedet for.
     </div>
     <button class="button button-primary" @click="$emit('fritekst')">Fritekst event</button>
+    <h4>AppStart</h4>
+    <div class="my-5">Denne event bruges til at angive man har startet et forløb i applikationen fx. startet en guide med trin.</div>
+    <button class="button button-primary" @click="$emit('start')">Start event</button>
+    <h4>AppSlut</h4>
+    <div class="my-5">
+      Denne event bruges til at angive man har afsluttet et forløb i applikationen fx. afsluttet en guide med trin, og nu er kommet til resultatsiden.
+    </div>
+    <button class="button button-primary" @click="$emit('slut')">Slut event</button>
   </div>
 </template>
 
@@ -26,6 +34,6 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'DataCollector',
-  emits: ['fritekst', 'cTAClick', 'download']
+  emits: ['fritekst', 'cTAClick', 'download', 'start', 'slut']
 });
 </script>
