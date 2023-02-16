@@ -9,11 +9,8 @@
           :token="token"
           :bruger="bruger"
           @piwikPageView="onPiwikPageView"
-          @piwikNaesteEvent="onPiwikNaesteEvent"
-          @piwikForrigeEvent="onPiwikForrigeEvent"
           @piwikDownloadEvent="onPiwikDownloadEvent"
           @piwikCTAClickEvent="onPiwikCTAClickEvent"
-          @piwikFritekstEvent="onPiwikFritekstEvent"
           @piwikStartEvent="handlePiwikStartEvent"
           @piwikSlutEvent="handlePiwikSlutEvent"
           @requestToken="onRequestToken"
@@ -137,14 +134,6 @@ export default {
       // eslint-disable-next-line no-console
       console.log('EVENT: page view');
     },
-    onPiwikNaesteEvent() {
-      // eslint-disable-next-line no-console
-      console.log('EVENT: naeste', arguments);
-    },
-    onPiwikForrigeEvent() {
-      // eslint-disable-next-line no-console
-      console.log('EVENT: forrige', arguments);
-    },
     onPiwikDownloadEvent() {
       // eslint-disable-next-line no-console
       console.log('EVENT: download', arguments);
@@ -160,10 +149,6 @@ export default {
     handlePiwikSlutEvent() {
       // eslint-disable-next-line no-console
       console.log('EVENT: Slut', arguments);
-    },
-    onPiwikFritekstEvent() {
-      // eslint-disable-next-line no-console
-      console.log('EVENT: fritekst ', arguments);
     },
     onRequestToken() {
       // eslint-disable-next-line no-console

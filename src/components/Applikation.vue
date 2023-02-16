@@ -31,17 +31,21 @@
     <hr />
     <StateComponent />
     <hr />
-    <DataCollector
-      @download="emitDownloadEvent"
-      @cTAClick="emitCTAClickEvent"
-      @fritekst="emitFritekstEvent"
-      @start="emitStartEvent"
-      @slut="emitSlutEvent"
-    />
+    <DataCollector />
   </div>
 </template>
+
+<script setup lang="ts">
+import { DataEvents } from '@erst-vg/piwik-event-wrapper-vue3/lib/enums/dataEvents.enum';
+const emit = defineEmits(Object.values(DataEvents));
+/**
+ * Initialiserer Piwik service med entry-point komponentens emits, så der kan emittes ud af leverandør-applikationen
+ * uanset fra hvilket komponent niveau Piwik service kaldes fra
+ */
+piwikService.init(emit);
+</script>
+
 <script lang="ts">
-import * as DataEvent from '@erst-vg/piwik-event-wrapper';
 import { createPinia } from 'pinia';
 import { defineComponent } from 'vue';
 import { Bruger } from '../models/bruger.model';
@@ -60,6 +64,7 @@ import Responsive from './Responsive.vue';
 import StateComponent from './StateComponent.vue';
 import SvgIcons from './SvgIcons.vue';
 import * as slugUtil from '../utils/slug.util';
+import { piwikService } from '@erst-vg/piwik-event-wrapper-vue3';
 
 export default defineComponent({
   name: 'Applikation',
@@ -106,17 +111,6 @@ export default defineComponent({
       required: false
     }
   },
-  emits: [
-    'requestToken',
-    'piwikPageView',
-    'piwikNaesteEvent',
-    'piwikForrigeEvent',
-    'piwikDownloadEvent',
-    'piwikCTAClickEvent',
-    'piwikFritekstEvent',
-    'piwikStartEvent',
-    'piwikSlutEvent'
-  ],
   data() {
     return {
       step: 1,
@@ -133,51 +127,28 @@ export default defineComponent({
   methods: {
     decreaseStep() {
       if (window.location.hash !== '#1') {
-        const { hash, pathname } = window.location;
+        const { hash } = window.location;
         const previousHash = String(parseInt(this.removeHash(hash), 10) - 1);
-        const previousUrl = pathname + '#' + previousHash;
-        DataEvent.emitForrigeEvent(this, previousUrl);
         window.location.hash = slugUtil.slugify(previousHash);
       }
     },
     increaseStep() {
       if (window.location.hash !== '#' + this.maxStep) {
-        const { hash, pathname } = window.location;
+        const { hash } = window.location;
         const previousHash = String(parseInt(this.removeHash(hash), 10) + 1);
-        const nextUrl = pathname + '#' + previousHash;
-        DataEvent.emitNaesteEvent(this, nextUrl);
         window.location.hash = slugUtil.slugify(previousHash);
       }
     },
     updateStepFromHash() {
       const { hash } = window.location;
       this.step = hash ? parseInt(this.removeHash(hash), 10) : 1;
-      DataEvent.emitPageViewEvent(this);
+      piwikService.emitPageViewEvent();
     },
     removeHash(hash: string) {
       return hash.replaceAll('#', '');
     },
-    // Data opsamlingsmetoder
-    emitDownloadEvent() {
-      const [file, data] = arguments;
-      DataEvent.emitDownloadEvent(this, file, data);
-    },
-    emitCTAClickEvent() {
-      const [type, data] = arguments;
-      DataEvent.emitCTAClickEvent(this, type, data);
-    },
-    emitStartEvent() {
-      DataEvent.emitStartEvent(this);
-    },
-    emitSlutEvent() {
-      DataEvent.emitSlutEvent(this);
-    },
-    emitFritekstEvent() {
-      const data = {
-        step: this.step,
-        maxStep: this.maxStep
-      };
-      DataEvent.emitFritekstEvent(this, 'eventType', JSON.stringify(data));
+    emitRequestToken() {
+      this.$emit('requestToken');
     }
   }
 });
