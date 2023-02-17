@@ -31,7 +31,7 @@
     </div>
     <div class="mt-5">
       Bemærk hvis hash (#) indholder flere ord eller specielle karakterer, og sendes til dataopsamling via
-      <strong>@erst-vg/piwik-event-wrapper-vue3</strong>, så må den ikke URL encodes. I stedet for bør man bruge
+      <strong>@erst-vg/piwik-event-wrapper</strong>, så må den ikke URL encodes. I stedet for bør man bruge
       <strong>src/utils/slug.util.ts</strong> eller lignende alternativ, som sørger for hash er nemmere at læse. Se evt.
       <strong>src/components/Navigation.vue</strong> for hvordan util funktionen bruges.
       <div class="mt-5">

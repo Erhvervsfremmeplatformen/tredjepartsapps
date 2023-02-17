@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { DataEvents } from '@erst-vg/piwik-event-wrapper-vue3/lib/enums/dataEvents.enum';
+import { DataEvents } from '@erst-vg/piwik-event-wrapper/lib/enums/dataEvents.enum';
 const emit = defineEmits(Object.values(DataEvents));
 /**
  * Initialiserer Piwik service med entry-point komponentens emits, så der kan emittes ud af leverandør-applikationen
@@ -64,7 +64,7 @@ import Responsive from './Responsive.vue';
 import StateComponent from './StateComponent.vue';
 import SvgIcons from './SvgIcons.vue';
 import * as slugUtil from '../utils/slug.util';
-import { piwikService } from '@erst-vg/piwik-event-wrapper-vue3';
+import { piwikService } from '@erst-vg/piwik-event-wrapper/lib/services/piwik.service';
 
 export default defineComponent({
   name: 'Applikation',
