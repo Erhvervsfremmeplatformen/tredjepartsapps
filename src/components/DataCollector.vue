@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { piwikService } from '@erst-vg/piwik-event-wrapper/lib/services/piwik.service';
+import { piwikService } from '@erst-vg/piwik-event-wrapper';
 
 export default defineComponent({
   name: 'DataCollector',

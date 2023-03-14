@@ -35,12 +35,20 @@
   </div>
 </template>
 
+<!-- Script setup blok for Composition API -->
 <script setup lang="ts">
-import { DataEvents } from '@erst-vg/piwik-event-wrapper/lib/enums/dataEvents.enum';
-const emit = defineEmits(Object.values(DataEvents));
+const emit = defineEmits([
+  DataEvents.PAGE_VIEW,
+  DataEvents.DOWNLOAD_EVENT,
+  DataEvents.CTA_CLICK_EVENT,
+  DataEvents.START_EVENT,
+  DataEvents.SLUT_EVENT
+]);
 /**
  * Initialiserer Piwik service med entry-point komponentens emits, så der kan emittes ud af leverandør-applikationen
- * uanset fra hvilket komponent niveau Piwik service kaldes fra
+ * uanset fra hvilket komponent niveau Piwik service kaldes fra. Bemærk dette her skal kun gøres for Composition API
+ *
+ * Se created lifecycle hook for hvordan det håndteres for Options API
  */
 piwikService.init(emit);
 </script>
@@ -64,7 +72,7 @@ import Responsive from './Responsive.vue';
 import StateComponent from './StateComponent.vue';
 import SvgIcons from './SvgIcons.vue';
 import * as slugUtil from '../utils/slug.util';
-import { piwikService } from '@erst-vg/piwik-event-wrapper/lib/services/piwik.service';
+import { DataEvents, piwikService } from '@erst-vg/piwik-event-wrapper';
 
 export default defineComponent({
   name: 'Applikation',
@@ -111,6 +119,7 @@ export default defineComponent({
       required: false
     }
   },
+  emits: [DataEvents.PAGE_VIEW, DataEvents.DOWNLOAD_EVENT, DataEvents.CTA_CLICK_EVENT, DataEvents.START_EVENT, DataEvents.SLUT_EVENT],
   data() {
     return {
       step: 1,
@@ -118,6 +127,13 @@ export default defineComponent({
     };
   },
   created() {
+    /**
+     * Initialiserer Piwik service med entry-point komponentens emits, så der kan emittes ud af leverandør-applikationen
+     * uanset fra hvilket komponent niveau Piwik service kaldes fra. Bemærk dette her skal kun gøres for Options API
+     *
+     * Se script setup blokken for hvordan det håndteres for Composition API
+     */
+    piwikService.init(this.$emit);
     window.location.hash = '1';
     window.addEventListener('hashchange', this.updateStepFromHash);
   },
