@@ -2,6 +2,7 @@
 <template>
   <div class="applikation-container">
     <h1>Leverandør-applikation Sandkasse Miljø</h1>
+    <div id="foo">Her kommer noget tekst</div>
     <div class="my-5">
       Denne applikation kan bruges som skabelon til udvikling af leverandør-applikation, der kan integreres i
       <a href="https://www.virksomhedsguiden.dk" target="_blank">Virksomhedsguiden</a> som Vue 3 komponenter. Siden indeholder desuden teknisk
@@ -37,6 +38,30 @@
 
 <!-- Script setup blok for Composition API -->
 <script setup lang="ts">
+import { z } from 'zod';
+import i18next from 'i18next';
+
+// creating a schema for strings
+const mySchema = z.string();
+
+i18next.init({
+  lng: 'en', // if you're using a language detector, do not define the lng option
+  debug: true,
+  resources: {
+    en: {
+      translation: {
+        key: 'hello world :)'
+      }
+    }
+  }
+});
+// init
+
+onMounted(() => {
+  document.querySelector('.applikation-container #foo')!.innerHTML = i18next.t('key');
+  console.log('Zod: ', mySchema.parse('tuna'));
+});
+
 const emit = defineEmits([
   DataEvents.PAGE_VIEW,
   DataEvents.DOWNLOAD_EVENT,
@@ -55,7 +80,7 @@ piwikService.init(emit);
 
 <script lang="ts">
 import { createPinia } from 'pinia';
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 import { Bruger } from '../models/bruger.model';
 import { Variant } from '../models/variant.model';
 import API from './API.vue';
