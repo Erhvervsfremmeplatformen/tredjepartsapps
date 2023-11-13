@@ -48,3 +48,37 @@ Nuværende NPM moduler og versioner, som kan bruges af leverandør-applikationer
 * "tippy.js": "6.3.7"
 * "zod": "3.22.4"
 * "i18next": "23.5.1"
+
+# Web-components
+Denne branch er et eksperiment om man kan bygge en 3parts applikation som web-components.
+
+Byg applikation som web-component:
+```
+npm run transpile-wc
+```
+
+Serve web-component som JavaScript
+```
+npm run serve-wc
+```
+
+
+Virksomhedsguiden eller anden consuming applikation. Inject script element, som peger på web-component
+```
+http://127.0.0.1:8080/xvg-example.umd.js
+```
+
+Indsæt web-component i applikationen.
+```
+<xvg-example
+  @piwikSlutEvent="onPiwikSlutEvent"
+  :bruger="{
+    navn: 'Anders And',
+    organisation: 'Demo Nation r US',
+    virksomhedsnavn: 'Business Demo',
+    cvr: 12345678,
+    entityId: 'eid-CVR:12345678-RID:e4f13c3b-3c5a-459d-90a9-847ab9596157',
+    roller: ['ERF_LEVERANDOER']
+  }"
+/>
+```
