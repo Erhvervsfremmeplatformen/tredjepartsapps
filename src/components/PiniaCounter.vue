@@ -1,10 +1,10 @@
 <template>
   <div>
     <h3>Pinia</h3>
-    <div class="mt-5">
+    <p class="mt-5">
       Se <strong>{{ componentPath() }}</strong> vedr. registrering og anvendelse. Forneden vises en simpel tæller, hvis værdi gemmes i en
       <a href="https://pinia.vuejs.org/" target="_blank">Pinia</a> store, og kan opdateres ved klik på knappen.
-    </div>
+    </p>
     <div class="mt-5">
       <h2 class="displayheading-1">{{ counter }}</h2>
     </div>

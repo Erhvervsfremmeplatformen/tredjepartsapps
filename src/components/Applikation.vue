@@ -1,37 +1,41 @@
 <!-- Indgangspunktet for sandkasse-applikationen. Direkte og indirekte importering af komponenter og stylesheets i denne klasse vil blive inkluderet i den endelig applikation. -->
 <template>
   <div class="applikation-container">
-    <h1>Leverandør-applikation Sandkasse Miljø</h1>
-    <div class="my-5">
-      Denne applikation kan bruges som skabelon til udvikling af leverandør-applikation, der kan integreres i
-      <a href="https://www.virksomhedsguiden.dk" target="_blank">Virksomhedsguiden</a> som Vue 3 komponenter. Siden indeholder desuden teknisk
-      information om forskellige aspekter af en leverandør-applikation. Se <strong>README.md</strong> for instruktioner. Der henvises desuden til den
-      tekniske vejledning og design-vejledningen, som er blevet udleveret, for yderligere information.
+    <div class="row">
+      <div class="col-lg-8">
+        <h1>Leverandør-applikation Sandkasse Miljø</h1>
+        <p class="my-5">
+          Denne applikation kan bruges som skabelon til udvikling af leverandør-applikation, der kan integreres i
+          <a href="https://www.virksomhedsguiden.dk" target="_blank">Virksomhedsguiden</a> som Vue 3 komponenter. Siden indeholder desuden teknisk
+          information om forskellige aspekter af en leverandør-applikation. Se <strong>README.md</strong> for instruktioner. Der henvises desuden til
+          den tekniske vejledning og design-vejledningen, som er blevet udleveret, for yderligere information.
+        </p>
+        <API />
+        <SvgIcons />
+        <hr />
+        <LoginDemo :token="token" :bruger="bruger" :is-logged-in="isLoggedIn" @requestToken="$emit('requestToken')" />
+        <hr />
+        <Navigation :step="step" :max-step="maxStep" @decreaseStep="decreaseStep" @increaseStep="increaseStep" />
+        <hr />
+        <LoginComponent />
+        <hr />
+        <ExternalAPI />
+        <hr />
+        <ParameterVariant :variant="variant" />
+        <hr />
+        <Responsive />
+        <hr />
+        <Icons />
+        <hr />
+        <DKFDSComponent />
+        <hr />
+        <CustomMultiselect />
+        <hr />
+        <StateComponent />
+        <hr />
+        <DataCollector />
+      </div>
     </div>
-    <API />
-    <SvgIcons />
-    <hr />
-    <LoginDemo :token="token" :bruger="bruger" :is-logged-in="isLoggedIn" @requestToken="$emit('requestToken')" />
-    <hr />
-    <Navigation :step="step" :max-step="maxStep" @decreaseStep="decreaseStep" @increaseStep="increaseStep" />
-    <hr />
-    <LoginComponent />
-    <hr />
-    <ExternalAPI />
-    <hr />
-    <ParameterVariant :variant="variant" />
-    <hr />
-    <Responsive />
-    <hr />
-    <Icons />
-    <hr />
-    <DKFDSComponent />
-    <hr />
-    <CustomMultiselect />
-    <hr />
-    <StateComponent />
-    <hr />
-    <DataCollector />
   </div>
 </template>
 

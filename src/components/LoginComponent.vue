@@ -1,39 +1,41 @@
 <template>
   <div>
     <h2 class="mt-5">Login:</h2>
-    Brugere kan være logget ind på Virksomhedsguiden. Hvis de er det, så kan leverandøren anmode om brugerens token, så leverandører-applikationen kan
-    gemme data om brugeren i leverandørens eget system med reference til brugerens entitets ID.
+    <p>
+      Brugere kan være logget ind på Virksomhedsguiden. Hvis de er det, så kan leverandøren anmode om brugerens token, så leverandører-applikationen
+      kan gemme data om brugeren i leverandørens eget system med reference til brugerens entitets ID.
+    </p>
     <div>
       <h4>Forside</h4>
-      <div>
+      <p>
         Når leverandør-applikationer anvender login featuren, skal der vises en forside med information om applikationen, hvor brugeren som minimum
         har mulighed for at logge ind igennem Virksomhedsguiden vha. en knap. Det vil sige, at der skal være en side i leverandør-applikationen som
         brugeren kan se uden at være logget ind.
-      </div>
+      </p>
       <h4>Props</h4>
       <h5>isLoggedIn</h5>
-      <div>Boolean flag, som angiver om bruger er logget ind i Virksomhedsguiden eller ej.</div>
+      <p>Boolean flag, som angiver om bruger er logget ind i Virksomhedsguiden eller ej.</p>
       <h5>Bruger</h5>
-      <div>
+      <p>
         Model objekt med information om brugeren som fx. navn, entitets ID etc. Se <strong>src/models/bruger.model.ts</strong> for komplet liste af
         attributter
-      </div>
+      </p>
       <h5>token</h5>
-      <div>
+      <p>
         Er en <i>access token</i> fra <a href="https://en.wikipedia.org/wiki/JSON_Web_Token" target="_blank">JWT</a> som leverandør-applikationen kan
         bruge til at kalde Erhvervsstyrelsens beskyttede API'er. Den skal angives som bearer token i Authorization headeren i beskyttede API requests.
-      </div>
+      </p>
       <pre>Authorization: Bearer &lt;token&gt;</pre>
       <h4>Events</h4>
-      <div>
+      <p>
         Uanset om brugeren er logget ind eller ej (isLoggedIn), så er token og bruger prop ikke udfyldt til at starte med. Den bliver først
         tilgængelig når leverandør-applikationen eksplicit anmoder om token. Dette gøres ved at emitte event <i>requestToken</i> til
         Virksomhedsguiden. Hvis brugeren ikke er logget ind, så vil denne event starte et login forløb i Virksomhedsguiden og ellers bare udfylde
         token prop.
-      </div>
+      </p>
       <pre>this.$emit('requestToken');</pre>
       <h4>Flow</h4>
-      For en applikation som undersøtter login er forløbet følgende:
+      <p>For en applikation som undersøtter login er forløbet følgende:</p>
       <div>
         <ol>
           <li>Der vises en forside hvor der skal være en knap, som anmoder om token via <i>requestToken</i> event</li>

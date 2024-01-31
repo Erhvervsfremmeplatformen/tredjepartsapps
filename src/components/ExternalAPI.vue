@@ -2,10 +2,10 @@
 <template>
   <div>
     <h2 class="mt-5">Eksternt API:</h2>
-    <div>
+    <p>
       Eksempel på brug af <a href="https://www.npmjs.com/package/axios">Axios</a> biblioteket til at kalde eksternt API og vise spinner ved asynkrone
       operationer
-    </div>
+    </p>
     <div>
       <div v-if="pending" class="spinner" aria-label="Henter indhold" />
       <div v-if="error" class="alert alert-error my-5" role="alert" aria-atomic="true">

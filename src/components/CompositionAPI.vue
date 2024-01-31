@@ -11,7 +11,7 @@ function onClick() {
 <template>
   <div>
     <h3>Composition API</h3>
-    <div>Eksempel på simpel tæller som opdateres via Composition API script setup</div>
+    <p>Eksempel på simpel tæller som opdateres via Composition API script setup</p>
     <div class="mt-5 displayheading-1">{{ msg }}</div>
     <button class="button button-primary mt-5" @click="onClick">Opdater tæller</button>
   </div>

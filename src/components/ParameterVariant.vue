@@ -1,11 +1,11 @@
 <template>
   <div>
     <h2 class="mt-5">Parameter-variant:</h2>
-    <div>
+    <p>
       Eksempel på brug af variant parameter, som udenfor sandkassen specificeres som Vue property fra Virksomhedsguiden. I denne sandkasse angives
       varianten i
       <strong>src/App.vue</strong> for at have en effekt.
-    </div>
+    </p>
     <pre>{{ variant }}</pre>
     <div class="py-5 align-text-center" :style="{ 'background-color': variantColor }">
       Baggrundsfarven bestemmes af parameter varianten ({{ variantName }})

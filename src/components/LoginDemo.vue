@@ -7,7 +7,7 @@
         <div v-if="bruger" class="mt-5">
           <pre>{{ bruger }}</pre>
         </div>
-        <div v-else class="mt-5">Brugeren er ikke logget ind</div>
+        <p v-else class="mt-5">Brugeren er ikke logget ind</p>
       </span>
     </div>
     <div class="my-5">
