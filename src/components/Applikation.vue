@@ -1,37 +1,8 @@
 <!-- Indgangspunktet for sandkasse-applikationen. Direkte og indirekte importering af komponenter og stylesheets i denne klasse vil blive inkluderet i den endelig applikation. -->
 <template>
   <div class="applikation-container">
-    <h1>Leverandør-applikation Sandkasse Miljø</h1>
-    <div class="my-5">
-      Denne applikation kan bruges som skabelon til udvikling af leverandør-applikation, der kan integreres i
-      <a href="https://www.virksomhedsguiden.dk" target="_blank">Virksomhedsguiden</a> som Vue 3 komponenter. Siden indeholder desuden teknisk
-      information om forskellige aspekter af en leverandør-applikation. Se <strong>README.md</strong> for instruktioner. Der henvises desuden til den
-      tekniske vejledning og design-vejledningen, som er blevet udleveret, for yderligere information.
-    </div>
-    <API />
-    <SvgIcons />
-    <hr />
-    <LoginDemo :token="token" :bruger="bruger" :is-logged-in="isLoggedIn" @requestToken="$emit('requestToken')" />
-    <hr />
-    <Navigation :step="step" :max-step="maxStep" @decreaseStep="decreaseStep" @increaseStep="increaseStep" />
-    <hr />
-    <LoginComponent />
-    <hr />
-    <ExternalAPI />
-    <hr />
-    <ParameterVariant :variant="variant" />
-    <hr />
-    <Responsive />
-    <hr />
-    <Icons />
-    <hr />
-    <DKFDSComponent />
-    <hr />
-    <CustomMultiselect />
-    <hr />
-    <StateComponent />
-    <hr />
-    <DataCollector />
+    Testing ...
+    <div id="gm-afvikler" />
   </div>
 </template>
 
@@ -44,6 +15,25 @@ const emit = defineEmits([
   DataEvents.START_EVENT,
   DataEvents.SLUT_EVENT
 ]);
+
+onMounted(() => {
+  const tag = document.createElement('script');
+  //tag.setAttribute('src', 'https://virk.dk/static/gm/1.3.87/afvikler.js');
+  tag.setAttribute('type', 'text/javascript');
+  tag.type = 'module';
+  tag.text = `
+  console.log("xTesting ...");
+  import { opretAfvikler } from 'https://virk.dk/static/gm/1.3.87/afvikler.js';
+  console.log("opretAfvikler ",opretAfvikler);
+  const afvikler = await opretAfvikler({
+    rejse: 'hablxkz1122s'
+  })
+  afvikler.mount('#gm-afvikler');
+`;
+
+  // TODO: AJP - hvor skal den indsættes ?
+  document.head.append(tag);
+});
 /**
  * Initialiserer Piwik service med entry-point komponentens emits, så der kan emittes ud af leverandør-applikationen
  * uanset fra hvilket komponent niveau Piwik service kaldes fra. Bemærk dette her skal kun gøres for Composition API
@@ -55,7 +45,7 @@ piwikService.init(emit);
 
 <script lang="ts">
 import { createPinia } from 'pinia';
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 import { Bruger } from '../models/bruger.model';
 import { Variant } from '../models/variant.model';
 import API from './API.vue';
@@ -76,21 +66,7 @@ import { DataEvents, piwikService } from '@erst-vg/piwik-event-wrapper';
 
 export default defineComponent({
   name: 'Applikation',
-  components: {
-    SvgIcons,
-    CustomMultiselect,
-    StateComponent,
-    LoginComponent,
-    LoginDemo,
-    Navigation,
-    ParameterVariant,
-    Responsive,
-    Icons,
-    DKFDSComponent,
-    DataCollector,
-    ExternalAPI,
-    API
-  },
+  components: {},
   provide() {
     const pinia = createPinia();
     return {
