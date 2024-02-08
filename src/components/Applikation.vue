@@ -1,7 +1,6 @@
 <!-- Indgangspunktet for sandkasse-applikationen. Direkte og indirekte importering af komponenter og stylesheets i denne klasse vil blive inkluderet i den endelig applikation. -->
 <template>
   <div class="applikation-container">
-    Testing ...
     <div id="gm-afvikler" />
   </div>
 </template>
@@ -16,15 +15,22 @@ const emit = defineEmits([
   DataEvents.SLUT_EVENT
 ]);
 
-onMounted(() => {
+import { opretAfvikler } from './afvikler.js';
+console.log('XXX ', opretAfvikler);
+
+onMounted(async () => {
   const tag = document.createElement('script');
-  //tag.setAttribute('src', 'https://virk.dk/static/gm/1.3.87/afvikler.js');
+
+  const afvikler = await opretAfvikler({
+    rejse: 'hablxkz1122s'
+  });
+  afvikler.mount('#gm-afvikler');
+
+  return;
   tag.setAttribute('type', 'text/javascript');
   tag.type = 'module';
   tag.text = `
-  console.log("xTesting ...");
-  import { opretAfvikler } from 'https://virk.dk/static/gm/1.3.87/afvikler.js';
-  console.log("opretAfvikler ",opretAfvikler);
+  import { opretAfvikler } from 'http://localhost:8084/afvikler.js';
   const afvikler = await opretAfvikler({
     rejse: 'hablxkz1122s'
   })
@@ -32,7 +38,7 @@ onMounted(() => {
 `;
 
   // TODO: AJP - hvor skal den indsættes ?
-  document.head.append(tag);
+  document.querySelector('.applikation-container')!.append(tag);
 });
 /**
  * Initialiserer Piwik service med entry-point komponentens emits, så der kan emittes ud af leverandør-applikationen
@@ -147,4 +153,7 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 @import '../styles/components/_applikation.scss';
+</style>
+<style lang="scss">
+@import '../styles/components/virk.scss';
 </style>
