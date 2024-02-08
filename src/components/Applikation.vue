@@ -25,6 +25,25 @@ onMounted(async () => {
     }
   });
   afvikler.mount('#gm-afvikler');
+
+  // XXX: AJP - quick and dirty håndtering af modificering af DOM - bør laves med MutationObserver eller lign. så man undgår setInterval. Alternativt skal den ikke lytte hele tiden (stop når den har lavet modifikationen)
+  setInterval(() => {
+    document.querySelectorAll('button').forEach(b => {
+      const classList = b.classList;
+      if (classList.contains('gm-knap')) {
+        classList.add('button');
+        classList.add('button-primary');
+        classList.remove('gm-knap');
+        classList.remove('gm-primary');
+      }
+    });
+
+    const opsummering = document.querySelector('.gm-opsummeringsside');
+    if (opsummering) {
+      console.log('Skip opsummering!');
+      (document.querySelectorAll('.gm-navigation .button-primary')[0]! as HTMLButtonElement).click();
+    }
+  }, 1);
 });
 /**
  * Initialiserer Piwik service med entry-point komponentens emits, så der kan emittes ud af leverandør-applikationen
@@ -108,6 +127,42 @@ export default defineComponent({
   unmounted() {
     window.removeEventListener('hashchange', this.updateStepFromHash);
   },
+  mounted() {
+    // Select the node that will be observed for mutations
+    var targetNode = document.querySelector('.applikation-container');
+
+    // Options for the observer (which mutations to observe)
+    var config = {
+      attributes: true,
+      subtree: true
+    };
+
+    // Callback function to execute when mutations are observed
+    var callback = function (mutationsList: any) {
+      for (var mutation of mutationsList) {
+        if (mutation.type == 'attributes') {
+          if (mutation.attributeName === 'tabindex') {
+            document.querySelectorAll('button').forEach(b => {
+              const classList = b.classList;
+              classList.add('button');
+              classList.add('button-primary');
+              classList.remove('gm-knap');
+              classList.remove('gm-primary');
+            });
+          }
+        }
+      }
+    };
+
+    // Create an observer instance linked to the callback function
+    var observer = new MutationObserver(callback);
+
+    // Start observing the target node for configured mutations
+    //observer.observe(targetNode!, config);
+
+    // Later, you can stop observing
+    //observer.disconnect();
+  },
   methods: {
     decreaseStep() {
       if (window.location.hash !== '#1') {
@@ -140,8 +195,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import '../styles/components/_applikation.scss';
 </style>
-<!--
 <style lang="scss">
 @import '../styles/components/virk.scss';
 </style>
--->
