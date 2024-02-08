@@ -15,30 +15,16 @@ const emit = defineEmits([
   DataEvents.SLUT_EVENT
 ]);
 
-import { opretAfvikler } from './afvikler.js';
-console.log('XXX ', opretAfvikler);
+import { opretAfvikler } from '../../public/script/afvikler.js';
 
 onMounted(async () => {
-  const tag = document.createElement('script');
-
   const afvikler = await opretAfvikler({
-    rejse: 'hablxkz1122s'
+    rejse: 'hablxkz1122s',
+    authCallback(requestLogin = false) {
+      return null;
+    }
   });
   afvikler.mount('#gm-afvikler');
-
-  return;
-  tag.setAttribute('type', 'text/javascript');
-  tag.type = 'module';
-  tag.text = `
-  import { opretAfvikler } from 'http://localhost:8084/afvikler.js';
-  const afvikler = await opretAfvikler({
-    rejse: 'hablxkz1122s'
-  })
-  afvikler.mount('#gm-afvikler');
-`;
-
-  // TODO: AJP - hvor skal den indsættes ?
-  document.querySelector('.applikation-container')!.append(tag);
 });
 /**
  * Initialiserer Piwik service med entry-point komponentens emits, så der kan emittes ud af leverandør-applikationen
@@ -154,6 +140,8 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import '../styles/components/_applikation.scss';
 </style>
+<!--
 <style lang="scss">
 @import '../styles/components/virk.scss';
 </style>
+-->
