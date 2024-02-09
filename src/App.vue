@@ -71,12 +71,12 @@ export default {
       token: '',
       modal: null,
       variant: {
-        navn: 'blå',
+        navn: 'rejse',
         aktiv: true,
         parametre: [
           {
-            parameternavn: 'farve',
-            parametervaerdi: 'skyBlue'
+            parameternavn: 'slug',
+            parametervaerdi: 'hablxkz1122s'
           }
         ]
       }

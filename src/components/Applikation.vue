@@ -7,6 +7,7 @@
 
 <!-- Script setup blok for Composition API -->
 <script setup lang="ts">
+import { opretAfvikler } from '../../public/script/afvikler.js';
 const emit = defineEmits([
   DataEvents.PAGE_VIEW,
   DataEvents.DOWNLOAD_EVENT,
@@ -15,44 +16,6 @@ const emit = defineEmits([
   DataEvents.SLUT_EVENT
 ]);
 
-import { opretAfvikler } from '../../public/script/afvikler.js';
-
-onMounted(async () => {
-  const afvikler = await opretAfvikler({
-    rejse: 'hablxkz1122s',
-    authCallback(requestLogin = false) {
-      return null;
-    }
-  });
-  afvikler.mount('#gm-afvikler');
-
-  // XXX: AJP - quick and dirty håndtering af modificering af DOM - bør laves med MutationObserver eller lign. så man undgår setInterval. Alternativt skal den ikke lytte hele tiden (stop når den har lavet modifikationen)
-  setInterval(() => {
-    document.querySelectorAll('.gm-knap').forEach(b => {
-      const classList = b.classList;
-      if (classList.contains('gm-knap')) {
-        classList.add('button');
-        classList.add('button-primary');
-        classList.remove('gm-knap');
-        classList.remove('gm-primary');
-      }
-    });
-
-    document.querySelectorAll('a.gm-handlings-link').forEach(l => {
-      const classList = l.classList;
-      classList.add('button');
-      classList.add('button-secondary');
-      classList.remove('gm-knap');
-      classList.remove('gm-primary');
-    });
-
-    const opsummering = document.querySelector('.gm-opsummeringsside');
-    if (opsummering) {
-      console.log('Skip opsummering!');
-      (document.querySelectorAll('.gm-navigation .button-primary')[0]! as HTMLButtonElement).click();
-    }
-  }, 1);
-});
 /**
  * Initialiserer Piwik service med entry-point komponentens emits, så der kan emittes ud af leverandør-applikationen
  * uanset fra hvilket komponent niveau Piwik service kaldes fra. Bemærk dette her skal kun gøres for Composition API
@@ -64,7 +27,7 @@ piwikService.init(emit);
 
 <script lang="ts">
 import { createPinia } from 'pinia';
-import { defineComponent, onMounted } from 'vue';
+import { computed, defineComponent, onMounted } from 'vue';
 import { Bruger } from '../models/bruger.model';
 import { Variant } from '../models/variant.model';
 import API from './API.vue';
@@ -135,7 +98,44 @@ export default defineComponent({
   unmounted() {
     window.removeEventListener('hashchange', this.updateStepFromHash);
   },
-  mounted() {
+  async mounted() {
+    const { opretAfvikler } = require('../../public/script/afvikler.js');
+    const afvikler = await opretAfvikler({
+      rejse: this.variant?.parametre[0].parametervaerdi ?? 'foobar',
+      authCallback(requestLogin = false) {
+        return null;
+      }
+    });
+    afvikler.mount('#gm-afvikler');
+
+    // XXX: AJP - quick and dirty håndtering af modificering af DOM - bør laves med MutationObserver eller lign. så man undgår setInterval. Alternativt skal den ikke lytte hele tiden (stop når den har lavet modifikationen)
+    setInterval(() => {
+      document.querySelectorAll('.gm-knap').forEach(b => {
+        const classList = b.classList;
+        if (classList.contains('gm-knap')) {
+          classList.add('button');
+          classList.add('button-primary');
+          classList.remove('gm-knap');
+          classList.remove('gm-primary');
+        }
+      });
+
+      document.querySelectorAll('a.gm-handlings-link').forEach(l => {
+        const classList = l.classList;
+        classList.add('button');
+        classList.add('button-secondary');
+        classList.remove('gm-knap');
+        classList.remove('gm-primary');
+      });
+
+      const opsummering = document.querySelector('.gm-opsummeringsside');
+      if (opsummering) {
+        console.log('Skip opsummering!');
+        (document.querySelectorAll('.gm-navigation .button-primary')[0]! as HTMLButtonElement).click();
+      }
+    }, 1);
+
+    return;
     // Select the node that will be observed for mutations
     var targetNode = document.querySelector('.applikation-container');
 
