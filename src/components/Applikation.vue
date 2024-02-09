@@ -28,7 +28,7 @@ onMounted(async () => {
 
   // XXX: AJP - quick and dirty håndtering af modificering af DOM - bør laves med MutationObserver eller lign. så man undgår setInterval. Alternativt skal den ikke lytte hele tiden (stop når den har lavet modifikationen)
   setInterval(() => {
-    document.querySelectorAll('button').forEach(b => {
+    document.querySelectorAll('.gm-knap').forEach(b => {
       const classList = b.classList;
       if (classList.contains('gm-knap')) {
         classList.add('button');
@@ -36,6 +36,14 @@ onMounted(async () => {
         classList.remove('gm-knap');
         classList.remove('gm-primary');
       }
+    });
+
+    document.querySelectorAll('a.gm-handlings-link').forEach(l => {
+      const classList = l.classList;
+      classList.add('button');
+      classList.add('button-secondary');
+      classList.remove('gm-knap');
+      classList.remove('gm-primary');
     });
 
     const opsummering = document.querySelector('.gm-opsummeringsside');
@@ -194,6 +202,18 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 @import '../styles/components/_applikation.scss';
+:deep() {
+  .gm-navigation {
+    flex-direction: row;
+  }
+  .gm-afvikler {
+    font-size: 14px;
+  }
+  .gm-handlings-link {
+    display: flex;
+    max-width: fit-content;
+  }
+}
 </style>
 <style lang="scss">
 @import '../styles/components/virk.scss';
