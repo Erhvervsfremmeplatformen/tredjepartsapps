@@ -8,7 +8,6 @@
     </div>
     <div class="alert alert-info">
       <div class="alert-body">
-        <p class="alert-heading">Mode</p>
         <div class="alert-text">
           <div v-if="isVirksomhedsguiden">Applikationen kører inden i Virksomhedsguiden</div>
           <div v-else>Applikationen kører udenfor Virksomhedsguiden</div>
