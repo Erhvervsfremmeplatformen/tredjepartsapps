@@ -7,13 +7,6 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-  name: 'Responsive'
-});
-</script>
 <style lang="scss" scoped>
 @import '../styles/components/_responsive.scss';
 </style>

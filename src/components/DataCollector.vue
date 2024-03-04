@@ -26,16 +26,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { defineComponent } from 'vue';
 import { piwikService } from '@erst-vg/piwik-event-wrapper';
-
-export default defineComponent({
-  name: 'DataCollector',
-  data() {
-    return {
-      piwikService
-    };
-  }
-});
 </script>

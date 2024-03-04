@@ -118,7 +118,6 @@ export default {
       this.modal.show();
     }
   },
-  created() {},
   methods: {
     // Brugeren har accepteret rumlerille modal og leverandør-applikation modtager en JWT token
     accept() {

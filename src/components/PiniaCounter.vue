@@ -11,21 +11,20 @@
   </div>
 </template>
 
-<script lang="ts">
-import { mapState } from 'pinia';
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
 import { useCounterStore } from '../stores/counter';
+import { createPinia, setActivePinia } from 'pinia';
+import { computed } from 'vue';
+
+const counterStore = useCounterStore();
+setActivePinia(createPinia());
+const counter = computed(() => counterStore.counter);
+</script>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'PiniaCounter',
-  // Får Pinia instansen fra 'src/components/Applikation.vue' via provide/inject pattern
-  inject: ['pinia'],
-  computed: {
-    ...mapState(useCounterStore, ['counter'])
-  },
-  created() {
-    // Da Pinia store ikke registreres globalt, skal dette gøres i hvert komponent, som skal tilgå stores
-    this.$pinia = this.pinia;
-  },
   methods: {
     componentPath() {
       /* eslint no-underscore-dangle: ["error", { "allow": ["__file"] }]*/

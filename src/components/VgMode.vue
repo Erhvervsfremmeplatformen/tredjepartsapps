@@ -18,18 +18,13 @@
   </div>
 </template>
 
-<script lang="ts">
-import { TokenStatus } from '../enums/tokenStatus.enum';
-import { defineComponent } from 'vue';
-import { Bruger } from '../models/bruger.model';
+<script setup lang="ts">
+import { ref } from 'vue';
 
-export default defineComponent({
-  name: 'VgMode',
-  props: {
-    isVirksomhedsguiden: {
-      type: Boolean,
-      required: true
-    }
+const props = defineProps({
+  isVirksomhedsguiden: {
+    type: Boolean,
+    required: true
   }
 });
 </script>

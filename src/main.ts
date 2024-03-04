@@ -4,4 +4,16 @@ import 'dkfds/dist/css/dkfds.min.css';
 import { createApp } from 'vue';
 import App from './App.vue';
 const app = createApp(App);
+
+/**
+ * Sørg for specifik Pinia fejl ikke vises ved hvert tekstnøgle opslag.
+ * Bemærk konsollen vil dog stadig vise denne fejl når den transpileret version af applikationen afvikles, men kun i build mode *
+ */
+app.config.warnHandler = (msg, _, trace) => {
+  if (!['injection "Symbol(pinia)" not found.'].some(warning => msg.includes(warning))) {
+    // eslint-disable-next-line no-console
+    console.warn('[Vue warn]: '.concat(msg).concat(trace));
+  }
+};
+
 app.mount('#app');

@@ -9,7 +9,6 @@
       tekniske vejledning og design-vejledningen, som er blevet udleveret, for yderligere information.
     </div>
     <VgMode :is-virksomhedsguiden="isVirksomhedsguiden" />
-    <API />
     <SvgIcons />
     <hr />
     <LoginDemo :token="token" :bruger="bruger" :is-logged-in="isLoggedIn" @requestToken="$emit('requestToken')" />
@@ -38,28 +37,10 @@
 
 <!-- Script setup blok for Composition API -->
 <script setup lang="ts">
-const emit = defineEmits([
-  DataEvents.PAGE_VIEW,
-  DataEvents.DOWNLOAD_EVENT,
-  DataEvents.CTA_CLICK_EVENT,
-  DataEvents.START_EVENT,
-  DataEvents.SLUT_EVENT
-]);
-/**
- * Initialiserer Piwik service med entry-point komponentens emits, så der kan emittes ud af leverandør-applikationen
- * uanset fra hvilket komponent niveau Piwik service kaldes fra. Bemærk dette her skal kun gøres for Composition API
- *
- * Se created lifecycle hook for hvordan det håndteres for Options API
- */
-piwikService.init(emit);
-</script>
-
-<script lang="ts">
 import { createPinia } from 'pinia';
-import { defineComponent } from 'vue';
+import { ref, onUnmounted } from 'vue';
 import { Bruger } from '../models/bruger.model';
 import { Variant } from '../models/variant.model';
-import API from './API.vue';
 import CustomMultiselect from './CustomMultiselect.vue';
 import DataCollector from './DataCollector.vue';
 import DKFDSComponent from './DKFDSComponent.vue';
@@ -76,106 +57,85 @@ import SvgIcons from './SvgIcons.vue';
 import * as slugUtil from '../utils/slug.util';
 import { DataEvents, piwikService } from '@erst-vg/piwik-event-wrapper';
 
-export default defineComponent({
-  name: 'Applikation',
-  components: {
-    SvgIcons,
-    CustomMultiselect,
-    StateComponent,
-    LoginComponent,
-    VgMode,
-    LoginDemo,
-    Navigation,
-    ParameterVariant,
-    Responsive,
-    Icons,
-    DKFDSComponent,
-    DataCollector,
-    ExternalAPI,
-    API
+const props = defineProps({
+  variant: {
+    type: Object as () => Variant,
+    default: null,
+    required: false
   },
-  provide() {
-    const pinia = createPinia();
-    return {
-      pinia
-    };
+  token: {
+    type: String,
+    default: '',
+    required: false
   },
-  props: {
-    variant: {
-      type: Object as () => Variant,
-      default: null,
-      required: false
-    },
-    token: {
-      type: String,
-      default: '',
-      required: false
-    },
-    isLoggedIn: {
-      type: Boolean,
-      default: false,
-      required: false
-    },
-    bruger: {
-      type: Object as () => Bruger,
-      default: null,
-      required: false
-    },
-    isVirksomhedsguiden: {
-      type: Boolean,
-      default: true
-    }
+  isLoggedIn: {
+    type: Boolean,
+    default: false,
+    required: false
   },
-  emits: [DataEvents.PAGE_VIEW, DataEvents.DOWNLOAD_EVENT, DataEvents.CTA_CLICK_EVENT, DataEvents.START_EVENT, DataEvents.SLUT_EVENT],
-  data() {
-    return {
-      step: 1,
-      maxStep: 3
-    };
+  bruger: {
+    type: Object as () => Bruger,
+    default: null,
+    required: false
   },
-  created() {
-    /**
-     * Initialiserer Piwik service med entry-point komponentens emits, så der kan emittes ud af leverandør-applikationen
-     * uanset fra hvilket komponent niveau Piwik service kaldes fra. Bemærk dette her skal kun gøres for Options API
-     *
-     * Se script setup blokken for hvordan det håndteres for Composition API
-     */
-    piwikService.init(this.$emit);
-    window.location.hash = '1';
-    window.addEventListener('hashchange', this.updateStepFromHash);
-  },
-  unmounted() {
-    window.removeEventListener('hashchange', this.updateStepFromHash);
-  },
-  methods: {
-    decreaseStep() {
-      if (window.location.hash !== '#1') {
-        const { hash } = window.location;
-        const previousHash = String(parseInt(this.removeHash(hash), 10) - 1);
-        window.location.hash = slugUtil.slugify(previousHash);
-      }
-    },
-    increaseStep() {
-      if (window.location.hash !== '#' + this.maxStep) {
-        const { hash } = window.location;
-        const previousHash = String(parseInt(this.removeHash(hash), 10) + 1);
-        window.location.hash = slugUtil.slugify(previousHash);
-      }
-    },
-    updateStepFromHash() {
-      const { hash } = window.location;
-      this.step = hash ? parseInt(this.removeHash(hash), 10) : 1;
-      piwikService.emitPageViewEvent();
-    },
-    removeHash(hash: string) {
-      return hash.replaceAll('#', '');
-    },
-    emitRequestToken() {
-      this.$emit('requestToken');
-    }
+  isVirksomhedsguiden: {
+    type: Boolean,
+    default: true
   }
 });
+
+const emit = defineEmits([
+  DataEvents.PAGE_VIEW,
+  DataEvents.DOWNLOAD_EVENT,
+  DataEvents.CTA_CLICK_EVENT,
+  DataEvents.START_EVENT,
+  DataEvents.SLUT_EVENT
+]);
+
+const step = ref(1);
+const maxStep = ref(3);
+/**
+ * Initialiserer Piwik service med entry-point komponentens emits, så der kan emittes ud af leverandør-applikationen
+ * uanset fra hvilket komponent niveau Piwik service kaldes
+ */
+piwikService.init(emit);
+
+onUnmounted(() => {
+  window.removeEventListener('hashchange', updateStepFromHash);
+});
+
+const decreaseStep = () => {
+  if (window.location.hash !== '#1') {
+    const { hash } = window.location;
+    const previousHash = String(parseInt(removeHash(hash), 10) - 1);
+    window.location.hash = slugUtil.slugify(previousHash);
+  }
+};
+
+const increaseStep = () => {
+  if (window.location.hash !== '#' + maxStep.value) {
+    const { hash } = window.location;
+    const previousHash = String(parseInt(removeHash(hash), 10) + 1);
+    window.location.hash = slugUtil.slugify(previousHash);
+  }
+};
+
+const updateStepFromHash = () => {
+  const { hash } = window.location;
+  step.value = hash ? parseInt(removeHash(hash), 10) : 1;
+  piwikService.emitPageViewEvent();
+};
+
+const removeHash = (hash: string) => hash.replaceAll('#', '');
+
+const emitRequestToken = () => {
+  emit('requestToken');
+};
+
+window.location.hash = '1';
+window.addEventListener('hashchange', updateStepFromHash);
 </script>
+
 <style lang="scss" scoped>
 @import '../styles/components/_applikation.scss';
 </style>

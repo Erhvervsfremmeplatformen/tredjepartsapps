@@ -41,32 +41,21 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import * as slugUtil from '../utils/slug.util';
 
-export default defineComponent({
-  name: 'Navigation',
-  props: {
-    step: {
-      type: Number,
-      required: true
-    },
-    maxStep: {
-      type: Number,
-      required: true
-    }
+const props = defineProps({
+  step: {
+    type: Number,
+    required: true
   },
-  emits: ['decreaseStep', 'increaseStep'],
-  data() {
-    return {
-      langHash: 'flere ord med specielle karakterer kødpålæg!'
-    };
-  },
-  methods: {
-    slugify() {
-      return slugUtil.slugify(this.langHash);
-    }
+  maxStep: {
+    type: Number,
+    required: true
   }
 });
+const emits = defineEmits(['decreaseStep', 'increaseStep']);
+const langHash = 'flere ord med specielle karakterer kødpålæg!';
+
+const slugify = () => slugUtil.slugify(langHash);
 </script>

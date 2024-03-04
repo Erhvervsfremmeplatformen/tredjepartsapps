@@ -1,6 +1,7 @@
 <template>
   <div>
     <h2 class="mt-5">Det Fælles Designsystem (DKFDS)</h2>
+    <!--
     <div>Applikationen skal bygges op vha. <a href="https://designsystem.dk/kode/implementering/" target="_blank">DKFDS</a></div>
     <h4>Layout:</h4>
     <div class="row">
@@ -36,17 +37,15 @@
         står side om side.
       </div>
     </div>
+    -->
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import * as DKFDS from 'dkfds';
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 
-export default defineComponent({
-  name: 'DKFDSComponent',
-  mounted() {
-    new DKFDS.Accordion(document.getElementById('accordion-element')).init();
-  }
+onMounted(() => {
+  //new DKFDS.Accordion(document.getElementById('accordion-element')).init();
 });
 </script>

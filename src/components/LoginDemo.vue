@@ -46,34 +46,25 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { TokenStatus } from '../enums/tokenStatus.enum';
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { Bruger } from '../models/bruger.model';
 
-export default defineComponent({
-  name: 'LoginDemo',
-  props: {
-    token: {
-      type: String,
-      default: '',
-      required: false
-    },
-    isLoggedIn: {
-      type: Boolean,
-      default: false,
-      required: false
-    },
-    bruger: {
-      type: Object as () => Bruger,
-      default: null,
-      required: false
-    }
+const props = defineProps({
+  token: {
+    type: String,
+    default: ''
   },
-  computed: {
-    isTokenRequestCancelled() {
-      return this.token === TokenStatus.CANCELLED;
-    }
+  isLoggedIn: {
+    type: Boolean,
+    default: false
+  },
+  bruger: {
+    type: Object as () => Bruger,
+    default: null
   }
 });
+
+const isTokenRequestCancelled = computed(() => props.token === TokenStatus.CANCELLED);
 </script>

@@ -13,26 +13,18 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { Variant } from 'src/models/variant.model';
-import { defineComponent } from 'vue';
-export default defineComponent({
-  name: 'ParameterVariant',
-  props: {
-    variant: {
-      type: Object as () => Variant,
-      default: null,
-      required: false
-    }
-  },
-  computed: {
-    variantColor: function () {
-      return this.variant?.parametre[0].parametervaerdi ?? '#C0C0C0';
-    },
-    variantName: function () {
-      return this.variant?.navn ?? 'default';
-    }
-  },
-  methods: {}
+import { computed } from 'vue';
+
+const props = defineProps({
+  variant: {
+    type: Object as () => Variant,
+    default: null,
+    required: false
+  }
 });
+
+const variantColor = computed(() => props.variant?.parametre[0].parametervaerdi ?? '#C0C0C0');
+const variantName = computed(() => props.variant?.navn ?? 'default');
 </script>

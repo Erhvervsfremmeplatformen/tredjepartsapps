@@ -12,20 +12,11 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { ref } from 'vue';
 import multiselect from 'vue-multiselect';
-
-export default defineComponent({
-  name: 'CustomMultiselect',
-  components: { multiselect },
-  data() {
-    return {
-      value: null,
-      options: ['Danmark', 'Sverige', 'Norge']
-    };
-  }
-});
+const value = ref(null);
+const options = ['Danmark', 'Sverige', 'Norge'];
 </script>
 
 <style lang="scss" scoped>
