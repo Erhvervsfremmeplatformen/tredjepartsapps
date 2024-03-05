@@ -1,5 +1,7 @@
 # Demo leverandør-applikation
 
+Denne applikation kan bruges som skabelon til udvikling af leverandør-applikation, der kan integreres i Virksomhedsguiden som Vue 3 komponenter.
+
 ## Initial
 Installér NPM afhængigheder
 ```

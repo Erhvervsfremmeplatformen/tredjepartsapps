@@ -2,8 +2,8 @@
   <div>
     <h2 class="mt-5">Parameter-variant:</h2>
     <div>
-      Eksempel på brug af variant parameter, som udenfor leverandør-applikationen specificeres som Vue property fra Virksomhedsguiden. Her angives
-      varianten i <strong>src/App.vue</strong> for at have en effekt.
+      Eksempel på brug af variant parameter, der specificeres som Vue property fra Virksomhedsguiden. For denne applikation angives varianten bare i
+      <strong>src/App.vue</strong> for at have en effekt.
     </div>
     <pre>{{ variant }}</pre>
     <div class="py-5 align-text-center" :style="{ 'background-color': variantColor }">
