@@ -1,57 +1,42 @@
 <!-- Indgangspunktet for leverandør-applikationen. Direkte og indirekte importering af komponenter og stylesheets i denne klasse vil blive inkluderet i den endelig applikation. -->
 <template>
-  <div class="applikation-container">
-    <SvgIcons />
-    <h1>Demo leverandør-applikation</h1>
-    <div class="my-5">
-      Denne applikation kan bruges som skabelon til udvikling af leverandør-applikation, der kan integreres i
-      <a href="https://www.virksomhedsguiden.dk" target="_blank">Virksomhedsguiden</a> som Vue 3 komponenter. Siden indeholder desuden teknisk
-      information om forskellige aspekter af en leverandør-applikation. Se <strong>README.md</strong> for instruktioner. Der henvises desuden til den
-      tekniske vejledning og design-vejledningen, som er blevet udleveret, for yderligere information.
-    </div>
-    <hr />
-    <VgMode :is-virksomhedsguiden="isVirksomhedsguiden" />
-    <hr />
-    <LoginDemo :token="token" :bruger="bruger" :is-logged-in="isLoggedIn" @requestToken="$emit('requestToken')" />
-    <hr />
-    <Navigation :step="step" :max-step="maxStep" @decreaseStep="decreaseStep" @increaseStep="increaseStep" />
-    <hr />
-    <LoginComponent />
-    <hr />
-    <ExternalAPI />
-    <hr />
-    <ParameterVariant :variant="variant" />
-    <hr />
-    <Responsive />
-    <hr />
-    <Icons />
-    <hr />
-    <DKFDSComponent />
-    <hr />
-    <CustomMultiselect />
-    <hr />
-    <StateComponent />
-    <hr />
-    <DataCollector />
-    <footer>
-      <div class="footer">
-        <div class="container">
-          <ul class="align-text-left unstyled-list inline-list">
-            <li class=""><strong class="weight-semibold">Erhvervsstyrelsen</strong></li>
-            <li class="">
-              <a href="mailto:support@myndighed.dk" class="function-link" title="Skriv til Erhvervsstyrelsen">support@erst.dk</a>
-            </li>
-            <li class=""><a href="tel:+4512345678" class="function-link" title="Ring til Digitaliseringsstyrelsen">(+45) 12 34 56 78</a></li>
-            <li class="d-print-none">
-              <a href="#" class="function-link icon-link"
-                >Tilgængelighedserklæring<svg class="icon-svg" focusable="false" aria-hidden="true"><use xlink:href="#open-in-new"></use></svg
-              ></a>
-            </li>
-            <li class="d-print-none"><a href="#" class="function-link">Privatlivspolitik (cookies)</a></li>
-          </ul>
-        </div>
+  <div class="row">
+    <div class="col-12 col-md-10">
+      <div class="applikation-container">
+        <SvgIcons />
+        <h1>Demo leverandør-applikation</h1>
+        <p class="my-5">
+          Denne applikation kan bruges som skabelon til udvikling af leverandør-applikation, der kan integreres i
+          <a href="https://www.virksomhedsguiden.dk" target="_blank">Virksomhedsguiden</a> som Vue 3 komponenter. Siden indeholder desuden teknisk
+          information om forskellige aspekter af en leverandør-applikation. Se <strong>README.md</strong> for instruktioner. Der henvises desuden til
+          den tekniske vejledning og design-vejledningen, som er blevet udleveret, for yderligere information.
+        </p>
+        <hr />
+        <VgMode :is-virksomhedsguiden="isVirksomhedsguiden" />
+        <hr />
+        <LoginDemo :token="token" :bruger="bruger" :is-logged-in="isLoggedIn" @requestToken="$emit('requestToken')" />
+        <hr />
+        <Navigation :step="step" :max-step="maxStep" @decreaseStep="decreaseStep" @increaseStep="increaseStep" />
+        <hr />
+        <LoginComponent />
+        <hr />
+        <ExternalAPI />
+        <hr />
+        <ParameterVariant :variant="variant" />
+        <hr />
+        <Responsive />
+        <hr />
+        <Icons />
+        <hr />
+        <DKFDSComponent />
+        <hr />
+        <CustomMultiselect />
+        <hr />
+        <StateComponent />
+        <hr />
+        <DataCollector />
       </div>
-    </footer>
+    </div>
   </div>
 </template>
 

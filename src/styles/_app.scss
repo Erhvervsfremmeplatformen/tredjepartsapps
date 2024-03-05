@@ -1,3 +1,7 @@
-.app-body{
+.app-body {
   min-height: 100vh;
+
+  :deep(p) {
+    max-width: 100%;
+  }
 }
