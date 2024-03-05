@@ -42,7 +42,7 @@
 
 <script setup lang="ts">
 import { createPinia } from 'pinia';
-import { ref, onUnmounted } from 'vue';
+import { ref, onUnmounted, onMounted } from 'vue';
 import { Bruger } from '../models/bruger.model';
 import { Variant } from '../models/variant.model';
 import CustomMultiselect from './CustomMultiselect.vue';
@@ -58,6 +58,7 @@ import ParameterVariant from './ParameterVariant.vue';
 import Responsive from './Responsive.vue';
 import StateComponent from './StateComponent.vue';
 import SvgIcons from './SvgIcons.vue';
+import { tekstService } from '../services/tekst.service';
 import * as slugUtil from '../utils/slug.util';
 import { DataEvents, piwikService } from '@erst-vg/piwik-event-wrapper';
 
@@ -103,6 +104,11 @@ const maxStep = ref(3);
  * uanset fra hvilket komponent niveau Piwik service kaldes
  */
 piwikService.init(emit);
+
+onMounted(async () => {
+  const data = await tekstService.hentTekster();
+  console.log('## Data ', data);
+});
 
 onUnmounted(() => {
   window.removeEventListener('hashchange', updateStepFromHash);
