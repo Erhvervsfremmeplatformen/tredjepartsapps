@@ -1,6 +1,6 @@
 <!-- Indgangspunktet for sandkasse-applikationen. Direkte og indirekte importering af komponenter og stylesheets i denne klasse vil blive inkluderet i den endelig applikation. -->
 <template>
-  <div class="applikation-container">
+  <div class="applikation-container vg-app-container">
     <div class="row">
       <div class="col-lg-8">
         <h1>Leverandør-applikation Sandkasse Miljø</h1>
