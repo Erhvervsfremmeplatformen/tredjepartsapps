@@ -48,7 +48,7 @@
 
 <script setup lang="ts">
 import { TokenStatus } from '../enums/tokenStatus.enum';
-import { computed, defineComponent } from 'vue';
+import { computed } from 'vue';
 import { Bruger } from '../models/bruger.model';
 
 const props = defineProps({

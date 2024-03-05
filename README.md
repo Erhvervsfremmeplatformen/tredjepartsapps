@@ -1,4 +1,4 @@
-# Leverandør-applikation sandkasse
+# Demo leverandør-applikation
 
 ## Initial
 Installér NPM afhængigheder

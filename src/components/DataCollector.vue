@@ -3,8 +3,15 @@
     <h2 class="mt-5">Data-opsamling</h2>
     Virksomhedsguiden opsamler data vedr. brugerens adfærd. Det er leverandørens ansvar at der også opsamles relevant data i leverandør-applikationen.
     Følgende er en liste af events, som leverandør-applikationen skal kalde i forskellige scenarier. Service <strong>piwikService</strong> fra
-    <strong>@erst-vg/piwik-event-wrapper</strong> bruges til at kalde de tilgængelige data funktioner. Det er vigtigt piwikService først initialiseres
-    i entry point komponenten <strong>src/components/Applikation.vue</strong>.
+    <strong>@erst-vg/piwik-event-wrapper</strong> bruges til at kalde de tilgængelige data funktioner.
+
+    <div class="alert alert-info">
+      <div class="alert-body">
+        <p class="alert-text">
+          Det er vigtigt piwikService først initialiseres i entry point komponenten <strong>src/components/Applikation.vue</strong>.
+        </p>
+      </div>
+    </div>
 
     <h4>AppDownload</h4>
     <div class="my-5">Dette event bruges ved tryk på en download-knap eller tilsvarende.</div>
@@ -27,6 +34,5 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent } from 'vue';
 import { piwikService } from '@erst-vg/piwik-event-wrapper';
 </script>

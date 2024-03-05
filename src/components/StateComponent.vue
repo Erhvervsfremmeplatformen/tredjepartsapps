@@ -25,6 +25,7 @@ import { useCounterStore } from '../stores/counter';
 import { createPinia, setActivePinia } from 'pinia';
 import PiniaCounter from './PiniaCounter.vue';
 import VuexCounter from './VuexCounter.vue';
+
 setActivePinia(createPinia());
 const counterStore = useCounterStore();
 const incrementPinia = () => counterStore.incrementPinia();

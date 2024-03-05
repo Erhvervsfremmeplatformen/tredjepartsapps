@@ -4,7 +4,7 @@
     <h2 class="mt-5">Scoped styling:</h2>
     <div>
       Det er vigtigt alt styling i leverandør-applikationen ikke påvirker Virksomhedsguiden eller andre leverandør-applikationer. Derfor skal alle
-      &lt;style&gt; tags bruge <strong>scoped</strong> attributten. Dette gælder naturligvis også stylesheets der importeres fra NPM moduler.
+      &lt;style&gt; tags bruge <strong>scoped</strong> attributten. Dette gælder naturligvis også stylesheets, der importeres fra NPM moduler.
     </div>
     <div class="custom-multiselect">
       <multiselect v-model="value" :options="options" class="mt-5" placeholder="Vælg et land"></multiselect>
