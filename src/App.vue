@@ -9,6 +9,7 @@
           :token="token"
           :bruger="bruger"
           :is-virksomhedsguiden="false"
+          :tekstnoegle-bundt-id="tekstnoegleBundtId"
           @piwikPageView="onPiwikPageView"
           @piwikDownloadEvent="onPiwikDownloadEvent"
           @piwikCTAClickEvent="onPiwikCTAClickEvent"
@@ -53,9 +54,9 @@
 <script setup lang="ts">
 // INFO: Bemærk ændringer til denne fil, vil ikke blive inkluderet i den endelige applikation
 import * as DKFDS from 'dkfds';
+import { Ref, computed, onMounted, ref } from 'vue';
 import Applikation from './components/Applikation.vue';
 import { TokenStatus } from './enums/tokenStatus.enum';
-import { ref, onMounted, computed } from 'vue';
 
 // Hash værdi som VG sætter når login flow initieres, og når leverandør-applikationen vises igen efter successfuldt login
 const HASH_LOGIN_STRING = 'login_for_app';
@@ -65,7 +66,7 @@ const DUMMY_TOKEN =
 
 const loaded = ref(false);
 const token = ref('');
-const modal = ref(null);
+const modal: Ref<DKFDSModal | undefined> = ref();
 const variant = ref({
   navn: 'blå',
   aktiv: true,
@@ -77,21 +78,24 @@ const variant = ref({
   ]
 });
 
+// TODO: AJP
+const tekstnoegleBundtId = 'foo.bar.baz';
+
 const isLoggedIn = computed(() => !!token.value && !isTokenRequestCancelled);
 
 const isTokenRequestCancelled = computed(() => token.value === TokenStatus.CANCELLED);
 
 const bruger = computed(() =>
-  isLoggedIn.value
-    ? {
+  !isLoggedIn.value
+    ? null
+    : {
         navn: 'Jens Hansen',
         organisation: 'Demo Nation',
         virksomhedsnavn: 'Business Demo',
-        cvr: 12345678,
+        cvr: '12345678',
         entityId: 'eid-CVR:12345678-RID:e4f13c3b-3c5a-459d-90a9-847ab9596157',
         roller: ['ERF_LEVERANDOER']
       }
-    : null
 );
 
 onMounted(() => {
@@ -106,41 +110,41 @@ onMounted(() => {
   // Simulér bruger er kommet tilbage efter login, og derfor skal vise rumlerille modal
   const { hash } = window.location;
   if (hash?.replaceAll('#', '') === HASH_LOGIN_STRING) {
-    modal.value.show();
+    modal.value!.show();
   }
 });
 
 // Brugeren har accepteret rumlerille modal og leverandør-applikation modtager en JWT token
 const accept = () => {
   token.value = DUMMY_TOKEN;
-  modal.value.hide();
+  modal.value!.hide();
 };
 // Brugeren har ikke accepteret rumlerille modal, så leverandør-applikation modtager en annulleret token
 const cancelTokenRequest = () => {
   token.value = TokenStatus.CANCELLED;
-  modal.value.hide();
+  modal.value!.hide();
 };
 // Dummy metoder til at teste dataopsamling events. Disse events vil blive håndteret af Virksomhedsguiden.
 const onPiwikPageView = () => {
   // eslint-disable-next-line no-console
   console.log('EVENT: page view');
 };
-const onPiwikDownloadEvent = () => {
+function onPiwikDownloadEvent() {
   // eslint-disable-next-line no-console
   console.log('EVENT: download', arguments);
-};
-const onPiwikCTAClickEvent = () => {
+}
+function onPiwikCTAClickEvent() {
   // eslint-disable-next-line no-console
   console.log('EVENT: CTA', arguments);
-};
-const handlePiwikStartEvent = () => {
+}
+function handlePiwikStartEvent() {
   // eslint-disable-next-line no-console
   console.log('EVENT: Start', arguments);
-};
-const handlePiwikSlutEvent = () => {
+}
+function handlePiwikSlutEvent() {
   // eslint-disable-next-line no-console
   console.log('EVENT: Slut', arguments);
-};
+}
 const onRequestToken = () => {
   // eslint-disable-next-line no-console
   console.log('Request token er blevet kaldt');

@@ -47,8 +47,8 @@
 </template>
 
 <script setup lang="ts">
+import { PropType, computed } from 'vue';
 import { TokenStatus } from '../enums/tokenStatus.enum';
-import { computed } from 'vue';
 import { Bruger } from '../models/bruger.model';
 
 const props = defineProps({
@@ -61,7 +61,7 @@ const props = defineProps({
     default: false
   },
   bruger: {
-    type: Object as () => Bruger,
+    type: Object as PropType<Bruger | null>,
     default: null
   }
 });

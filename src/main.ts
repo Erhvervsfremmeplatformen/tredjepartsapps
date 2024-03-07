@@ -3,6 +3,17 @@
 import 'dkfds/dist/css/dkfds.min.css';
 import { createApp } from 'vue';
 import App from './App.vue';
+
+// TODO: AJP - håndter!
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-ignore
+import makeServer from './server';
+// Mock server for standalone mode
+const useMockServer = true;
+if (useMockServer) {
+  makeServer();
+}
+
 const app = createApp(App);
 
 /**
