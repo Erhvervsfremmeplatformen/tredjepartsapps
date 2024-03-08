@@ -12,6 +12,7 @@
     "@erst-vg/bucket-json-client": "file:../../../../../erst-vg-bucket-json-client-0.0.2.tgz",
     "@erst-vg/piwik-event-wrapper": "2.0.3",
     "dkfds": "8.0.1",
+    "graphql-tag": "2.12.6",
     "miragejs": "0.1.48",
     "mitt": "3.0.0",
     "pinia": "2.0.22",
@@ -22,8 +23,8 @@
     "vuex": "4.0.2"
   },
   "devDependencies": {
-    "@babel/traverse": "7.23.2",
     "@babel/core": "7.23.9",
+    "@babel/traverse": "7.23.2",
     "@typescript-eslint/eslint-plugin": "5.38.1",
     "@typescript-eslint/eslint-plugin-tslint": "5.38.1",
     "@typescript-eslint/parser": "5.38.1",

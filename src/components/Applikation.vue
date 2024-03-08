@@ -5,6 +5,7 @@
       <div class="applikation-container">
         <SvgIcons />
         <h1>Demo leverandør-applikation</h1>
+        <StorageAPI :tekstnoegle-bundt-id="tekstnoegleBundtId" :token="token" />
         <p class="my-5">
           Denne applikation kan bruges som skabelon til udvikling af leverandør-applikation, der kan integreres i
           <a href="https://www.virksomhedsguiden.dk" target="_blank">Virksomhedsguiden</a> som Vue 3 komponenter. Siden indeholder desuden teknisk
@@ -16,7 +17,7 @@
         <hr />
         <LoginDemo :token="token" :bruger="bruger" :is-logged-in="isLoggedIn" @requestToken="$emit('requestToken')" />
         <hr />
-        <StorageAPI :tekstnoegle-bundt-id="tekstnoegleBundtId" :token="token" />
+
         <hr />
         <Navigation :step="step" :max-step="maxStep" @decreaseStep="decreaseStep" @increaseStep="increaseStep" />
         <hr />
@@ -45,7 +46,7 @@
 <script setup lang="ts">
 import { DataEvents, piwikService } from '@erst-vg/piwik-event-wrapper';
 import { DataEmits } from '@erst-vg/piwik-event-wrapper/lib/models/emits.model';
-import { PropType, onUnmounted, ref } from 'vue';
+import { PropType, onUnmounted, provide, ref } from 'vue';
 import { Bruger } from '../models/bruger.model';
 import { Variant } from '../models/variant.model';
 import * as slugUtil from '../utils/slug.util';
@@ -63,7 +64,6 @@ import StateComponent from './StateComponent.vue';
 import StorageAPI from './StorageAPI.vue';
 import SvgIcons from './SvgIcons.vue';
 import VgMode from './VgMode.vue';
-import { provide } from 'vue';
 
 const props = defineProps({
   variant: {

@@ -51,6 +51,8 @@ import { PropType, computed } from 'vue';
 import { TokenStatus } from '../enums/tokenStatus.enum';
 import { Bruger } from '../models/bruger.model';
 
+const emit = defineEmits(['requestToken']);
+
 const props = defineProps({
   token: {
     type: String,
