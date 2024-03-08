@@ -64,7 +64,8 @@
     <h4>Eksempel</h4>
     <p>
       Sålænge data kan serialiseres som JSON, er det op til leverandør-applikationen hvilke data der skal gemmes. I denne leverandør-applikation
-      anvendes Storage API til opbevaring og redigering af tekstnøgler, så det ikke kræver en ny release hver gang tekster skal ændres.
+      anvendes Storage API til opbevaring og redigering af tekstnøgler, så det ikke kræver en ny release hver gang tekster skal ændres. Dette eksempel
+      er kraftigt simplificeret, og i en realistisk version ville redigeringsknappen ofte være skjult bag et rolle tjek.
     </p>
 
     <div v-if="data" class="my-5 d-flex align-items-center">
@@ -113,7 +114,7 @@ const error = ref(false);
 const redigeringsmode = ref(false);
 
 const accessToken = computed(() => (isVirksomhedsguiden ? props.token : DEMO_ACCESS_TOKEN));
-const tekstFromTekstnoegle = computed(() => (data.value?.tekster.faelles as Tekster)?.eksempel);
+const tekstFromTekstnoegle = computed(() => (data.value?.tekster?.faelles as Tekster)?.eksempel);
 
 // Henter JSON data fra Storage API igennem bucketClientService
 const hentData = async () => {

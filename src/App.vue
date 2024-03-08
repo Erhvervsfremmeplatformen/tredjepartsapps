@@ -77,8 +77,7 @@ const variant = ref({
   ]
 });
 
-const isLoggedIn = computed(() => !!token.value && !isTokenRequestCancelled);
-
+const isLoggedIn = computed(() => !!token.value && !isTokenRequestCancelled.value);
 const isTokenRequestCancelled = computed(() => token.value === TokenStatus.CANCELLED);
 
 const bruger = computed(() =>
@@ -114,6 +113,7 @@ onMounted(() => {
 const accept = () => {
   token.value = DEMO_ACCESS_TOKEN;
   modal.value!.hide();
+  console.log('Accept modal ', token.value);
 };
 // Brugeren har ikke accepteret rumlerille modal, så leverandør-applikation modtager en annulleret token
 const cancelTokenRequest = () => {

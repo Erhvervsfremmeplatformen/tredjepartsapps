@@ -144,10 +144,6 @@ const updateStepFromHash = () => {
 
 const removeHash = (hash: string) => hash.replaceAll('#', '');
 
-const emitRequestToken = () => {
-  emit('requestToken');
-};
-
 window.location.hash = '1';
 window.addEventListener('hashchange', updateStepFromHash);
 </script>
