@@ -25,7 +25,7 @@
     </div>
     <h3>klient</h3>
     <p>
-      Erhvervsfremmeplatformen udstiller en NPM <a href="https://www.npmjs.com/package/@erst-vg/piwik-event-wrapper" target="_blank">klient</a> til
+      Erhvervsfremmeplatformen udstiller en NPM <a href="https://www.npmjs.com/package/@erst-vg/bucket-json-client" target="_blank">klient</a> til
       kommunikation med Storage API. Service <strong>bucketClientService</strong> fra <strong>@erst-vg/bucket-json-client</strong> bruges til at hente
       og gemme JSON Se <strong>src/components/StorageAPI.vue</strong> for hvordan servicen initialiseres og anvendes.
     </p>

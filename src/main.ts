@@ -3,13 +3,13 @@
 import 'dkfds/dist/css/dkfds.min.css';
 import { createApp } from 'vue';
 import App from './App.vue';
-// TODO: AJP - håndter!
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 import makeServer from './server';
 
-// TODO: AJP - forklar
+// ID på det tekstnøgle bundt, som bruges til at hente og gemme data igennem Storage API
 export const TEKSTNOEGLE_BUNDT_ID = 'tredjepartsapplikation.demo_applikation.alle_tekster';
+
 // Mock server for standalone mode
 const useMockServer = true;
 if (useMockServer) {
