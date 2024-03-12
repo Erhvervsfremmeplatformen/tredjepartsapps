@@ -15,7 +15,7 @@
     </p>
 
     <p>
-      Sålænge data kan serialiseres som JSON, er det op til leverandør-applikationen hvilke data der skal gemmes. I denne leverandør-applikation
+      Så længe data kan serialiseres som JSON, er det op til leverandør-applikationen hvilke data der skal gemmes. I denne leverandør-applikation
       anvendes Storage API til opbevaring og redigering af tekstnøgler, så det ikke kræver en ny release hver gang tekster skal ændres.
     </p>
 
@@ -54,8 +54,8 @@
           <p>
             Denne applikation har ikke adgang til Erhvervsstyrelsen Storage API når den afvikles selvstændigt udenfor Virksomhedsguiden. Der anvendes
             derfor en mock server
-            <strong>src/server.js</strong> til at emulere Storage API, så man kan demonstrere brugen af <strong>bucketClientService</strong> uden
-            fejl. Data gemmes naturligvis kun i memory når mock server anvendes.
+            <strong>src/server.js</strong> til at simulere Storage API, så leverandør-applikationen kan demonstrere brugen af
+            <strong>bucketClientService</strong> uden fejl. Data gemmes naturligvis kun i memory når mock server anvendes.
           </p>
         </div>
       </div>
@@ -67,7 +67,6 @@
       anvendes Storage API til opbevaring og redigering af tekstnøgler, så det ikke kræver en ny release hver gang tekster skal ændres. Dette eksempel
       er kraftigt simplificeret, og i en realistisk version ville redigeringsknappen ofte være skjult bag et rolle tjek.
     </p>
-
     <div v-if="data" class="my-5 d-flex align-items-center">
       <span>
         <button type="button" class="button button-primary mr-3" @click="toggleRedigering">Toggle redigering</button>
@@ -76,13 +75,23 @@
       <input v-else type="input" class="input-width-xl" :value="tekstFromTekstnoegle" @change="opdaterTekstnoegle" />
     </div>
     <button type="button" class="button button-primary" @click="hentData">Hent data</button>
-    <button type="button" class="button button-primary" :disabled="!accessToken" @click="gemData">Gem data</button>
+    <button
+      v-if="isVirksomhedsguiden && !tekstFromTekstnoegle"
+      type="button"
+      class="button button-primary mr-3"
+      :disabled="!accessToken"
+      @click="initializeData"
+    >
+      Initialiser data
+    </button>
+    <button type="button" class="button button-primary" :disabled="!accessToken" @click="gemData()">Gem data</button>
+
     <div v-if="pending" class="spinner" aria-label="Henter indhold" />
     <template v-else>
       <div v-if="error" class="alert alert-error my-5" role="alert" aria-atomic="true">
         <div class="alert-body">
           <p class="alert-heading">Fejl</p>
-          <p class="alert-text">API request failed</p>
+          <p class="alert-text">Storage API request failed</p>
         </div>
       </div>
       <pre v-else>{{ data }}</pre>
@@ -112,7 +121,6 @@ const data: Ref<TekstData | null> = ref(null);
 const pending = ref(false);
 const error = ref(false);
 const redigeringsmode = ref(false);
-
 const accessToken = computed(() => (isVirksomhedsguiden ? props.token : DEMO_ACCESS_TOKEN));
 const tekstFromTekstnoegle = computed(() => (data.value?.tekster?.faelles as Tekster)?.eksempel);
 
@@ -134,11 +142,11 @@ const hentData = async () => {
 };
 
 // Gemmer JSON data i Storage API igennem bucketClientService
-const gemData = async () => {
+const gemData = async (payload: TekstData = data.value!) => {
   pending.value = true;
   error.value = false;
   bucketClientService
-    .gemData<TekstData>(data.value!)
+    .gemData<TekstData>(payload)
     .then(tekster => {
       data.value = tekster;
     })
@@ -150,7 +158,7 @@ const gemData = async () => {
     });
 };
 
-// Venter på der er en token som klienten kan initialiseres med
+// Venter på en token som klienten kan initialiseres med
 watch(
   () => accessToken.value,
   async token => {
@@ -172,5 +180,16 @@ const toggleRedigering = () => {
 
 const opdaterTekstnoegle = (event: Event) => {
   (data.value!.tekster.faelles as Tekster).eksempel = (event.target as HTMLInputElement).value;
+};
+
+// Kan bruges til at oprette JSON i ERST Storage løsning, hvis der ikke allerede findes data noget for tekstnoegleBundtId
+const initializeData = () => {
+  gemData({
+    tekster: {
+      faelles: {
+        eksempel: 'Dette er en tekstnøgle, som kan redigeres'
+      }
+    }
+  });
 };
 </script>

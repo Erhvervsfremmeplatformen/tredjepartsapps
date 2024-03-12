@@ -1,5 +1,4 @@
 export interface TekstData {
-  timestamp: number;
   tekster: Tekster;
 }
 

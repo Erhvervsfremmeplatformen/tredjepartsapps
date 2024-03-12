@@ -5,13 +5,12 @@ import { TEKSTNOEGLE_BUNDT_ID } from '@/main';
 /**
  * Dette er et mock storage JSON API som bruges når leverandør-applikationen kører udenfor VG. Den er derfor ikke relevant i forhold til udvikling af leverandør-applikationer
  */
-export default function() {
+export default function () {
 
     const stubbedResponse = {
         id: TEKSTNOEGLE_BUNDT_ID,
         version: 1,
         jsonindhold: {
-            timestamp: 1677678703205,
             tekster: {
                 faelles: {
                     eksempel: 'Dette er en tekstnøgle, som kan redigeres'
@@ -36,8 +35,7 @@ export default function() {
                 }
                 else if (requestBody.includes('bucketTekstnoeglePutJsonindhold')) {
                     const response = stubbedResponse;
-                    const {jsonindhold} = response;
-                    jsonindhold.timestamp = new Date().getTime();
+                    const { jsonindhold } = response;
                     const payload = extractTekstnoegle(requestBody);
                     if (payload) {
                         jsonindhold.tekster.faelles.eksempel = payload;
@@ -56,12 +54,12 @@ export default function() {
 
     function extractTekstnoegle(requestBody) {
         let payload = null;
-        const startFragment = 'tekster:{faelles:{eksempel:';
+        const startFragment = 'tekster: {faelles: {eksempel: ';
         const endFragment = '}}}';
         const startPos = requestBody.indexOf(startFragment);
         const endPos = requestBody.indexOf(endFragment, startPos);
         if (startPos && endPos) {
-            payload = requestBody.substring(startPos + startFragment.length+2, endPos-2);
+            payload = requestBody.substring(startPos + startFragment.length + 2, endPos - 2);
         }
         return payload;
 
