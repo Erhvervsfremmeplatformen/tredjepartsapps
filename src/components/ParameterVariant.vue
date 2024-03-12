@@ -25,5 +25,6 @@ const props = defineProps({
 });
 
 const variantColor = computed(() => props.variant?.parametre[0].parametervaerdi ?? '#C0C0C0');
+
 const variantName = computed(() => props.variant?.navn ?? 'default');
 </script>

@@ -42,8 +42,8 @@
             </p>
           </div>
           <div class="modal-footer">
-            <button id="button-modal-accept" class="button button-primary" @click="accept">Fortsæt</button
-            ><button id="button-modal-cancel" class="button button-secondary" @click="cancelTokenRequest">Fortryd</button>
+            <button id="button-modal-accept" class="button button-primary" @click="accept">Fortsæt</button>
+            <button id="button-modal-cancel" class="button button-secondary" @click="cancelTokenRequest">Fortryd</button>
           </div>
         </div>
       </div>
@@ -78,6 +78,7 @@ const variant = ref({
 });
 
 const isLoggedIn = computed(() => !!token.value && !isTokenRequestCancelled.value);
+
 const isTokenRequestCancelled = computed(() => token.value === TokenStatus.CANCELLED);
 
 const bruger = computed(() =>
@@ -113,34 +114,40 @@ onMounted(() => {
 const accept = () => {
   token.value = DEMO_ACCESS_TOKEN;
   modal.value!.hide();
-  console.log('Accept modal ', token.value);
 };
+
 // Brugeren har ikke accepteret rumlerille modal, så leverandør-applikation modtager en annulleret token
 const cancelTokenRequest = () => {
   token.value = TokenStatus.CANCELLED;
   modal.value!.hide();
 };
+
 // Dummy metoder til at teste dataopsamling events. Disse events vil blive håndteret af Virksomhedsguiden.
 const onPiwikPageView = () => {
   // eslint-disable-next-line no-console
   console.log('EVENT: page view');
 };
+
 function onPiwikDownloadEvent() {
   // eslint-disable-next-line no-console
   console.log('EVENT: download', arguments);
 }
+
 function onPiwikCTAClickEvent() {
   // eslint-disable-next-line no-console
   console.log('EVENT: CTA', arguments);
 }
+
 function handlePiwikStartEvent() {
   // eslint-disable-next-line no-console
   console.log('EVENT: Start', arguments);
 }
+
 function handlePiwikSlutEvent() {
   // eslint-disable-next-line no-console
   console.log('EVENT: Slut', arguments);
 }
+
 const onRequestToken = () => {
   // eslint-disable-next-line no-console
   console.log('Request token er blevet kaldt');

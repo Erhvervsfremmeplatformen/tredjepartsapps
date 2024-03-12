@@ -13,11 +13,12 @@
 </template>
 
 <script lang="ts" setup>
-import { useCounterStore } from '../stores/counter';
 import { createPinia, setActivePinia } from 'pinia';
 import { computed } from 'vue';
+import { useCounterStore } from '../stores/counter';
 
 const counterStore = useCounterStore();
 setActivePinia(createPinia());
+
 const counter = computed(() => counterStore.counter);
 </script>

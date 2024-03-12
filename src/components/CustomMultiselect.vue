@@ -15,6 +15,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import multiselect from 'vue-multiselect';
+
 const value = ref(null);
 const options = ['Danmark', 'Sverige', 'Norge'];
 </script>

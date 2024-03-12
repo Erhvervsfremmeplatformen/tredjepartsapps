@@ -112,7 +112,9 @@ const data: Ref<TekstData | null> = ref(null);
 const pending = ref(false);
 const error = ref(false);
 const redigeringsmode = ref(false);
+
 const accessToken = computed(() => (isVirksomhedsguiden ? props.token : DEMO_ACCESS_TOKEN));
+
 const tekstFromTekstnoegle = computed(() => (data.value?.tekster?.faelles as Tekster)?.eksempel);
 
 // Henter JSON data fra Storage API igennem bucketClientService
