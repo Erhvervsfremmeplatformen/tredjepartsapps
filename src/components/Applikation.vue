@@ -5,7 +5,6 @@
       <div class="applikation-container">
         <SvgIcons />
         <h1>Demo leverandør-applikation</h1>
-        <StorageAPI :tekstnoegle-bundt-id="tekstnoegleBundtId" :token="token" />
         <p class="my-5">
           Denne applikation kan bruges som skabelon til udvikling af leverandør-applikation, der kan integreres i
           <a href="https://www.virksomhedsguiden.dk" target="_blank">Virksomhedsguiden</a> som Vue 3 komponenter. Siden indeholder desuden teknisk
@@ -17,7 +16,7 @@
         <hr />
         <LoginDemo :token="token" :bruger="bruger" :is-logged-in="isLoggedIn" @requestToken="$emit('requestToken')" />
         <hr />
-
+        <StorageAPI :tekstnoegle-bundt-id="tekstnoegleBundtId" :token="token" />
         <hr />
         <Navigation :step="step" :max-step="maxStep" @decreaseStep="decreaseStep" @increaseStep="increaseStep" />
         <hr />

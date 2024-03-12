@@ -1,24 +1,20 @@
 <template>
   <div>
     <h2>Storage API</h2>
-
     <p>
       Erhvervsfremmeplatformen udstiller et generisk JSON API, således at leverandør-applikationer ikke selv behøver at stille en storage-løsning til
       rådighed for at opbevare data i applikationen.
     </p>
-
     <p>
       For at bruge denne feature, så skal leverandør-applikationen først have specificeret et ID kaldet <em>tekstnoegleBundtId</em>. Dette ID
       refererer til et JSON felt i database, hvor i leverandør-applikationen selv kan gemme og hente data fra. Værdien af tekstnoegleBundtId
       konfigureres i adminstration af applikationer i Virksomhedsguiden, og gives som en prop <em>tekstnoegleBundtId</em> til
       leverandør-applikationen.
     </p>
-
     <p>
       Så længe data kan serialiseres som JSON, er det op til leverandør-applikationen hvilke data der skal gemmes. I denne leverandør-applikation
       anvendes Storage API til opbevaring og redigering af tekstnøgler, så det ikke kræver en ny release hver gang tekster skal ændres.
     </p>
-
     <div v-if="!isVirksomhedsguiden" class="alert alert-info">
       <div class="alert-body">
         <div class="alert-text">
@@ -27,7 +23,6 @@
         </div>
       </div>
     </div>
-
     <h3>klient</h3>
     <p>
       Erhvervsfremmeplatformen udstiller en NPM <a href="https://www.npmjs.com/package/@erst-vg/piwik-event-wrapper" target="_blank">klient</a> til
@@ -35,7 +30,6 @@
       og gemme JSON Se <strong>src/components/StorageAPI.vue</strong> for hvordan servicen initialiseres og anvendes.
     </p>
     <p>Data fra Storage API må kun hentes én gang, og kan passende gøres når leverandør-applikationen starter op</p>
-
     <div class="alert alert-info">
       <div class="alert-body">
         <div class="alert-text">
@@ -46,7 +40,6 @@
         </div>
       </div>
     </div>
-
     <div v-if="!isVirksomhedsguiden" class="alert alert-warning">
       <div class="alert-body">
         <p class="alert-heading">Mock server</p>
@@ -60,7 +53,6 @@
         </div>
       </div>
     </div>
-
     <h4>Eksempel</h4>
     <p>
       Sålænge data kan serialiseres som JSON, er det op til leverandør-applikationen hvilke data der skal gemmes. I denne leverandør-applikation
@@ -85,7 +77,6 @@
       Initialiser data
     </button>
     <button type="button" class="button button-primary" :disabled="!accessToken" @click="gemData()">Gem data</button>
-
     <div v-if="pending" class="spinner" aria-label="Henter indhold" />
     <template v-else>
       <div v-if="error" class="alert alert-error my-5" role="alert" aria-atomic="true">
