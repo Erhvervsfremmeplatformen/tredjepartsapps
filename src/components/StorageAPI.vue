@@ -64,7 +64,7 @@
       </div>
     </div>
     <div v-if="!accessToken">
-      <p>Klik på knappen for at anmode om token, så <strong>bucketClientService</strong> kan initialiseres</p>
+      <p>Klik på knappen for at anmode om token, så <strong>bucketClientService</strong> initialiseres</p>
       <button class="button button-primary" @click="$emit('requestToken')">Anmod om token</button>
     </div>
     <template v-else>
@@ -78,7 +78,7 @@
           <input v-else type="input" class="input-width-xl" :value="tekstFromTekstnoegle" @change="opdaterTekstnoegle" />
         </div>
       </div>
-      <p>Klik på knapperne for at hente og gemme data igennem <strong>bucketClientService</strong></p>
+      <p>Klik på knapperne for at hente og gemme teksten igennem <strong>bucketClientService</strong></p>
       <button type="button" class="button button-primary" @click="hentData">Hent data</button>
       <button v-if="isVirksomhedsguiden && !tekstFromTekstnoegle" type="button" class="button button-primary mr-3" @click="initializeData">
         Initialiser data
