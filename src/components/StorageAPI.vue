@@ -27,19 +27,12 @@
     <p>
       Erhvervsfremmeplatformen udstiller en NPM <a href="https://www.npmjs.com/package/@erst-vg/bucket-json-client" target="_blank">klient</a> til
       kommunikation med Storage API. Service <strong>bucketClientService</strong> fra <strong>@erst-vg/bucket-json-client</strong> bruges til at hente
-      og gemme JSON Se <strong>src/components/StorageAPI.vue</strong> for hvordan servicen initialiseres og anvendes.
+      og gemme JSON. Se <strong>src/components/StorageAPI.vue</strong> for hvordan servicen initialiseres og anvendes.
     </p>
-    <p>Data fra Storage API må kun hentes én gang, og kan passende gøres når leverandør-applikationen starter op</p>
-    <div class="alert alert-info">
-      <div class="alert-body">
-        <div class="alert-text">
-          <div><strong>TekstnoegleBundtId: </strong>{{ tekstnoegleBundtId }}</div>
-          <div>
-            <strong>Token: </strong><span>{{ accessToken ? 'Har angivet token' : 'Mangler at anmode om token i "Login Demo" sektionen' }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <p>
+      Data fra Storage API må kun hentes én gang, og kan passende gøres når leverandør-applikationen starter op eller når den har modtaget en token
+      hvis der er behov for at gemme data.
+    </p>
     <div v-if="!isVirksomhedsguiden" class="alert alert-warning">
       <div class="alert-body">
         <p class="alert-heading">Mock server</p>
@@ -57,20 +50,35 @@
     <p>
       Sålænge data kan serialiseres som JSON, er det op til leverandør-applikationen hvilke data der skal gemmes. I denne leverandør-applikation
       anvendes Storage API til opbevaring og redigering af tekstnøgler, så det ikke kræver en ny release hver gang tekster skal ændres. Dette eksempel
-      er kraftigt simplificeret, og i en realistisk version ville redigeringsknappen ofte være skjult bag et rolle tjek.
+      er kraftigt simplificeret, og i en realistisk version ville hentede data være gemt et centralt sted fx. Pinia store og redigeringsknappen vil
+      være skjult bag et rolle tjek.
     </p>
-
+    <div class="alert alert-info">
+      <div class="alert-body">
+        <div class="alert-text">
+          <div><strong>TekstnoegleBundtId: </strong>{{ tekstnoegleBundtId }}</div>
+          <div>
+            <strong>Token: </strong><span>{{ accessToken ? 'Har angivet token' : 'Har ikke anmodet om token' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <div v-if="!accessToken">
+      <p>Klik på knappen for at anmode om token, så <strong>bucketClientService</strong> kan initialiseres</p>
       <button class="button button-primary" @click="$emit('requestToken')">Anmod om token</button>
     </div>
     <template v-else>
-      <div v-if="data" class="my-5 d-flex align-items-center">
-        <span>
-          <button type="button" class="button button-primary mr-3" @click="toggleRedigering">Toggle redigering</button>
-        </span>
-        <div v-if="!redigeringsmode">{{ tekstFromTekstnoegle }}</div>
-        <input v-else type="input" class="input-width-xl" :value="tekstFromTekstnoegle" @change="opdaterTekstnoegle" />
+      <div v-if="data" class="my-5">
+        <p>Klik på knappen for at skifte redigeringsmode</p>
+        <div class="d-flex align-items-center">
+          <span>
+            <button type="button" class="button button-primary mr-3" @click="toggleRedigering">Toggle redigering</button>
+          </span>
+          <div v-if="!redigeringsmode">{{ tekstFromTekstnoegle }}</div>
+          <input v-else type="input" class="input-width-xl" :value="tekstFromTekstnoegle" @change="opdaterTekstnoegle" />
+        </div>
       </div>
+      <p>Klik på knapperne for at hente og gemme data igennem <strong>bucketClientService</strong></p>
       <button type="button" class="button button-primary" @click="hentData">Hent data</button>
       <button v-if="isVirksomhedsguiden && !tekstFromTekstnoegle" type="button" class="button button-primary mr-3" @click="initializeData">
         Initialiser data
