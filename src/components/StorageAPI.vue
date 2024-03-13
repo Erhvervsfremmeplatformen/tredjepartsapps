@@ -160,12 +160,14 @@ const gemData = async (payload: TekstData = data.value!) => {
 watch(
   () => accessToken.value,
   async token => {
-    console.log('TOKN ', token);
-    bucketClientService.init({
-      tekstnoegleBundtId: props.tekstnoegleBundtId,
-      token
-    });
-    await hentData();
+    if (token) {
+      console.log('TOKN ', token);
+      bucketClientService.init({
+        tekstnoegleBundtId: props.tekstnoegleBundtId,
+        token
+      });
+      await hentData();
+    }
   },
   {
     immediate: true
