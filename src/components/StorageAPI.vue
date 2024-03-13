@@ -128,7 +128,8 @@ const hentData = async () => {
       data.value = tekster;
     })
     .catch(e => {
-      console.log('# Error ', e);
+      // eslint-disable-next-line no-console
+      console.error(e);
       error.value = true;
     })
     .finally(() => {
@@ -145,7 +146,9 @@ const gemData = async (payload: TekstData = data.value!) => {
     .then(tekster => {
       data.value = tekster;
     })
-    .catch(() => {
+    .catch(e => {
+      // eslint-disable-next-line no-console
+      console.error(e);
       error.value = true;
     })
     .finally(() => {
@@ -157,6 +160,7 @@ const gemData = async (payload: TekstData = data.value!) => {
 watch(
   () => accessToken.value,
   async token => {
+    console.log('TOKN ', token);
     bucketClientService.init({
       tekstnoegleBundtId: props.tekstnoegleBundtId,
       token
