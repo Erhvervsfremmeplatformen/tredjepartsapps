@@ -119,6 +119,7 @@ const tekstFromTekstnoegle = computed(() => (data.value?.tekster?.faelles as Tek
 
 // Henter JSON data fra Storage API igennem bucketClientService
 const hentData = async () => {
+  console.log('Henter data');
   pending.value = true;
   error.value = false;
   bucketClientService
@@ -126,7 +127,8 @@ const hentData = async () => {
     .then(tekster => {
       data.value = tekster;
     })
-    .catch(() => {
+    .catch(e => {
+      console.log('# Error ', e);
       error.value = true;
     })
     .finally(() => {
