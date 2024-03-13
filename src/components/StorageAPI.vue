@@ -59,24 +59,24 @@
       anvendes Storage API til opbevaring og redigering af tekstnøgler, så det ikke kræver en ny release hver gang tekster skal ændres. Dette eksempel
       er kraftigt simplificeret, og i en realistisk version ville redigeringsknappen ofte være skjult bag et rolle tjek.
     </p>
-    <div v-if="data" class="my-5 d-flex align-items-center">
-      <span>
-        <button type="button" class="button button-primary mr-3" @click="toggleRedigering">Toggle redigering</button>
-      </span>
-      <div v-if="!redigeringsmode">{{ tekstFromTekstnoegle }}</div>
-      <input v-else type="input" class="input-width-xl" :value="tekstFromTekstnoegle" @change="opdaterTekstnoegle" />
+
+    <div v-if="!accessToken">
+      <button class="button button-primary" @click="$emit('requestToken')">Anmod om token</button>
     </div>
-    <button type="button" class="button button-primary" @click="hentData">Hent data</button>
-    <button
-      v-if="isVirksomhedsguiden && !tekstFromTekstnoegle"
-      type="button"
-      class="button button-primary mr-3"
-      :disabled="!accessToken"
-      @click="initializeData"
-    >
-      Initialiser data
-    </button>
-    <button type="button" class="button button-primary" :disabled="!accessToken" @click="gemData()">Gem data</button>
+    <template v-else>
+      <div v-if="data" class="my-5 d-flex align-items-center">
+        <span>
+          <button type="button" class="button button-primary mr-3" @click="toggleRedigering">Toggle redigering</button>
+        </span>
+        <div v-if="!redigeringsmode">{{ tekstFromTekstnoegle }}</div>
+        <input v-else type="input" class="input-width-xl" :value="tekstFromTekstnoegle" @change="opdaterTekstnoegle" />
+      </div>
+      <button type="button" class="button button-primary" @click="hentData">Hent data</button>
+      <button v-if="isVirksomhedsguiden && !tekstFromTekstnoegle" type="button" class="button button-primary mr-3" @click="initializeData">
+        Initialiser data
+      </button>
+      <button type="button" class="button button-primary" @click="gemData()">Gem data</button>
+    </template>
     <div v-if="pending" class="spinner" aria-label="Henter indhold" />
     <template v-else>
       <div v-if="error" class="alert alert-error my-5" role="alert" aria-atomic="true">
@@ -97,6 +97,7 @@ import { TekstData, Tekster } from '../models/tekster.model';
 import { DEMO_ACCESS_TOKEN } from '../utils/jwt-util';
 
 const isVirksomhedsguiden = inject('isVirksomhedsguiden');
+const emit = defineEmits(['requestToken']);
 const props = defineProps({
   tekstnoegleBundtId: {
     type: String,
@@ -119,7 +120,6 @@ const tekstFromTekstnoegle = computed(() => (data.value?.tekster?.faelles as Tek
 
 // Henter JSON data fra Storage API igennem bucketClientService
 const hentData = async () => {
-  console.log('Henter data');
   pending.value = true;
   error.value = false;
   bucketClientService
@@ -161,7 +161,6 @@ watch(
   () => accessToken.value,
   async token => {
     if (token) {
-      console.log('TOKN ', token);
       bucketClientService.init({
         tekstnoegleBundtId: props.tekstnoegleBundtId,
         token

@@ -16,7 +16,7 @@
         <hr />
         <LoginDemo :token="token" :bruger="bruger" :is-logged-in="isLoggedIn" @requestToken="$emit('requestToken')" />
         <hr />
-        <StorageAPI :tekstnoegle-bundt-id="tekstnoegleBundtId" :token="token" />
+        <StorageAPI :tekstnoegle-bundt-id="tekstnoegleBundtId" :token="token" @requestToken="$emit('requestToken')" />
         <hr />
         <Navigation :step="step" :max-step="maxStep" @decreaseStep="decreaseStep" @increaseStep="increaseStep" />
         <hr />
