@@ -50,57 +50,75 @@
     <p>
       Sålænge data kan serialiseres som JSON, er det op til leverandør-applikationen hvilke data der skal gemmes. I denne leverandør-applikation
       anvendes Storage API til opbevaring og redigering af tekstnøgler, så det ikke kræver en ny release hver gang tekster skal ændres. Dette eksempel
-      er kraftigt simplificeret, og i en realistisk version ville hentede data være gemt et centralt sted fx. Pinia store og redigeringsknappen vil
-      være skjult bag et rolle tjek.
+      er kraftigt simplificeret, og i en realistisk version ville hentede data være gemt et centralt sted fx. Pinia store.
     </p>
     <div class="alert alert-info">
       <div class="alert-body">
         <div class="alert-text">
           <div><strong>TekstnoegleBundtId: </strong>{{ tekstnoegleBundtId }}</div>
+          <div><strong>Ejes af CVR-nummer: </strong>{{ tekstnoegleCvrNummer }}</div>
           <div>
             <strong>Token: </strong><span>{{ accessToken ? 'Har angivet token' : 'Har ikke anmodet om token' }}</span>
           </div>
         </div>
       </div>
     </div>
-    <div v-if="!accessToken">
-      <p>Klik på knappen for at anmode om token, så <strong>bucketClientService</strong> initialiseres</p>
-      <button class="button button-primary" @click="$emit('requestToken')">Anmod om token</button>
+    <div v-if="bruger && !allowJsonEdit">
+      <div class="alert alert-error">
+        <div class="alert-body">
+          <p class="alert-heading">Manglende rettigheder</p>
+          <div class="alert-text">
+            <p>
+              Brugeren med rollerne: '<strong>{{ bruger.roller.join(', ') }}</strong
+              >' og CVR-nummer: <strong>{{ bruger.cvr }}</strong> har ikke rettighed til at redigere data
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
     <template v-else>
-      <div v-if="data" class="my-5">
-        <p>Klik på knappen for at skifte redigeringsmode</p>
-        <div class="d-flex align-items-center">
-          <span>
-            <button type="button" class="button button-primary mr-3" @click="toggleRedigering">Toggle redigering</button>
-          </span>
-          <div v-if="!redigeringsmode">{{ tekstFromTekstnoegle }}</div>
-          <input v-else type="input" class="input-width-xl" :value="tekstFromTekstnoegle" @change="opdaterTekstnoegle" />
-        </div>
+      <div v-if="!accessToken">
+        <p>Klik på knappen for at anmode om token, så <strong>bucketClientService</strong> initialiseres</p>
+        <button class="button button-primary" @click="$emit('requestToken')">Anmod om token</button>
       </div>
-      <p>Klik på knapperne for at hente og gemme teksten igennem <strong>bucketClientService</strong></p>
-      <button type="button" class="button button-primary" @click="hentData">Hent data</button>
-      <button v-if="isVirksomhedsguiden && !tekstFromTekstnoegle" type="button" class="button button-primary mr-3" @click="initializeData">
-        Initialiser data
-      </button>
-      <button type="button" class="button button-primary" @click="gemData()">Gem data</button>
-    </template>
-    <div v-if="pending" class="spinner" aria-label="Henter indhold" />
-    <template v-else>
-      <div v-if="error" class="alert alert-error my-5" role="alert" aria-atomic="true">
-        <div class="alert-body">
-          <p class="alert-heading">Fejl</p>
-          <p class="alert-text">Storage API request failed</p>
+      <template v-else>
+        <div v-if="data" class="my-5">
+          <p>Klik på knappen for at skifte redigeringsmode</p>
+          <div class="d-flex align-items-center">
+            <span>
+              <button type="button" class="button button-primary mr-3" @click="toggleRedigering">Toggle redigering</button>
+            </span>
+            <div v-if="!redigeringsmode">{{ tekstFromTekstnoegle }}</div>
+            <input v-else type="input" class="input-width-xl" :value="tekstFromTekstnoegle" @change="opdaterTekstnoegle" />
+          </div>
         </div>
-      </div>
-      <pre v-else>{{ data }}</pre>
+        <p>Klik på knapperne for at hente og gemme teksten igennem <strong>bucketClientService</strong></p>
+        <button type="button" class="button button-primary" @click="hentData">Hent data</button>
+        <button v-if="isVirksomhedsguiden && !tekstFromTekstnoegle" type="button" class="button button-primary mr-3" @click="initializeData">
+          Initialiser data
+        </button>
+        <button type="button" class="button button-primary" @click="gemData()">Gem data</button>
+      </template>
+
+      <div v-if="pending" class="spinner" aria-label="Henter indhold" />
+      <template v-else>
+        <div v-if="error" class="alert alert-error my-5" role="alert" aria-atomic="true">
+          <div class="alert-body">
+            <p class="alert-heading">Fejl</p>
+            <p class="alert-text">Storage API request failed</p>
+          </div>
+        </div>
+        <pre v-else>{{ data }}</pre>
+      </template>
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
 import { bucketClientService } from '@erst-vg/bucket-json-client';
-import { Ref, computed, inject, ref, watch } from 'vue';
+import { PropType, Ref, computed, inject, ref, watch } from 'vue';
+import { Role } from '../enums/role.enum';
+import { Bruger } from '../models/bruger.model';
 import { TekstData, Tekster } from '../models/tekster.model';
 import { DEMO_ACCESS_TOKEN } from '../utils/jwt-util';
 
@@ -111,9 +129,18 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  tekstnoegleCvrNummer: {
+    type: String,
+    default: ''
+  },
   token: {
     type: String,
     default: ''
+  },
+  bruger: {
+    type: Object as PropType<Bruger | null>,
+    default: null,
+    required: false
   }
 });
 
@@ -125,6 +152,20 @@ const redigeringsmode = ref(false);
 const accessToken = computed(() => (isVirksomhedsguiden ? props.token : DEMO_ACCESS_TOKEN));
 
 const tekstFromTekstnoegle = computed(() => (data.value?.tekster?.faelles as Tekster)?.eksempel);
+
+const allowJsonEdit = computed(() => {
+  // Altid tillad adgang til redigering når leverandør-applikationen kører selvstændigt udenfor Virksomhedsguiden
+  let hasAccess = true;
+  if (isVirksomhedsguiden) {
+    const { bruger } = props;
+    if (bruger) {
+      const { roller, cvr } = bruger;
+      // Kun ejeren af tekstnøgle bundt ID og specifikke roller har adgang til redigering
+      hasAccess = cvr === props.tekstnoegleCvrNummer || roller.includes(Role.ERF_ADMIN);
+    }
+  }
+  return hasAccess;
+});
 
 // Henter JSON data fra Storage API igennem bucketClientService
 const hentData = async () => {

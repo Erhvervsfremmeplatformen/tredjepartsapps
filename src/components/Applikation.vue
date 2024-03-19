@@ -16,7 +16,13 @@
         <hr />
         <LoginDemo :token="token" :bruger="bruger" :is-logged-in="isLoggedIn" @requestToken="$emit('requestToken')" />
         <hr />
-        <StorageAPI :tekstnoegle-bundt-id="tekstnoegleBundtId" :token="token" @requestToken="$emit('requestToken')" />
+        <StorageAPI
+          :tekstnoegle-bundt-id="tekstnoegleBundtId"
+          :tekstnoegle-cvr-nummer="tekstnoegleCvrNummer"
+          :token="token"
+          :bruger="bruger"
+          @requestToken="$emit('requestToken')"
+        />
         <hr />
         <Navigation :step="step" :max-step="maxStep" @decreaseStep="decreaseStep" @increaseStep="increaseStep" />
         <hr />
@@ -90,6 +96,10 @@ const props = defineProps({
     default: true
   },
   tekstnoegleBundtId: {
+    type: String,
+    default: ''
+  },
+  tekstnoegleCvrNummer: {
     type: String,
     default: ''
   }

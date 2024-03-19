@@ -10,6 +10,7 @@
           :bruger="bruger"
           :is-virksomhedsguiden="false"
           :tekstnoegle-bundt-id="TEKSTNOEGLE_BUNDT_ID"
+          :tekstnoegle-cvr-nummer="TEKSTNOEGLE_CVR_NUMMER"
           @piwikPageView="onPiwikPageView"
           @piwikDownloadEvent="onPiwikDownloadEvent"
           @piwikCTAClickEvent="onPiwikCTAClickEvent"
@@ -56,8 +57,9 @@
 import * as DKFDS from 'dkfds';
 import { Ref, computed, onMounted, ref } from 'vue';
 import Applikation from './components/Applikation.vue';
+import { Role } from './enums/role.enum';
 import { TokenStatus } from './enums/tokenStatus.enum';
-import { TEKSTNOEGLE_BUNDT_ID } from './main';
+import { TEKSTNOEGLE_BUNDT_ID, TEKSTNOEGLE_CVR_NUMMER } from './main';
 import { DEMO_ACCESS_TOKEN } from './utils/jwt-util';
 
 // Hash værdi som VG sætter når login flow initieres, og når leverandør-applikationen vises igen efter successfuldt login
@@ -88,9 +90,9 @@ const bruger = computed(() =>
         navn: 'Jens Hansen',
         organisation: 'Demo Nation',
         virksomhedsnavn: 'Business Demo',
-        cvr: '12345678',
+        cvr: TEKSTNOEGLE_CVR_NUMMER,
         entityId: 'eid-CVR:12345678-RID:e4f13c3b-3c5a-459d-90a9-847ab9596157',
-        roller: ['ERF_LEVERANDOER']
+        roller: [Role.ERF_LEVERANDOER]
       }
 );
 
