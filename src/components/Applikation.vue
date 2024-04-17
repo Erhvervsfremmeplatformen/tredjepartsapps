@@ -5,201 +5,130 @@
   </div>
 </template>
 
-<!-- Script setup blok for Composition API -->
 <script setup lang="ts">
+import { Variant } from 'src/models/variant.model.js';
+import { onMounted, ref } from 'vue';
 import { opretAfvikler } from '../../public/script/afvikler.js';
-const emit = defineEmits([
-  DataEvents.PAGE_VIEW,
-  DataEvents.DOWNLOAD_EVENT,
-  DataEvents.CTA_CLICK_EVENT,
-  DataEvents.START_EVENT,
-  DataEvents.SLUT_EVENT
-]);
 
 /**
- * Initialiserer Piwik service med entry-point komponentens emits, så der kan emittes ud af leverandør-applikationen
- * uanset fra hvilket komponent niveau Piwik service kaldes fra. Bemærk dette her skal kun gøres for Composition API
- *
- * Se created lifecycle hook for hvordan det håndteres for Options API
+ * https://jira.erst.dk/browse/ERF-9555
  */
-piwikService.init(emit);
-</script>
-
-<script lang="ts">
-import { createPinia } from 'pinia';
-import { computed, defineComponent, onMounted } from 'vue';
-import { Bruger } from '../models/bruger.model';
-import { Variant } from '../models/variant.model';
-import API from './API.vue';
-import CustomMultiselect from './CustomMultiselect.vue';
-import DataCollector from './DataCollector.vue';
-import DKFDSComponent from './DKFDSComponent.vue';
-import ExternalAPI from './ExternalAPI.vue';
-import Icons from './Icons.vue';
-import LoginComponent from './LoginComponent.vue';
-import LoginDemo from './LoginDemo.vue';
-import Navigation from './Navigation.vue';
-import ParameterVariant from './ParameterVariant.vue';
-import Responsive from './Responsive.vue';
-import StateComponent from './StateComponent.vue';
-import SvgIcons from './SvgIcons.vue';
-import * as slugUtil from '../utils/slug.util';
-import { DataEvents, piwikService } from '@erst-vg/piwik-event-wrapper';
-
-export default defineComponent({
-  name: 'Applikation',
-  components: {},
-  provide() {
-    const pinia = createPinia();
-    return {
-      pinia
-    };
-  },
-  props: {
-    variant: {
-      type: Object as () => Variant,
-      default: null,
-      required: false
-    },
-    token: {
-      type: String,
-      default: '',
-      required: false
-    },
-    isLoggedIn: {
-      type: Boolean,
-      default: false,
-      required: false
-    },
-    bruger: {
-      type: Object as () => Bruger,
-      default: null,
-      required: false
-    }
-  },
-  emits: [DataEvents.PAGE_VIEW, DataEvents.DOWNLOAD_EVENT, DataEvents.CTA_CLICK_EVENT, DataEvents.START_EVENT, DataEvents.SLUT_EVENT],
-  data() {
-    return {
-      step: 1,
-      maxStep: 3
-    };
-  },
-  created() {
-    /**
-     * Initialiserer Piwik service med entry-point komponentens emits, så der kan emittes ud af leverandør-applikationen
-     * uanset fra hvilket komponent niveau Piwik service kaldes fra. Bemærk dette her skal kun gøres for Options API
-     *
-     * Se script setup blokken for hvordan det håndteres for Composition API
-     */
-    piwikService.init(this.$emit);
-    window.location.hash = '1';
-    window.addEventListener('hashchange', this.updateStepFromHash);
-  },
-  unmounted() {
-    window.removeEventListener('hashchange', this.updateStepFromHash);
-  },
-  async mounted() {
-    const { opretAfvikler } = require('../../public/script/afvikler.js');
-    const afvikler = await opretAfvikler({
-      rejse: this.variant?.parametre[0].parametervaerdi ?? 'foobar',
-      authCallback(requestLogin = false) {
-        return null;
-      }
-    });
-    afvikler.mount('#gm-afvikler');
-
-    // XXX: AJP - quick and dirty håndtering af modificering af DOM - bør laves med MutationObserver eller lign. så man undgår setInterval. Alternativt skal den ikke lytte hele tiden (stop når den har lavet modifikationen)
-    setInterval(() => {
-      document.querySelectorAll('.gm-knap').forEach(b => {
-        const classList = b.classList;
-        if (classList.contains('gm-knap')) {
-          classList.add('button');
-          classList.add('button-primary');
-          classList.remove('gm-knap');
-          classList.remove('gm-primary');
-        }
-      });
-
-      document.querySelectorAll('a.gm-handlings-link').forEach(l => {
-        const classList = l.classList;
-        classList.add('button');
-        classList.add('button-secondary');
-        classList.remove('gm-knap');
-        classList.remove('gm-primary');
-      });
-
-      const opsummering = document.querySelector('.gm-opsummeringsside');
-      if (opsummering) {
-        console.log('Skip opsummering!');
-        (document.querySelectorAll('.gm-navigation .button-primary')[0]! as HTMLButtonElement).click();
-      }
-    }, 1);
-
-    return;
-    // Select the node that will be observed for mutations
-    var targetNode = document.querySelector('.applikation-container');
-
-    // Options for the observer (which mutations to observe)
-    var config = {
-      attributes: true,
-      subtree: true
-    };
-
-    // Callback function to execute when mutations are observed
-    var callback = function (mutationsList: any) {
-      for (var mutation of mutationsList) {
-        if (mutation.type == 'attributes') {
-          if (mutation.attributeName === 'tabindex') {
-            document.querySelectorAll('button').forEach(b => {
-              const classList = b.classList;
-              classList.add('button');
-              classList.add('button-primary');
-              classList.remove('gm-knap');
-              classList.remove('gm-primary');
-            });
-          }
-        }
-      }
-    };
-
-    // Create an observer instance linked to the callback function
-    var observer = new MutationObserver(callback);
-
-    // Start observing the target node for configured mutations
-    //observer.observe(targetNode!, config);
-
-    // Later, you can stop observing
-    //observer.disconnect();
-  },
-  methods: {
-    decreaseStep() {
-      if (window.location.hash !== '#1') {
-        const { hash } = window.location;
-        const previousHash = String(parseInt(this.removeHash(hash), 10) - 1);
-        window.location.hash = slugUtil.slugify(previousHash);
-      }
-    },
-    increaseStep() {
-      if (window.location.hash !== '#' + this.maxStep) {
-        const { hash } = window.location;
-        const previousHash = String(parseInt(this.removeHash(hash), 10) + 1);
-        window.location.hash = slugUtil.slugify(previousHash);
-      }
-    },
-    updateStepFromHash() {
-      const { hash } = window.location;
-      this.step = hash ? parseInt(this.removeHash(hash), 10) : 1;
-      piwikService.emitPageViewEvent();
-    },
-    removeHash(hash: string) {
-      return hash.replaceAll('#', '');
-    },
-    emitRequestToken() {
-      this.$emit('requestToken');
-    }
+const props = defineProps({
+  variant: {
+    type: Object as () => Variant,
+    default: null,
+    required: false
   }
 });
+
+const embedded = ref(false);
+
+onMounted(async () => {
+  const afvikler = await opretAfvikler({
+    rejse: props.variant?.parametre[0].parametervaerdi ?? 'foobar',
+    authCallback(requestLogin = false) {
+      return null;
+    }
+  });
+  afvikler.mount('#gm-afvikler');
+
+  // XXX: AJP - quick and dirty håndtering af modificering af DOM - bør laves med MutationObserver eller lign. så man undgår setInterval. Alternativt skal den ikke lytte hele tiden (stop når den har lavet modifikationen)
+  setInterval(() => {
+    document.querySelectorAll('.applikation-container .gm-knap').forEach(b => {
+      const classList = b.classList;
+      if (classList.contains('gm-back-button')) {
+        console.log('# Handle back-button');
+        classList.remove('gm-knap');
+        classList.add('button');
+        classList.add('button-secondary');
+
+        if (b) {
+          // AK 3.1, 3.2: Byt om på "Forrige" og "Fortsæt"
+          b.parentNode!.insertBefore(b, b.previousElementSibling);
+        }
+      } else if (classList.contains('gm-knap')) {
+        console.log('# Handle gem-button');
+        classList.add('button');
+        classList.add('button-primary');
+        classList.remove('gm-knap');
+        classList.remove('gm-primary');
+      }
+    });
+
+    document.querySelectorAll('.gm-resultattrin .gm-handlings-link').forEach(el => {
+      el.classList.remove('button');
+      el.classList.remove('button-primary');
+    });
+
+    // AK 3.2.1: Knappen er inaktiv indtil jeg har valgt en svarmulighed
+    const allSvarInputs = document.querySelectorAll('.gm-svarmuligheder input');
+    if (allSvarInputs.length) {
+      const nextButton = document.querySelector('.gm-navigation .button-primary');
+      if (nextButton) {
+        if ([...allSvarInputs].some(n => (n as HTMLInputElement).checked)) {
+          nextButton.removeAttribute('disabled');
+        } else {
+          nextButton.setAttribute('disabled', 'disabled');
+        }
+      }
+    }
+
+    /* TODO: AJP - er denne nødvendig ?
+    document.querySelectorAll('.applikation-container a.gm-handlings-link').forEach(l => {
+      const classList = l.classList;
+      classList.add('button');
+      classList.add('button-secondary');
+      classList.remove('gm-knap');
+      classList.remove('gm-primary');
+    });
+    */
+
+    // TODO: AJP - brug en bestem klasse eller prop for at angive om den er standalone eller indlejret
+    // TODO: AJP - refak
+
+    if (embedded.value) {
+      // AK 1.1 Udskift H3 med H1
+      const overskrift = document.querySelector('.applikation-container .gm-overskrift h3');
+      if (overskrift) {
+        console.log('Erstat heading h3 -> h1');
+        const newOverskrift = document.createElement('h1');
+        newOverskrift.textContent = overskrift.textContent;
+        overskrift.replaceWith(newOverskrift);
+      }
+
+      // AK 1.2 Udskift H4 med H3 i accordions
+      document.querySelectorAll('.applikation-container .gm-uddybende-vejledning .gm-tekst h4').forEach(e => {
+        const newOverskrift = document.createElement('h2');
+        newOverskrift.textContent = e.textContent;
+        e.replaceWith(newOverskrift);
+      });
+    } else {
+      // AK 2.1 Udskift H3 med H2
+      const overskrift = document.querySelector('.applikation-container .gm-overskrift h3');
+      if (overskrift) {
+        console.log('Erstat heading h3 -> h2');
+        const newOverskrift = document.createElement('h2');
+        newOverskrift.textContent = overskrift.textContent;
+        overskrift.replaceWith(newOverskrift);
+      }
+
+      // AK 2.2 Udskift H4 med H3 i accordions
+      document.querySelectorAll('.applikation-container .gm-uddybende-vejledning .gm-tekst h4').forEach(e => {
+        const newOverskrift = document.createElement('h3');
+        newOverskrift.textContent = e.textContent;
+        e.replaceWith(newOverskrift);
+      });
+    }
+
+    const opsummering = document.querySelector('.applikation-container .gm-opsummeringsside');
+    if (opsummering) {
+      console.log('Skip opsummering!');
+      (document.querySelectorAll('.gm-navigation .button-primary')[0]! as HTMLButtonElement).click();
+    }
+  }, 1);
+});
 </script>
+
 <style lang="scss" scoped>
 @import '../styles/components/_applikation.scss';
 :deep() {
@@ -212,6 +141,15 @@ export default defineComponent({
   .gm-handlings-link {
     display: flex;
     max-width: fit-content;
+  }
+
+  .gm-svarmuligheder label .gm-tekst {
+    // TODO: AJP - bør vi bruge 1em ?
+    font-size: 16px;
+  }
+
+  .gm-uddybende-vejledning-container summary {
+    font-size: 20px;
   }
 }
 </style>

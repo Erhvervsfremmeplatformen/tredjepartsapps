@@ -76,7 +76,7 @@ export default {
         parametre: [
           {
             parameternavn: 'slug',
-            parametervaerdi: 'hablxkz1122s'
+            parametervaerdi: '2dv6ajw3iav4'
           }
         ]
       }
