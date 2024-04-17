@@ -10,6 +10,8 @@ import { Variant } from 'src/models/variant.model.js';
 import { onMounted } from 'vue';
 import { opretAfvikler } from '../../public/script/afvikler.js';
 
+const APP_CONTAINER_CLASS = '.applikation-container';
+
 /**
  * https://jira.erst.dk/browse/ERF-9555
  */
@@ -25,112 +27,113 @@ const props = defineProps({
   }
 });
 
-onMounted(async () => {
-  const afvikler = await opretAfvikler({
-    rejse: props.variant?.parametre[0].parametervaerdi ?? 'foobar',
-    authCallback(requestLogin = false) {
-      return null;
-    }
-  });
-  afvikler.mount('#gm-afvikler');
-
-  // XXX: AJP - quick and dirty håndtering af modificering af DOM - bør laves med MutationObserver eller lign. så man undgår setInterval. Alternativt skal den ikke lytte hele tiden (stop når den har lavet modifikationen)
+const changeDesign = () => {
   setInterval(() => {
-    document.querySelectorAll('.applikation-container .gm-knap').forEach(b => {
-      const classList = b.classList;
-      if (classList.contains('gm-back-button')) {
-        console.log('# Handle back-button');
-        classList.remove('gm-knap');
-        classList.add('button');
-        classList.add('button-secondary');
+    designNavigationsButtons();
+    designEksternLink();
+    designButtonState();
+    designOverskrift();
+    designAccordion();
+    skipOpsummeringsside();
+  }, 1);
+};
 
-        if (b) {
-          // AK 3.1, 3.2: Byt om på "Forrige" og "Fortsæt"
-          b.parentNode!.insertBefore(b, b.previousElementSibling);
-        }
-      } else if (classList.contains('gm-knap')) {
-        console.log('# Handle gem-button');
-        classList.add('button');
-        classList.add('button-primary');
-        classList.remove('gm-knap');
-        classList.remove('gm-primary');
+onMounted(async () => {
+  const rejseSlug = props.variant?.parametre[0].parametervaerdi;
+  if (!rejseSlug) {
+    // eslint-disable-next-line no-console
+    console.error('Missing variant "rejse" with slug');
+  } else {
+    const afvikler = await opretAfvikler({
+      rejse: rejseSlug,
+      authCallback(requestLogin = false) {
+        return null;
       }
     });
+    afvikler.mount('#gm-afvikler');
+    changeDesign();
+  }
+});
 
-    document.querySelectorAll('.gm-resultattrin .gm-handlings-link').forEach(el => {
-      el.classList.remove('button');
-      el.classList.remove('button-primary');
-    });
+const querySelector = (selector: string): any => document.querySelector(`${APP_CONTAINER_CLASS} ${selector}`);
+const querySelectorAll = (selector: string): NodeListOf<any> => document.querySelectorAll(`${APP_CONTAINER_CLASS} ${selector}`);
 
-    // AK 3.2.1: Knappen er inaktiv indtil jeg har valgt en svarmulighed
-    const allSvarInputs = document.querySelectorAll('.gm-svarmuligheder input');
-    if (allSvarInputs.length) {
-      const nextButton = document.querySelector('.gm-navigation .button-primary');
-      if (nextButton) {
-        if ([...allSvarInputs].some(n => (n as HTMLInputElement).checked)) {
-          nextButton.removeAttribute('disabled');
-        } else {
-          nextButton.setAttribute('disabled', 'disabled');
-        }
-      }
-    }
-
-    /* TODO: AJP - er denne nødvendig ?
-    document.querySelectorAll('.applikation-container a.gm-handlings-link').forEach(l => {
-      const classList = l.classList;
+const designNavigationsButtons = () => {
+  querySelectorAll('.gm-knap').forEach(buttonElm => {
+    const { classList } = buttonElm;
+    if (classList.contains('gm-back-button')) {
+      // Tilbage knap
+      classList.remove('gm-knap');
       classList.add('button');
       classList.add('button-secondary');
+
+      if (buttonElm) {
+        // Bytter om på "Forrige" og "Fortsæt" knapper
+        buttonElm.parentNode!.insertBefore(buttonElm, buttonElm.previousElementSibling);
+      }
+    } else if (classList.contains('gm-knap')) {
+      // Andre knapper
+      classList.add('button');
+      classList.add('button-primary');
       classList.remove('gm-knap');
       classList.remove('gm-primary');
-    });
-    */
-
-    // TODO: AJP - brug en bestem klasse eller prop for at angive om den er standalone eller indlejret
-    // TODO: AJP - refak
-
-    if (props.embedded) {
-      // AK 1.1 Udskift H3 med H1
-      const overskrift = document.querySelector('.applikation-container .gm-overskrift h3');
-      if (overskrift) {
-        console.log('Erstat heading h3 -> h1');
-        const newOverskrift = document.createElement('h1');
-        newOverskrift.textContent = overskrift.textContent;
-        overskrift.replaceWith(newOverskrift);
-      }
-
-      // AK 1.2 Udskift H4 med H3 i accordions
-      document.querySelectorAll('.applikation-container .gm-uddybende-vejledning .gm-tekst h4').forEach(e => {
-        const newOverskrift = document.createElement('h2');
-        newOverskrift.textContent = e.textContent;
-        e.replaceWith(newOverskrift);
-      });
-    } else {
-      // AK 2.1 Udskift H3 med H2
-      const overskrift = document.querySelector('.applikation-container .gm-overskrift h3');
-      if (overskrift) {
-        console.log('Erstat heading h3 -> h2');
-        const newOverskrift = document.createElement('h2');
-        newOverskrift.textContent = overskrift.textContent;
-        overskrift.replaceWith(newOverskrift);
-      }
-
-      // AK 2.2 Udskift H4 med H3 i accordions
-      document.querySelectorAll('.applikation-container .gm-uddybende-vejledning .gm-tekst h4').forEach(e => {
-        const newOverskrift = document.createElement('h3');
-        newOverskrift.textContent = e.textContent;
-        e.replaceWith(newOverskrift);
-      });
     }
+  });
+};
 
-    const opsummering = document.querySelector('.applikation-container .gm-opsummeringsside');
-    if (opsummering) {
-      console.log('Skip opsummering!');
-      (document.querySelectorAll('.gm-navigation .button-primary')[0]! as HTMLButtonElement).click();
+const designEksternLink = () => {
+  querySelectorAll('.gm-resultattrin .gm-handlings-link').forEach(el => {
+    el.classList.remove('button');
+    el.classList.remove('button-primary');
+  });
+};
+
+const designButtonState = () => {
+  // Knappen er inaktiv indtil jeg har valgt en svarmulighed
+  const allSvarInputs = querySelectorAll('.gm-svarmuligheder input');
+  if (allSvarInputs.length) {
+    const nextButton = querySelector('.gm-navigation .button-primary');
+    if (nextButton) {
+      if ([...allSvarInputs].some(n => (n as HTMLInputElement).checked)) {
+        nextButton.removeAttribute('disabled');
+      } else {
+        nextButton.setAttribute('disabled', 'disabled');
+      }
     }
-  }, 1);
-});
+  }
+};
+
+const designOverskrift = () => {
+  const overskrift = querySelector('.gm-overskrift h3');
+  if (overskrift) {
+    const newHeader = props.embedded ? 'h2' : 'h1';
+    const newOverskrift = document.createElement(newHeader);
+    newOverskrift.textContent = overskrift.textContent;
+    overskrift.replaceWith(newOverskrift);
+  }
+};
+
+const designAccordion = () => {
+  querySelectorAll('.gm-uddybende-vejledning .gm-tekst h4').forEach(e => {
+    const newHeader = props.embedded ? 'h3' : 'h2';
+    const newOverskrift = document.createElement(newHeader);
+    newOverskrift.classList.add('h3');
+    newOverskrift.textContent = e.textContent;
+    e.replaceWith(newOverskrift);
+  });
+};
+
+const skipOpsummeringsside = () => {
+  const opsummering = querySelector('.gm-opsummeringsside');
+  if (opsummering) {
+    (querySelectorAll('.gm-navigation .button-primary')[0]! as HTMLButtonElement).click();
+  }
+};
 </script>
 
+<style lang="scss">
+@import '../styles/components/_virk.scss';
+</style>
 <style lang="scss" scoped>
 @import '../styles/components/_applikation.scss';
 :deep() {
@@ -146,7 +149,6 @@ onMounted(async () => {
   }
 
   .gm-svarmuligheder label .gm-tekst {
-    // TODO: AJP - bør vi bruge 1em ?
     font-size: 16px;
   }
 
@@ -154,7 +156,4 @@ onMounted(async () => {
     font-size: 20px;
   }
 }
-</style>
-<style lang="scss">
-@import '../styles/components/virk.scss';
 </style>
