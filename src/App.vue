@@ -8,6 +8,7 @@
           :is-logged-in="isLoggedIn"
           :token="token"
           :bruger="bruger"
+          :embedded="false"
           @piwikPageView="onPiwikPageView"
           @piwikDownloadEvent="onPiwikDownloadEvent"
           @piwikCTAClickEvent="onPiwikCTAClickEvent"

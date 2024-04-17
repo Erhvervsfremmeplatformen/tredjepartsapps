@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { Variant } from 'src/models/variant.model.js';
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 import { opretAfvikler } from '../../public/script/afvikler.js';
 
 /**
@@ -18,10 +18,12 @@ const props = defineProps({
     type: Object as () => Variant,
     default: null,
     required: false
+  },
+  embedded: {
+    type: Boolean,
+    default: false
   }
 });
-
-const embedded = ref(false);
 
 onMounted(async () => {
   const afvikler = await opretAfvikler({
@@ -86,7 +88,7 @@ onMounted(async () => {
     // TODO: AJP - brug en bestem klasse eller prop for at angive om den er standalone eller indlejret
     // TODO: AJP - refak
 
-    if (embedded.value) {
+    if (props.embedded) {
       // AK 1.1 Udskift H3 med H1
       const overskrift = document.querySelector('.applikation-container .gm-overskrift h3');
       if (overskrift) {
