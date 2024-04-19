@@ -1,20 +1,23 @@
 <!-- Indgangspunktet for sandkasse-applikationen. Direkte og indirekte importering af komponenter og stylesheets i denne klasse vil blive inkluderet i den endelig applikation. -->
 <template>
   <div class="applikation-container">
+    <div v-if="!loaded" class="spinner" />
+    <!-- GUIDEMOTOR INDHOLD-->
     <div id="gm-afvikler" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { Variant } from 'src/models/variant.model.js';
-import { onMounted } from 'vue';
-import { opretAfvikler } from '../../public/script/afvikler.js';
-
-const APP_CONTAINER_CLASS = '.applikation-container';
+import { ref, watch } from 'vue';
+import { opretAfvikler } from '../../public/script/1.3.87/afvikler.js';
 
 /**
+ * Denne applikation kan bruges til at vise "rejser" fra Virks Guidemotor. Design justeres efterfølgende, så det matcher Virksomhedsguidens design.
  * https://jira.erst.dk/browse/ERF-9555
  */
+
+const APP_CONTAINER_CLASS = '.applikation-container';
 const props = defineProps({
   variant: {
     type: Object as () => Variant,
@@ -27,6 +30,8 @@ const props = defineProps({
   }
 });
 
+const loaded = ref(false);
+
 const changeDesign = () => {
   setInterval(() => {
     designNavigationsButtons();
@@ -38,22 +43,29 @@ const changeDesign = () => {
   }, 1);
 };
 
-onMounted(async () => {
-  const rejseSlug = props.variant?.parametre[0].parametervaerdi;
-  if (!rejseSlug) {
-    // eslint-disable-next-line no-console
-    console.error('Missing variant "rejse" with slug');
-  } else {
-    const afvikler = await opretAfvikler({
-      rejse: rejseSlug,
-      authCallback(requestLogin = false) {
-        return null;
-      }
-    });
-    afvikler.mount('#gm-afvikler');
-    changeDesign();
+watch(
+  () => props.variant,
+  async variant => {
+    const rejseSlug = props.variant?.parametre[0].parametervaerdi;
+    if (!rejseSlug) {
+      // eslint-disable-next-line no-console
+      console.error('Missing variant "rejse" with slug');
+    } else {
+      const afvikler = await opretAfvikler({
+        rejse: rejseSlug,
+        authCallback() {
+          return null;
+        }
+      });
+      afvikler.mount('#gm-afvikler');
+      changeDesign();
+    }
+    loaded.value = true;
+  },
+  {
+    immediate: true
   }
-});
+);
 
 const querySelector = (selector: string): any => document.querySelector(`${APP_CONTAINER_CLASS} ${selector}`);
 const querySelectorAll = (selector: string): NodeListOf<any> => document.querySelectorAll(`${APP_CONTAINER_CLASS} ${selector}`);
@@ -66,11 +78,6 @@ const designNavigationsButtons = () => {
       classList.remove('gm-knap');
       classList.add('button');
       classList.add('button-secondary');
-
-      if (buttonElm) {
-        // Bytter om på "Forrige" og "Fortsæt" knapper
-        buttonElm.parentNode!.insertBefore(buttonElm, buttonElm.previousElementSibling);
-      }
     } else if (classList.contains('gm-knap')) {
       // Andre knapper
       classList.add('button');
@@ -138,7 +145,12 @@ const skipOpsummeringsside = () => {
 @import '../styles/components/_applikation.scss';
 :deep() {
   .gm-navigation {
-    flex-direction: row;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+
+    .button-secondary {
+      margin-left: 0;
+    }
   }
   .gm-afvikler {
     font-size: 14px;
@@ -146,6 +158,9 @@ const skipOpsummeringsside = () => {
   .gm-handlings-link {
     display: flex;
     max-width: fit-content;
+
+    flex-direction: row-reverse;
+    align-items: center;
   }
 
   .gm-svarmuligheder label .gm-tekst {
