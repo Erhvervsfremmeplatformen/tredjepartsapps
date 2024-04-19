@@ -43,12 +43,12 @@ describe('Design service', () => {
     const appContainer = document.createElement('div');
     appContainer.classList.add(APP_CONTAINER_CLASS);
     const container = document.createElement('div');
-    appContainer.appendChild(container);
-    const link = document.createElement('a');
     container.classList.add('gm-resultattrin');
+    const link = document.createElement('a');
     link.classList.add('gm-knap');
     link.classList.add('gm-primary');
     link.classList.add('gm-handlings-link');
+    appContainer.appendChild(container);
     container.appendChild(link);
     document.body.appendChild(appContainer);
 
@@ -67,25 +67,31 @@ describe('Design service', () => {
     const buttonNextSelector = '#button-next';
     const appContainer = document.createElement('div');
     appContainer.classList.add(APP_CONTAINER_CLASS);
+
     const navigationElement = document.createElement('div');
     navigationElement.classList.add('gm-navigation');
+
     const svarmulighedElement = document.createElement('div');
     svarmulighedElement.classList.add('gm-svarmuligheder');
-    const inputElement = document.createElement('input');
-    inputElement.type = 'radio';
-    inputElement.classList.add('gm-form-radio');
-    const inputElement2 = document.createElement('input');
-    inputElement2.type = 'radio';
-    inputElement2.id = 'input-radio';
-    inputElement2.classList.add('gm-form-radio');
-    svarmulighedElement.appendChild(inputElement);
-    svarmulighedElement.appendChild(inputElement2);
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.id = 'button-next';
-    button.classList.add('gm-knap');
-    button.classList.add('gm-primary');
-    navigationElement.appendChild(button);
+
+    const svarElement = document.createElement('input');
+    svarElement.type = 'radio';
+    svarElement.classList.add('gm-form-radio');
+
+    const svarElement2 = document.createElement('input');
+    svarElement2.type = 'radio';
+    svarElement2.id = 'input-radio';
+    svarElement2.classList.add('gm-form-radio');
+
+    const buttonElement = document.createElement('button');
+    buttonElement.type = 'button';
+    buttonElement.id = 'button-next';
+    buttonElement.classList.add('gm-knap');
+    buttonElement.classList.add('gm-primary');
+
+    svarmulighedElement.appendChild(svarElement);
+    svarmulighedElement.appendChild(svarElement2);
+    navigationElement.appendChild(buttonElement);
     appContainer.appendChild(navigationElement);
     appContainer.appendChild(svarmulighedElement);
     document.body.appendChild(appContainer);
@@ -120,6 +126,7 @@ describe('Design service', () => {
 
     const overskriftElement = document.createElement('h3');
     overskriftElement.classList.add('gm-overskrift');
+
     appContainer.appendChild(overskriftElement);
     document.body.appendChild(appContainer);
 
@@ -160,6 +167,7 @@ describe('Design service', () => {
     tekstElement.classList.add('gm-tekst');
 
     const overskriftElement = document.createElement('h4');
+
     tekstElement.appendChild(overskriftElement);
     vejledningElement.appendChild(tekstElement);
     appContainer.appendChild(vejledningElement);
@@ -182,21 +190,23 @@ describe('Design service', () => {
   it('vil automatisk klikke på "næste" knappen når der vises en opsummeringsside', () => {
     // ARRANGE
     const buttonClickListener = jest.fn();
+
     const appContainer = document.createElement('div');
     appContainer.classList.add(APP_CONTAINER_CLASS);
+
     const container = document.createElement('div');
     container.classList.add('gm-opsummeringsside');
-    appContainer.appendChild(container);
+
     const navigationElement = document.createElement('div');
     navigationElement.classList.add('gm-navigation');
 
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.classList.add('gm-knap');
-    button.classList.add('gm-primary');
-    button.addEventListener('click', buttonClickListener);
+    const buttonElement = document.createElement('button');
+    buttonElement.classList.add('gm-knap');
+    buttonElement.classList.add('gm-primary');
+    buttonElement.addEventListener('click', buttonClickListener);
 
-    navigationElement.appendChild(button);
+    appContainer.appendChild(container);
+    navigationElement.appendChild(buttonElement);
     container.appendChild(navigationElement);
     document.body.appendChild(appContainer);
 
