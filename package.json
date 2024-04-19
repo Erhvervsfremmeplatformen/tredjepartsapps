@@ -6,6 +6,8 @@
     "lint": "eslint \"**/*.{ts,js,vue}\" --fix --format=pretty",
     "prettierfix": "prettier --write \"**/*.{vue,ts}\" ",
     "prettiercheck": "prettier --check \"**/*.{vue,ts}\" ",
+    "test:unit": "vue-cli-service test:unit --coverage",
+    "test:watch": "vue-cli-service test:unit --watchAll",
     "transpile-test": "cross-env VG_VUE_TRANSPILE=true vue-cli-service build --target lib --formats umd-min --dest build/transpiled --name=f957085aeab09f8d18000e98508c85b95655da84 src/components/Applikation.vue"
   },
   "dependencies": {
@@ -41,10 +43,55 @@
     "webpack": "5.76.0",
     "webpack-bundle-analyzer": "4.6.1",
     "@babel/traverse": "7.23.2",
-    "postcss": "8.4.31"
+    "postcss": "8.4.31",
+    "jest-canvas-mock": "2.4.0",
+    "@types/jest": "27.5.2",
+    "@vue/cli-plugin-unit-jest": "5.0.8",
+    "@vue/test-utils": "2.0.2",
+    "@vue/vue3-jest": "27.0.0",
+    "babel-jest": "27.5.1",
+    "eslint-plugin-jest": "27.0.4",
+    "jest": "27.5.1",
+    "ts-jest": "27.1.5",
+    "vue-typescript-jest": "0.3.1"
   },
   "overrides": {
     "node-ipc@>9.2.1 <10": "9.2.1",
     "node-ipc@>10.1.0": "10.1.0"
+  },
+  "jest": {
+    "verbose": true,
+    "setupFiles": [
+      "jest-canvas-mock"
+    ],
+    "setupFilesAfterEnv": [],
+    "coverageDirectory": "build/reports/test/html/jest/",
+    "moduleFileExtensions": [
+      "js",
+      "vue",
+      "ts"
+    ],
+    "transform": {
+      "^.+\\.vue$": "@vue/vue3-jest",
+      ".+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
+      "^.+\\.tsx?$": "ts-jest",
+      ".*\\.(ts|vue)$": "<rootDir>/node_modules/vue-typescript-jest/preprocessor.js",
+      "\\.js$": "<rootDir>/node_modules/babel-jest"
+    },
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1",
+      "^~/(.*)$": "<rootDir>/tests/$1"
+    },
+    "testMatch": [
+      "**/tests/unit/**/*.spec.ts"
+    ],
+    "globals": {
+      "ts-jest": {
+        "babelConfig": true,
+        "isolatedModules": true
+      }
+    },
+    "testEnvironment": "jsdom",
+    "testRunner": "jest-jasmine2"
   }
 }

@@ -15,8 +15,11 @@
     "sourceMap": true,
     "baseUrl": ".",
     "skipLibCheck": true, // TODO: skal være false - venter på ny update fra toasted
-    "types": ["webpack-env"],
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+    "types": ["webpack-env","jest"],
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": [
     "./public",

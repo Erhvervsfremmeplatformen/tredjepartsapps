@@ -8,9 +8,10 @@
 </template>
 
 <script setup lang="ts">
-import { Variant } from 'src/models/variant.model.js';
 import { ref, watch } from 'vue';
 import { opretAfvikler } from '../../public/script/1.3.87/afvikler.js';
+import { Variant } from '../models/variant.model.js';
+import { designService } from '../services/design.service';
 
 /**
  * Denne applikation kan bruges til at vise "rejser" fra Virks Guidemotor. Design justeres efterfølgende, så det matcher Virksomhedsguidens design.
@@ -34,33 +35,33 @@ const loaded = ref(false);
 
 const changeDesign = () => {
   setInterval(() => {
-    designNavigationsButtons();
-    designEksternLink();
-    designButtonState();
-    designOverskrift();
-    designAccordion();
-    skipOpsummeringsside();
+    designService.applyDesign(props.embedded);
   }, 1);
+};
+
+const loadGuidemotorRejse = async () => {
+  const rejseSlug = props.variant?.parametre[0].parametervaerdi;
+  if (!rejseSlug) {
+    // eslint-disable-next-line no-console
+    console.error('Missing variant "rejse" with slug');
+  } else {
+    loaded.value = false;
+    const afvikler = await opretAfvikler({
+      rejse: rejseSlug,
+      authCallback() {
+        return null;
+      }
+    });
+    afvikler.mount('#gm-afvikler');
+    changeDesign();
+  }
+  loaded.value = true;
 };
 
 watch(
   () => props.variant,
   async variant => {
-    const rejseSlug = props.variant?.parametre[0].parametervaerdi;
-    if (!rejseSlug) {
-      // eslint-disable-next-line no-console
-      console.error('Missing variant "rejse" with slug');
-    } else {
-      const afvikler = await opretAfvikler({
-        rejse: rejseSlug,
-        authCallback() {
-          return null;
-        }
-      });
-      afvikler.mount('#gm-afvikler');
-      changeDesign();
-    }
-    loaded.value = true;
+    loadGuidemotorRejse();
   },
   {
     immediate: true

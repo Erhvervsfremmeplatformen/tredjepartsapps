@@ -24,6 +24,7 @@ module.exports = {
     'plugin:import/warnings',
     'plugin:import/typescript',
     'plugin:vue/recommended',
+    'plugin:jest/recommended',
     'prettier/@typescript-eslint',
     'prettier/vue'
   ],
@@ -34,9 +35,12 @@ module.exports = {
     sourceType: 'module',
     extraFileExtensions: ['.vue']
   },
-  plugins: ['vue', '@typescript-eslint/eslint-plugin', '@typescript-eslint/tslint'],
+  plugins: ['vue', 'jest', '@typescript-eslint/eslint-plugin', '@typescript-eslint/tslint'],
   ignorePatterns: ["build/**"],
   rules: {
+    'jest/no-disabled-tests': 'off',
+    'jest/no-jasmine-globals': 'off',
+    'jest/no-test-callback': 'off',
     '@typescript-eslint/no-unsafe-argument': 'off',
     '@typescript-eslint/no-unsafe-return': 'off',
     '@typescript-eslint/no-unsafe-member-access': 'off',
@@ -171,6 +175,7 @@ module.exports = {
           whitespace: [true, 'check-branch', 'check-decl', 'check-operator', 'check-separator', 'check-type', 'check-typecast']
         }
       }
-    ]
+    ],
+    'jest/no-conditional-expect': 'off'
   }
 };
