@@ -1,8 +1,7 @@
-const APP_CONTAINER_CLASS = '.applikation-container';
+export const APP_CONTAINER_CLASS = 'applikation-container';
 
 class DesignService {
-  public applyDesign(embedded: boolean): void {
-    console.log('Applying design!');
+  public applyDesign(embedded = false): void {
     this.designNavigationsButtons();
     this.designEksternLink();
     this.designButtonState();
@@ -65,7 +64,9 @@ class DesignService {
     this.querySelectorAll('.gm-uddybende-vejledning .gm-tekst h4').forEach(e => {
       const newHeader = embedded ? 'h3' : 'h2';
       const newOverskrift = document.createElement(newHeader);
-      newOverskrift.classList.add('h3');
+      if (!embedded) {
+        newOverskrift.classList.add('h3');
+      }
       newOverskrift.textContent = e.textContent;
       e.replaceWith(newOverskrift);
     });
@@ -79,10 +80,10 @@ class DesignService {
   }
 
   private querySelector(selector: string): any {
-    return document.querySelector(`${APP_CONTAINER_CLASS} ${selector}`);
+    return document.querySelector(`.${APP_CONTAINER_CLASS} ${selector}`);
   }
   private querySelectorAll(selector: string): NodeListOf<any> {
-    return document.querySelectorAll(`${APP_CONTAINER_CLASS} ${selector}`);
+    return document.querySelectorAll(`.${APP_CONTAINER_CLASS} ${selector}`);
   }
 }
 

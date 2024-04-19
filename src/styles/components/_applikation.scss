@@ -7,3 +7,32 @@ hr {
   margin-bottom: 32px;
   border: 1px solid;
 }
+
+:deep() {
+  .gm-navigation {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+
+    .button-secondary {
+      margin-left: 0;
+    }
+  }
+  .gm-afvikler {
+    font-size: 14px;
+  }
+  .gm-handlings-link {
+    display: flex;
+    max-width: fit-content;
+
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+
+  .gm-svarmuligheder label .gm-tekst {
+    font-size: 16px;
+  }
+
+  .gm-uddybende-vejledning-container summary {
+    font-size: 20px;
+  }
+}
