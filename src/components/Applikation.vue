@@ -45,27 +45,8 @@ onMounted(() => {
       console.log('# Error');
     });
     scriptTag2.addEventListener('load', () => {
-      console.log('# Loaded');
+      console.log('# Loaded 2');
 
-      setTimeout(() => {
-        const iframe = document.querySelector('#hr-on iframe') as HTMLIFrameElement;
-        var style = document.createElement('style');
-        style.textContent = 'h1 { color: red}';
-        console.log('IFRAME ', iframe);
-
-        if (iframe) {
-          console.log('AAA ', iframe.contentDocument);
-          const head = iframe.contentDocument?.head;
-          console.log('HEAD ', head);
-          if (head) {
-            const cssRules = '{h1: red}';
-            const style = document.createElement('style');
-            style.appendChild(document.createTextNode(cssRules));
-            console.log('Style ', style);
-            head.appendChild(style);
-          }
-        }
-      }, 3000);
       /*
       var iframe = document.getElementById('the-iframe');
       var style = document.createElement('style');
