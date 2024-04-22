@@ -1,21 +1,16 @@
 <!-- Indgangspunktet for sandkasse-applikationen. Direkte og indirekte importering af komponenter og stylesheets i denne klasse vil blive inkluderet i den endelig applikation. -->
 <template>
-  <div class="applikation-container">
-    <div v-if="!loaded" class="spinner" />
-    <!-- GUIDEMOTOR INDHOLD-->
-    <div v-show="loaded" id="gm-afvikler" />
+  <div id="app-root">
+    <div id="hr-on"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import { opretAfvikler } from '../../public/script/1.3.87/afvikler.js';
+import { onMounted } from 'vue';
 import { Variant } from '../models/variant.model.js';
-import { designService } from '../services/design.service';
 
 /**
- * Denne applikation kan bruges til at vise "rejser" fra Virks Guidemotor. Design justeres efterfølgende, så det matcher Virksomhedsguidens design.
- * https://jira.erst.dk/browse/ERF-9555
+ * TODO: AJP - forklar
  */
 
 const APP_CONTAINER_CLASS = '.applikation-container';
@@ -31,54 +26,69 @@ const props = defineProps({
   }
 });
 
-const loaded = ref(false);
+onMounted(() => {
+  var scriptTag = document.createElement('script');
+  scriptTag.setAttribute('src', 'https://recruit.hr-on.com/frame-api/hr.js');
+  //scriptTag.setAttribute('integrity', 'sha384-lIdgifsjgNS+G9ZtJ9zQjrBXYKIuMJqkx2DDrBGGjaitNFa/ctBkIgq2XO7JKF3d');
+  scriptTag.setAttribute('crossorigin', 'anonymous');
+  scriptTag.addEventListener('error', () => {
+    console.log('# Error');
+  });
+  scriptTag.addEventListener('load', () => {
+    console.log('# Loaded');
 
-const changeDesign = () => {
-  setInterval(() => {
-    designService.applyDesign(props.isIndholdselement);
-  }, 1);
-};
-
-const loadGuidemotorRejse = async () => {
-  const rejseSlug = props.variant?.parametre[0].parametervaerdi;
-  if (!rejseSlug) {
-    // eslint-disable-next-line no-console
-    console.error('Missing variant "rejse" with slug');
-  } else {
-    loaded.value = false;
-    const afvikler = await opretAfvikler({
-      rejse: rejseSlug,
-      authCallback() {
-        return null;
-      }
+    var scriptTag2 = document.createElement('script');
+    scriptTag2.setAttribute('src', 'https://recruit.hr-on.com/frame-api/customers/erhvervshusmidtjyllandsi.js');
+    //scriptTag2.setAttribute('integrity', 'sha384-lIdgifsjgNS+G9ZtJ9zQjrBXYKIuMJqkx2DDrBGGjaitNFa/ctBkIgq2XO7JKF3d');
+    scriptTag2.setAttribute('crossorigin', 'anonymous');
+    scriptTag2.addEventListener('error', () => {
+      console.log('# Error');
     });
-    afvikler.mount('#gm-afvikler');
-    changeDesign();
-  }
-  loaded.value = true;
-};
+    scriptTag2.addEventListener('load', () => {
+      console.log('# Loaded');
 
-watch(
-  () => props.variant,
-  async () => {
-    loadGuidemotorRejse();
-  },
-  {
-    immediate: true
-  }
-);
+      setTimeout(() => {
+        const iframe = document.querySelector('#hr-on iframe') as HTMLIFrameElement;
+        var style = document.createElement('style');
+        style.textContent = 'h1 { color: red}';
+        console.log('IFRAME ', iframe);
+
+        if (iframe) {
+          console.log('AAA ', iframe.contentDocument);
+          const head = iframe.contentDocument?.head;
+          console.log('HEAD ', head);
+          if (head) {
+            const cssRules = '{h1: red}';
+            const style = document.createElement('style');
+            style.appendChild(document.createTextNode(cssRules));
+            console.log('Style ', style);
+            head.appendChild(style);
+          }
+        }
+      }, 3000);
+      /*
+      var iframe = document.getElementById('the-iframe');
+      var style = document.createElement('style');
+      style.textContent = '.some-class-name {' + '  some-style-name: some-value;' + '}';
+      iframe.contentDocument.head.appendChild(style);
+      */
+    });
+    document.querySelector('#app-root')!.appendChild(scriptTag2);
+  });
+  document.querySelector('#app-root')!.appendChild(scriptTag);
+});
 </script>
 
-<style lang="scss">
-// Ikke muligt at bruge deep selector til angivelse af CSS root variabler
-@import '../styles/components/_virk_variables.scss';
+<style lang="scss" scoped>
+@import '../styles/components/_applikation.scss';
 </style>
 
 <style lang="scss" scoped>
-.applikation-container {
+#app-root {
   :deep() {
-    @import '../styles/components/_virk.scss';
+    h1 {
+      color: red !important;
+    }
   }
 }
-@import '../styles/components/_applikation.scss';
 </style>

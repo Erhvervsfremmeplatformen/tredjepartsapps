@@ -21,12 +21,20 @@ export default {
     return {
       loaded: false,
       variant: {
-        navn: 'rejse',
+        navn: 'script',
         aktiv: true,
         parametre: [
           {
-            parameternavn: 'slug',
-            parametervaerdi: '2dv6ajw3iav4'
+            parameternavn: 'mount',
+            parametervaerdi: '#on-hr'
+          },
+          {
+            parameternavn: 'scripts',
+            parametervaerdi: 'https://recruit.hr-on.com/frame-api/hr.js,https://recruit.hr-on.com/frame-api/customers/erhvervshusmidtjyllandsi.js'
+          },
+          {
+            parameternavn: 'integrity',
+            parametervaerdi: '["sha1","sha2"]["sha1","sha2"]'
           }
         ]
       }
