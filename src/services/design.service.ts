@@ -9,12 +9,12 @@ export const GM_BACK_BUTTON = 'gm-back-button';
 export const GM_NAVIGATION = 'gm-navigation';
 
 class DesignService {
-  public applyDesign(embedded = false): void {
+  public applyDesign(isIndholdselement = false): void {
     this.designNavigationsButtons();
     this.designEksternLink();
     this.designButtonState();
-    this.designOverskrift(embedded);
-    this.designAccordion(embedded);
+    this.designOverskrift(isIndholdselement);
+    this.designAccordion(isIndholdselement);
     this.skipOpsummeringsside();
   }
 
@@ -54,21 +54,21 @@ class DesignService {
     }
   }
 
-  private designOverskrift(embedded: boolean): void {
+  private designOverskrift(isIndholdselement: boolean): void {
     const overskrift = this.querySelector('.gm-overskrift h3');
     if (overskrift) {
-      const newHeader = embedded ? 'h2' : 'h1';
+      const newHeader = isIndholdselement ? 'h2' : 'h1';
       const newOverskrift = document.createElement(newHeader);
       newOverskrift.textContent = overskrift.textContent;
       overskrift.replaceWith(newOverskrift);
     }
   }
 
-  private designAccordion(embedded: boolean): void {
+  private designAccordion(isIndholdselement: boolean): void {
     this.querySelectorAll('.gm-uddybende-vejledning .gm-tekst h4').forEach(el => {
-      const newHeader = embedded ? 'h3' : 'h2';
+      const newHeader = isIndholdselement ? 'h3' : 'h2';
       const newOverskrift = document.createElement(newHeader);
-      if (!embedded) {
+      if (!isIndholdselement) {
         newOverskrift.classList.add('h3');
       }
       newOverskrift.textContent = el.textContent;

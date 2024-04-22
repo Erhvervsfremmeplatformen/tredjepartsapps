@@ -25,7 +25,7 @@ const props = defineProps({
     default: null,
     required: false
   },
-  embedded: {
+  isIndholdselement: {
     type: Boolean,
     default: false
   }
@@ -35,7 +35,7 @@ const loaded = ref(false);
 
 const changeDesign = () => {
   setInterval(() => {
-    designService.applyDesign(props.embedded);
+    designService.applyDesign(props.isIndholdselement);
   }, 1);
 };
 

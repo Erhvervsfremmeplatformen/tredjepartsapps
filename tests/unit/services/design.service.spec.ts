@@ -117,15 +117,15 @@ describe('Design service', () => {
   it.each([
     {
       element: 'h2',
-      embedded: true,
+      isIndholdselement: true,
       description: 'køres som dynamisk indholdselment'
     },
     {
       element: 'h1',
-      embedded: false,
+      isIndholdselement: false,
       description: 'køres som selvstændingt indholdselement'
     }
-  ])('kan ændre overskrift til $element når applikation $description', ({ embedded, element, description }) => {
+  ])('kan ændre overskrift til $element når applikation $description', ({ isIndholdselement, element, description }) => {
     // ARRANGE
     document.body.innerHTML = '';
     const appContainer = document.createElement('div');
@@ -138,7 +138,7 @@ describe('Design service', () => {
     document.body.appendChild(appContainer);
 
     // ACT
-    designService.applyDesign(embedded);
+    designService.applyDesign(isIndholdselement);
 
     // ASSERT
     const el = document.querySelector(element);
@@ -148,15 +148,15 @@ describe('Design service', () => {
   it.each([
     {
       element: 'h3',
-      embedded: true,
+      isIndholdselement: true,
       description: 'køres som dynamisk indholdselment'
     },
     {
       element: 'h2',
-      embedded: false,
+      isIndholdselement: false,
       description: 'køres som selvstændingt indholdselement'
     }
-  ])('kan ændre accordion overskrift til $element når applikation $description', ({ embedded, element, description }) => {
+  ])('kan ændre accordion overskrift til $element når applikation $description', ({ isIndholdselement, element, description }) => {
     // ARRANGE
     document.body.innerHTML = '';
     const appContainer = document.createElement('div');
@@ -176,13 +176,13 @@ describe('Design service', () => {
     document.body.appendChild(appContainer);
 
     // ACT
-    designService.applyDesign(embedded);
+    designService.applyDesign(isIndholdselement);
 
     // ASSERT
 
     const el = document.querySelector(element);
     expect(el).toBeDefined();
-    if (!embedded) {
+    if (!isIndholdselement) {
       expect(el!.classList).toContain('h3');
     }
   });

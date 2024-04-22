@@ -2,7 +2,7 @@
   <div>
     <div id="app" class="app-body" tabindex="-1">
       <div class="flexgrow container pt-8 pb-8">
-        <Applikation :variant="variant" :embedded="false" />
+        <Applikation :variant="variant" :is-indholdselement="false" />
       </div>
     </div>
   </div>
