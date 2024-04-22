@@ -8,31 +8,33 @@ hr {
   border: 1px solid;
 }
 
-:deep() {
-  .gm-navigation {
-    flex-direction: row-reverse;
-    justify-content: flex-end;
+.applikation-container {
+  :deep() {
+    .gm-navigation {
+      flex-direction: row-reverse;
+      justify-content: flex-end;
 
-    .button-secondary {
-      margin-left: 0;
+      .button-secondary {
+        margin-left: 0;
+      }
     }
-  }
-  .gm-afvikler {
-    font-size: 14px;
-  }
-  .gm-handlings-link {
-    display: flex;
-    max-width: fit-content;
+    .gm-afvikler {
+      font-size: 14px;
+    }
+    .gm-handlings-link {
+      display: flex;
+      max-width: fit-content;
 
-    flex-direction: row-reverse;
-    align-items: center;
-  }
+      flex-direction: row-reverse;
+      align-items: center;
+    }
 
-  .gm-svarmuligheder label .gm-tekst {
-    font-size: 16px;
-  }
+    .gm-svarmuligheder label .gm-tekst {
+      font-size: 16px;
+    }
 
-  .gm-uddybende-vejledning-container summary {
-    font-size: 20px;
+    .gm-uddybende-vejledning-container summary {
+      font-size: 20px;
+    }
   }
 }

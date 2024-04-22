@@ -40,7 +40,6 @@ const changeDesign = () => {
 };
 
 const loadGuidemotorRejse = async () => {
-  console.log('XX ', opretAfvikler);
   const rejseSlug = props.variant?.parametre[0].parametervaerdi;
   if (!rejseSlug) {
     // eslint-disable-next-line no-console
@@ -61,7 +60,7 @@ const loadGuidemotorRejse = async () => {
 
 watch(
   () => props.variant,
-  async variant => {
+  async () => {
     loadGuidemotorRejse();
   },
   {
@@ -71,8 +70,15 @@ watch(
 </script>
 
 <style lang="scss">
-@import '../styles/components/_virk.scss';
+// Ikke muligt at bruge deep selector til angivelse af CSS root variabler
+@import '../styles/components/_virk_variables.scss';
 </style>
+
 <style lang="scss" scoped>
+.applikation-container {
+  :deep() {
+    @import '../styles/components/_virk.scss';
+  }
+}
 @import '../styles/components/_applikation.scss';
 </style>

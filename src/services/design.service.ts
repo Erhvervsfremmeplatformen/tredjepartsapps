@@ -1,5 +1,13 @@
 export const APP_CONTAINER_CLASS = 'applikation-container';
 
+export const BUTTON = 'button';
+export const BUTTON_SECONDARY = 'button-secondary';
+export const BUTTON_PRIMARY = 'button-primary';
+export const GM_KNAP = 'gm-knap';
+export const GM_PRIMARY = 'gm-primary';
+export const GM_BACK_BUTTON = 'gm-back-button';
+export const GM_NAVIGATION = 'gm-navigation';
+
 class DesignService {
   public applyDesign(embedded = false): void {
     this.designNavigationsButtons();
@@ -10,38 +18,34 @@ class DesignService {
     this.skipOpsummeringsside();
   }
 
-  private designNavigationsButtons() {
-    this.querySelectorAll('.gm-knap').forEach(buttonElm => {
-      const { classList } = buttonElm;
-      if (classList.contains('gm-back-button')) {
+  private designNavigationsButtons(): void {
+    this.querySelectorAll(`.${GM_KNAP}`).forEach(el => {
+      const { classList } = el;
+      if (classList.contains(GM_BACK_BUTTON)) {
         // Tilbage knap
-        classList.remove('gm-knap');
-        classList.add('button');
-        classList.add('button-secondary');
-      } else if (classList.contains('gm-knap')) {
+        classList.remove(GM_KNAP);
+        classList.add(BUTTON, BUTTON_SECONDARY);
+      } else if (classList.contains(GM_KNAP)) {
         // Andre knapper
-        classList.add('button');
-        classList.add('button-primary');
-        classList.remove('gm-knap');
-        classList.remove('gm-primary');
+        classList.add(BUTTON, BUTTON_PRIMARY);
+        classList.remove(GM_KNAP, GM_PRIMARY);
       }
     });
   }
 
-  private designEksternLink() {
+  private designEksternLink(): void {
     this.querySelectorAll('.gm-resultattrin .gm-handlings-link').forEach(el => {
-      el.classList.remove('button');
-      el.classList.remove('button-primary');
+      el.classList.remove(BUTTON, BUTTON_PRIMARY);
     });
   }
 
-  private designButtonState() {
+  private designButtonState(): void {
     // Knappen er inaktiv indtil jeg har valgt en svarmulighed
     const allSvarInputs = this.querySelectorAll('.gm-svarmuligheder input');
     if (allSvarInputs.length) {
-      const nextButton = this.querySelector('.gm-navigation .button-primary');
+      const nextButton = this.querySelector(`.${GM_NAVIGATION} .${BUTTON_PRIMARY}`);
       if (nextButton) {
-        if ([...allSvarInputs].some(n => (n as HTMLInputElement).checked)) {
+        if ([...allSvarInputs].some(el => (el as HTMLInputElement).checked)) {
           nextButton.removeAttribute('disabled');
         } else {
           nextButton.setAttribute('disabled', 'disabled');
@@ -61,28 +65,28 @@ class DesignService {
   }
 
   private designAccordion(embedded: boolean): void {
-    this.querySelectorAll('.gm-uddybende-vejledning .gm-tekst h4').forEach(e => {
+    this.querySelectorAll('.gm-uddybende-vejledning .gm-tekst h4').forEach(el => {
       const newHeader = embedded ? 'h3' : 'h2';
       const newOverskrift = document.createElement(newHeader);
       if (!embedded) {
         newOverskrift.classList.add('h3');
       }
-      newOverskrift.textContent = e.textContent;
-      e.replaceWith(newOverskrift);
+      newOverskrift.textContent = el.textContent;
+      el.replaceWith(newOverskrift);
     });
   }
 
-  private skipOpsummeringsside() {
+  private skipOpsummeringsside(): void {
     const opsummering = this.querySelector('.gm-opsummeringsside');
     if (opsummering) {
-      (this.querySelectorAll('.gm-navigation .button-primary')[0]! as HTMLButtonElement).click();
+      (this.querySelectorAll(`.${GM_NAVIGATION} .${BUTTON_PRIMARY}`)[0]! as HTMLButtonElement).click();
     }
   }
 
-  private querySelector(selector: string): any {
+  private querySelector(selector: string): Element | null {
     return document.querySelector(`.${APP_CONTAINER_CLASS} ${selector}`);
   }
-  private querySelectorAll(selector: string): NodeListOf<any> {
+  private querySelectorAll(selector: string): NodeListOf<HTMLElement> {
     return document.querySelectorAll(`.${APP_CONTAINER_CLASS} ${selector}`);
   }
 }

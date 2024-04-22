@@ -1,4 +1,14 @@
-import { APP_CONTAINER_CLASS, designService } from '@/services/design.service';
+import {
+  APP_CONTAINER_CLASS,
+  BUTTON,
+  BUTTON_PRIMARY,
+  BUTTON_SECONDARY,
+  GM_BACK_BUTTON,
+  GM_KNAP,
+  GM_NAVIGATION,
+  GM_PRIMARY,
+  designService
+} from '@/services/design.service';
 
 describe('Design service', () => {
   it('kan håndtere navigationsknapper (tilbage)', () => {
@@ -6,8 +16,7 @@ describe('Design service', () => {
     const appContainer = document.createElement('div');
     appContainer.classList.add(APP_CONTAINER_CLASS);
     const buttonElement = document.createElement('button');
-    buttonElement.classList.add('gm-knap');
-    buttonElement.classList.add('gm-back-button');
+    buttonElement.classList.add(GM_KNAP, GM_BACK_BUTTON);
     appContainer.appendChild(buttonElement);
     document.body.appendChild(appContainer);
 
@@ -15,8 +24,9 @@ describe('Design service', () => {
     designService.applyDesign();
 
     // ASSERT
-    expect(buttonElement.classList).toContain('button');
-    expect(buttonElement.classList).toContain('button-secondary');
+    const { classList } = buttonElement;
+    expect(classList).toContain(BUTTON);
+    expect(classList).toContain(BUTTON_SECONDARY);
   });
 
   it('kan håndtere navigationsknapper', () => {
@@ -24,8 +34,7 @@ describe('Design service', () => {
     const appContainer = document.createElement('div');
     appContainer.classList.add(APP_CONTAINER_CLASS);
     const buttonElement = document.createElement('button');
-    buttonElement.classList.add('gm-knap');
-    buttonElement.classList.add('gm-primary');
+    buttonElement.classList.add(GM_KNAP, GM_PRIMARY);
     appContainer.appendChild(buttonElement);
     document.body.appendChild(appContainer);
 
@@ -33,9 +42,10 @@ describe('Design service', () => {
     designService.applyDesign();
 
     // ASSERT
-    expect(buttonElement.classList).not.toContain('gm-knap');
-    expect(buttonElement.classList).toContain('button');
-    expect(buttonElement.classList).toContain('button-primary');
+    const { classList } = buttonElement;
+    expect(classList).not.toContain(GM_KNAP);
+    expect(classList).toContain(BUTTON);
+    expect(classList).toContain(BUTTON_PRIMARY);
   });
 
   it('kan ændre design for eksterne links', async () => {
@@ -45,9 +55,7 @@ describe('Design service', () => {
     const container = document.createElement('div');
     container.classList.add('gm-resultattrin');
     const link = document.createElement('a');
-    link.classList.add('gm-knap');
-    link.classList.add('gm-primary');
-    link.classList.add('gm-handlings-link');
+    link.classList.add(GM_KNAP, GM_PRIMARY, 'gm-handlings-link');
     appContainer.appendChild(container);
     container.appendChild(link);
     document.body.appendChild(appContainer);
@@ -58,8 +66,8 @@ describe('Design service', () => {
     // ASSERT
     const eksternLink = document.querySelector('.gm-resultattrin .gm-handlings-link');
     const { classList } = eksternLink!;
-    expect(classList.contains('button')).toEqual(false);
-    expect(classList.contains('button-primary')).toEqual(false);
+    expect(classList.contains(BUTTON)).toEqual(false);
+    expect(classList.contains(BUTTON_PRIMARY)).toEqual(false);
   });
 
   it('knap "næste" vil være deaktiveret indtil man har valgt en svarmulighed', () => {
@@ -86,8 +94,7 @@ describe('Design service', () => {
     const buttonElement = document.createElement('button');
     buttonElement.type = 'button';
     buttonElement.id = 'button-next';
-    buttonElement.classList.add('gm-knap');
-    buttonElement.classList.add('gm-primary');
+    buttonElement.classList.add(GM_KNAP, GM_PRIMARY);
 
     svarmulighedElement.appendChild(svarElement);
     svarmulighedElement.appendChild(svarElement2);
@@ -134,13 +141,8 @@ describe('Design service', () => {
     designService.applyDesign(embedded);
 
     // ASSERT
-    if (embedded) {
-      const h2 = document.querySelector(element);
-      expect(h2).toBeDefined();
-    } else {
-      const h1 = document.querySelector(element);
-      expect(h1).toBeDefined();
-    }
+    const el = document.querySelector(element);
+    expect(el).toBeDefined();
   });
 
   it.each([
@@ -177,13 +179,11 @@ describe('Design service', () => {
     designService.applyDesign(embedded);
 
     // ASSERT
-    if (embedded) {
-      const h3 = document.querySelector(element);
-      expect(h3).toBeDefined();
-    } else {
-      const h2 = document.querySelector(element);
-      expect(h2).toBeDefined();
-      expect(h2!.classList).toContain('h3');
+
+    const el = document.querySelector(element);
+    expect(el).toBeDefined();
+    if (!embedded) {
+      expect(el!.classList).toContain('h3');
     }
   });
 
@@ -198,11 +198,11 @@ describe('Design service', () => {
     container.classList.add('gm-opsummeringsside');
 
     const navigationElement = document.createElement('div');
-    navigationElement.classList.add('gm-navigation');
+    navigationElement.classList.add(GM_NAVIGATION);
 
     const buttonElement = document.createElement('button');
-    buttonElement.classList.add('gm-knap');
-    buttonElement.classList.add('gm-primary');
+    buttonElement.classList.add(GM_KNAP);
+    buttonElement.classList.add(GM_PRIMARY);
     buttonElement.addEventListener('click', buttonClickListener);
 
     appContainer.appendChild(container);
