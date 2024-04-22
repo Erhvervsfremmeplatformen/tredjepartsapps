@@ -3,7 +3,7 @@
   <div class="applikation-container">
     <div v-if="!loaded" class="spinner" />
     <!-- GUIDEMOTOR INDHOLD-->
-    <div id="gm-afvikler" />
+    <div v-show="loaded" id="gm-afvikler" />
   </div>
 </template>
 
