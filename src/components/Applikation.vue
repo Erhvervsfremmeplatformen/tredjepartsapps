@@ -5,44 +5,13 @@
       <div class="applikation-container">
         <SvgIcons />
         <h1>Demo leverandør-applikation</h1>
-        <p class="my-5">
-          Denne applikation kan bruges som skabelon til udvikling af leverandør-applikation, der kan integreres i
-          <a href="https://www.virksomhedsguiden.dk" target="_blank">Virksomhedsguiden</a> som Vue 3 komponenter. Siden indeholder desuden teknisk
-          information om forskellige aspekter af en leverandør-applikation. Se <strong>README.md</strong> for instruktioner. Der henvises desuden til
-          den tekniske vejledning og design-vejledningen, som er blevet udleveret, for yderligere information.
-        </p>
-        <hr />
-        <VgMode :is-virksomhedsguiden="isVirksomhedsguiden" />
-        <hr />
-        <LoginDemo :token="token" :bruger="bruger" :is-logged-in="isLoggedIn" @requestToken="$emit('requestToken')" />
-        <hr />
-        <StorageAPI
-          :tekstnoegle-bundt-id="tekstnoegleBundtId"
-          :tekstnoegle-cvr-nummer="tekstnoegleCvrNummer"
-          :token="token"
-          :bruger="bruger"
-          @requestToken="$emit('requestToken')"
-        />
-        <hr />
-        <Navigation :step="step" :max-step="maxStep" @decreaseStep="decreaseStep" @increaseStep="increaseStep" />
-        <hr />
-        <LoginComponent />
-        <hr />
-        <ExternalAPI />
-        <hr />
-        <ParameterVariant :variant="variant" />
-        <hr />
-        <Responsive />
-        <hr />
-        <Icons />
-        <hr />
+        <div class="foo">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+          voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+          deserunt mollit anim id est laborum.
+        </div>
         <DKFDSComponent />
-        <hr />
-        <CustomMultiselect />
-        <hr />
-        <StateComponent />
-        <hr />
-        <DataCollector />
       </div>
     </div>
   </div>
@@ -55,20 +24,8 @@ import { PropType, onUnmounted, provide, ref } from 'vue';
 import { Bruger } from '../models/bruger.model';
 import { Variant } from '../models/variant.model';
 import * as slugUtil from '../utils/slug.util';
-import CustomMultiselect from './CustomMultiselect.vue';
 import DKFDSComponent from './DKFDSComponent.vue';
-import DataCollector from './DataCollector.vue';
-import ExternalAPI from './ExternalAPI.vue';
-import Icons from './Icons.vue';
-import LoginComponent from './LoginComponent.vue';
-import LoginDemo from './LoginDemo.vue';
-import Navigation from './Navigation.vue';
-import ParameterVariant from './ParameterVariant.vue';
-import Responsive from './Responsive.vue';
-import StateComponent from './StateComponent.vue';
-import StorageAPI from './StorageAPI.vue';
 import SvgIcons from './SvgIcons.vue';
-import VgMode from './VgMode.vue';
 
 const props = defineProps({
   variant: {
@@ -158,5 +115,10 @@ window.addEventListener('hashchange', updateStepFromHash);
 </script>
 
 <style lang="scss" scoped>
+.foo {
+  border: 1px solid var(--color-vg);
+  background-color: var(--color-vg);
+}
+
 @import '../styles/components/_applikation.scss';
 </style>

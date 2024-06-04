@@ -22,6 +22,8 @@ export default function () {
 
     createServer({
         routes() {
+            // Tillad ikoner
+            this.passthrough('/img/*');
             this.post(DEFAULT_ENDPOINT, (schema, request) => {
                 const { requestBody } = request;
                 if (requestBody.includes('bucketTekstnoegleGetJsonindhold')) {

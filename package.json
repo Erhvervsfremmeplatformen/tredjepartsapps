@@ -11,6 +11,7 @@
   "dependencies": {
     "@erst-vg/bucket-json-client": "1.0.3",
     "@erst-vg/piwik-event-wrapper": "2.0.3",
+    "@erst-vg/vg-dkfds": "file:../../../../../Downloads/erst-vg-vg-dkfds-0.0.1.tgz",
     "dkfds": "8.0.1",
     "graphql-tag": "2.12.6",
     "miragejs": "0.1.48",
@@ -19,6 +20,7 @@
     "slugify": "1.6.5",
     "vue": "3.3.4",
     "vue-axios": "3.4.1",
+    "vue-inline-svg": "3.1.2",
     "vue-multiselect": "3.0.0-alpha.2",
     "vuex": "4.0.2"
   },

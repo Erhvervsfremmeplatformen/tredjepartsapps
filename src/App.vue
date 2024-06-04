@@ -9,6 +9,7 @@
           :token="token"
           :bruger="bruger"
           :is-virksomhedsguiden="false"
+          :icons-map="icons"
           :tekstnoegle-bundt-id="TEKSTNOEGLE_BUNDT_ID"
           :tekstnoegle-cvr-nummer="TEKSTNOEGLE_CVR_NUMMER"
           @piwikPageView="onPiwikPageView"
@@ -55,7 +56,7 @@
 <script setup lang="ts">
 // INFO: Bemærk ændringer til denne fil, vil ikke blive inkluderet i den endelige applikation
 import * as DKFDS from 'dkfds';
-import { Ref, computed, onMounted, ref } from 'vue';
+import { Ref, computed, onMounted, provide, ref } from 'vue';
 import Applikation from './components/Applikation.vue';
 import { Role } from './enums/role.enum';
 import { TokenStatus } from './enums/tokenStatus.enum';
@@ -95,6 +96,12 @@ const bruger = computed(() =>
         roller: [Role.ERF_LEVERANDOER]
       }
 );
+
+const icons = ref({
+  highlightArrow: require('@/assets/icons/highlightArrow.svg')
+});
+
+provide('iconMap', icons);
 
 onMounted(() => {
   DKFDS.init();
@@ -162,6 +169,10 @@ const onRequestToken = () => {
 };
 </script>
 
+<style lang="scss">
+@import '@erst-vg/vg-dkfds/src/styles/variable.scss';
+</style>
+
 <style scoped lang="scss">
-@import 'styles/_app.scss';
+//@import 'styles/_app.scss';
 </style>

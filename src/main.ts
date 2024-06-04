@@ -12,7 +12,7 @@ export const TEKSTNOEGLE_BUNDT_ID = 'tredjepartsapplikation.demo_applikation.all
 export const TEKSTNOEGLE_CVR_NUMMER = '12345678';
 
 // Mock server for standalone mode
-const useMockServer = true;
+const useMockServer = false;
 if (useMockServer) {
   makeServer();
 }
