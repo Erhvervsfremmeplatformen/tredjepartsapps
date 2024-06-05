@@ -8,6 +8,8 @@
 import { computed, inject } from 'vue';
 import InlineSvg from 'vue-inline-svg';
 
+// Ansvarlig for at hente ikon som enten er site specifikt eller fra @erst-vg/dkfds NPM biblioteket
+
 const props = defineProps({
   icon: {
     type: String,
