@@ -100,7 +100,6 @@ const bruger = computed(() =>
 const icons = ref({
   highlightArrow: require('@/assets/icons/highlightArrow.svg')
 });
-
 provide('iconMap', icons);
 
 onMounted(() => {
@@ -168,10 +167,6 @@ const onRequestToken = () => {
   }
 };
 </script>
-
-<style lang="scss">
-@import '@erst-vg/vg-dkfds/src/styles/variable.scss';
-</style>
 
 <style scoped lang="scss">
 //@import 'styles/_app.scss';

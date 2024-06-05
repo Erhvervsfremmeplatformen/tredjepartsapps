@@ -2,9 +2,14 @@
   <div>
     <h2 class="mt-5">Det Fælles Designsystem (DKFDS)</h2>
 
+    <h3>VG ikoner</h3>
+    <div>
+      <VgIcon icon="highlightArrow" />
+    </div>
+
     <h3>Accordions</h3>
     <div>
-      <ul id="accordion-element" class="accordion">
+      <ul id="accordion-element" class="accordion vg-accordion">
         <li>
           <h2>
             <button class="accordion-button" aria-expanded="false" aria-controls="a1">
@@ -13,6 +18,7 @@
                 <span class="icon_text">Information</span>
                 <svg class="icon-svg" focusable="false" aria-hidden="true"><use xlink:href="#info"></use></svg>
               </span>
+              <VgIcon icon="accordionOpen" />
             </button>
           </h2>
           <div id="a1" aria-hidden="true" class="accordion-content">
@@ -307,8 +313,8 @@
       <button class="button button-secondary">knap</button>
       <button class="button button-tertiary">knap</button>
       <button class="button button-quaternary">knap</button>
-      <button class="button button-primary">
-        <svg class="icon-svg" focusable="false" aria-hidden="true"><use xlink:href="#refresh"></use></svg>
+      <button class="button buttonx-primary">
+        <svg class="icon-svg" focusable="false" aria-hidden="true"><use xlink:href="#home"></use></svg>
         knap
       </button>
     </div>
@@ -670,7 +676,9 @@
 
 <script setup lang="ts">
 import * as DKFDS from 'dkfds';
-import { inject, onMounted } from 'vue';
+import { onMounted } from 'vue';
+
+import VgIcon from './VgIcon.vue';
 
 onMounted(() => {
   new DKFDS.Accordion(document.querySelector('.applikation-container #accordion-element')).init();
@@ -682,17 +690,4 @@ onMounted(() => {
   modal.init();
   DKFDS.datePicker.on(document.body);
 });
-
-const iconMap = inject('iconMap');
-
-const getIcon = (icon: string) => require(`@erst-vg/vg-dkfds/src/assets/icons/${icon}.svg`);
 </script>
-
-<style lang="scss" scoped>
-.foo {
-  height: 2.4rem;
-  width: 2.4rem;
-}
-
-@import '@erst-vg/vg-dkfds/src/styles/accordion/vg-accordion.scss';
-</style>

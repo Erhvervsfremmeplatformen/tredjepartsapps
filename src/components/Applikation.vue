@@ -1,31 +1,26 @@
 <!-- Indgangspunktet for leverandør-applikationen. Direkte og indirekte importering af komponenter og stylesheets i denne klasse vil blive inkluderet i den endelig applikation. -->
 <template>
-  <div class="row">
-    <div class="col-12 col-md-10">
-      <div class="applikation-container">
+  <VgBootstrap @icon-list="emit('icon-list', $event)">
+    <div class="row">
+      <div class="col-12 col-md-10">
         <SvgIcons />
         <h1>Demo leverandør-applikation</h1>
-        <div class="foo">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-          voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-          deserunt mollit anim id est laborum.
-        </div>
         <DKFDSComponent />
       </div>
     </div>
-  </div>
+  </VgBootstrap>
 </template>
 
 <script setup lang="ts">
 import { DataEvents, piwikService } from '@erst-vg/piwik-event-wrapper';
 import { DataEmits } from '@erst-vg/piwik-event-wrapper/lib/models/emits.model';
-import { PropType, onUnmounted, provide, ref } from 'vue';
+import { PropType, onMounted, onUnmounted, provide, ref } from 'vue';
 import { Bruger } from '../models/bruger.model';
 import { Variant } from '../models/variant.model';
 import * as slugUtil from '../utils/slug.util';
 import DKFDSComponent from './DKFDSComponent.vue';
 import SvgIcons from './SvgIcons.vue';
+import VgBootstrap from './VgBootstrap.vue';
 
 const props = defineProps({
   variant: {
@@ -59,6 +54,10 @@ const props = defineProps({
   tekstnoegleCvrNummer: {
     type: String,
     default: ''
+  },
+  iconsMap: {
+    type: Object as PropType<any>,
+    default: () => ({})
   }
 });
 
@@ -70,7 +69,8 @@ const emit = defineEmits([
   DataEvents.CTA_CLICK_EVENT,
   DataEvents.START_EVENT,
   DataEvents.SLUT_EVENT,
-  'requestToken'
+  'requestToken',
+  'icon-list'
 ]);
 
 const step = ref(1);
@@ -85,6 +85,8 @@ piwikService.init(emit as DataEmits);
 onUnmounted(() => {
   window.removeEventListener('hashchange', updateStepFromHash);
 });
+
+onMounted(() => {});
 
 const decreaseStep = () => {
   if (window.location.hash !== '#1') {
@@ -115,10 +117,5 @@ window.addEventListener('hashchange', updateStepFromHash);
 </script>
 
 <style lang="scss" scoped>
-.foo {
-  border: 1px solid var(--color-vg);
-  background-color: var(--color-vg);
-}
-
 @import '../styles/components/_applikation.scss';
 </style>
