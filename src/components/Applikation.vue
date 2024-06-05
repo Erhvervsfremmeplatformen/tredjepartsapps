@@ -54,10 +54,6 @@ const props = defineProps({
   tekstnoegleCvrNummer: {
     type: String,
     default: ''
-  },
-  iconsMap: {
-    type: Object as PropType<any>,
-    default: () => ({})
   }
 });
 

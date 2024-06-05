@@ -15,11 +15,8 @@ const props = defineProps({
   }
 });
 
-const iconMap = inject('iconMap');
-const getIcon = computed(() => {
-  console.log('## XXX ', iconMap);
-  return (iconMap as any)[props.icon] ?? require(`@erst-vg/vg-dkfds/src/assets/icons/${props.icon}.svg`);
-});
+const iconsMap = inject('iconsMap');
+const getIcon = computed(() => (iconsMap as any)[props.icon] ?? require(`@erst-vg/dkfds/src/assets/icons/${props.icon}.svg`));
 </script>
 
 <style lang="scss" scoped></style>

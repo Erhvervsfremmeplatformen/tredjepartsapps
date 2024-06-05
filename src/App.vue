@@ -100,7 +100,7 @@ const bruger = computed(() =>
 const icons = ref({
   highlightArrow: require('@/assets/icons/highlightArrow.svg')
 });
-provide('iconMap', icons);
+provide('iconsMap', icons);
 
 onMounted(() => {
   DKFDS.init();

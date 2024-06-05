@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@erst-vg/bucket-json-client": "1.0.3",
+    "@erst-vg/dkfds": "file:../../../../../Downloads/erst-vg-dkfds-0.0.1.tgz",
     "@erst-vg/piwik-event-wrapper": "2.0.3",
-    "@erst-vg/vg-dkfds": "file:../../../../../Downloads/erst-vg-vg-dkfds-0.0.1.tgz",
     "dkfds": "8.0.1",
     "graphql-tag": "2.12.6",
     "miragejs": "0.1.48",
