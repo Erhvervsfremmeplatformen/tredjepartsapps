@@ -1,0 +1,19 @@
+<template>
+  <div>
+    <h3>Cards</h3>
+    <div class="card">
+      <div class="card-header">
+        <h2 class="header-title">Eksempel på card-komponenten</h2>
+      </div>
+
+      <div class="card-text">
+        <p>
+          Du kan bruge cards til at gruppere funktionalitet, der adskiller sig fra sidens øvrige indhold. Cards kan placeres i et
+          <a href="/kode/grid/">grid</a>, således at de står side om side.
+        </p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts"></script>

@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <InlineSvg :src="getIcon" class="icon" />
-  </div>
+  <InlineSvg :src="getIcon" class="icon icon-svg" />
 </template>
 
 <script setup lang="ts">
@@ -21,4 +19,8 @@ const iconsMap = inject('iconsMap');
 const getIcon = computed(() => (iconsMap as any)[props.icon] ?? require(`@erst-vg/dkfds/src/assets/icons/${props.icon}.svg`));
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.icon {
+  fill: currentColor;
+}
+</style>

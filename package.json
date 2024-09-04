@@ -22,11 +22,14 @@
     "vue-axios": "3.4.1",
     "vue-inline-svg": "3.1.2",
     "vue-multiselect": "3.0.0-alpha.2",
-    "vuex": "4.0.2"
+    "vuex": "4.0.2",
+    "@types/lodash": "4.17.7",
+    "lodash": "4.17.21"
   },
   "devDependencies": {
     "@babel/core": "7.23.9",
     "@babel/traverse": "7.23.2",
+    "@types/lodash": "^4.17.7",
     "@typescript-eslint/eslint-plugin": "5.38.1",
     "@typescript-eslint/eslint-plugin-tslint": "5.38.1",
     "@typescript-eslint/parser": "5.38.1",

@@ -62,6 +62,7 @@ import { Role } from './enums/role.enum';
 import { TokenStatus } from './enums/tokenStatus.enum';
 import { TEKSTNOEGLE_BUNDT_ID, TEKSTNOEGLE_CVR_NUMMER } from './main';
 import { DEMO_ACCESS_TOKEN } from './utils/jwt-util';
+import * as tekstnoegleUtil from './utils/tekstnoegle-util';
 
 // Hash værdi som VG sætter når login flow initieres, og når leverandør-applikationen vises igen efter successfuldt login
 const HASH_LOGIN_STRING = 'login_for_app';
@@ -79,6 +80,8 @@ const variant = ref({
     }
   ]
 });
+
+provide('$t', tekstnoegleUtil.lookup);
 
 const isLoggedIn = computed(() => !!token.value && !isTokenRequestCancelled.value);
 
@@ -168,6 +171,13 @@ const onRequestToken = () => {
 };
 </script>
 
+<style lang="scss">
+@import '@erst-vg/dkfds/src/styles/vg-variable.scss';
+</style>
+
 <style scoped lang="scss">
+.app-body {
+  background-color: var(--body-bg-color);
+}
 //@import 'styles/_app.scss';
 </style>
