@@ -11,6 +11,7 @@
           :is-virksomhedsguiden="false"
           :tekstnoegle-bundt-id="TEKSTNOEGLE_BUNDT_ID"
           :tekstnoegle-cvr-nummer="TEKSTNOEGLE_CVR_NUMMER"
+          :allow-passiv-token="false"
           @piwikPageView="onPiwikPageView"
           @piwikDownloadEvent="onPiwikDownloadEvent"
           @piwikCTAClickEvent="onPiwikCTAClickEvent"

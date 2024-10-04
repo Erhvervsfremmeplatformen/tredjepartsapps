@@ -51,7 +51,7 @@
 <script setup lang="ts">
 import { DataEvents, piwikService } from '@erst-vg/piwik-event-wrapper';
 import { DataEmits } from '@erst-vg/piwik-event-wrapper/lib/models/emits.model';
-import { PropType, onUnmounted, provide, ref } from 'vue';
+import { PropType, onMounted, onUnmounted, provide, ref } from 'vue';
 import { Bruger } from '../models/bruger.model';
 import { Variant } from '../models/variant.model';
 import * as slugUtil from '../utils/slug.util';
@@ -102,6 +102,10 @@ const props = defineProps({
   tekstnoegleCvrNummer: {
     type: String,
     default: ''
+  },
+  allowPassivToken: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -124,6 +128,16 @@ const maxStep = ref(3);
  * uanset fra hvilket komponent niveau Piwik service kaldes
  */
 piwikService.init(emit as DataEmits);
+
+onMounted(() => {
+  /*
+    Hvis Virksomhedsguiden tillader at leverandør-applikationen kan bede om en token uden brugeren aktivt gør noget.
+    Prop er først true når bruger har bekræftet leverandør-applikationen og heller ikke ønsker at se login modal
+  */
+  if (props.allowPassivToken) {
+    emit('requestToken');
+  }
+});
 
 onUnmounted(() => {
   window.removeEventListener('hashchange', updateStepFromHash);
