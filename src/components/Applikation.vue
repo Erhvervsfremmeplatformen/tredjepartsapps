@@ -14,7 +14,13 @@
         <hr />
         <VgMode :is-virksomhedsguiden="isVirksomhedsguiden" />
         <hr />
-        <LoginDemo :token="token" :bruger="bruger" :is-logged-in="isLoggedIn" @requestToken="$emit('requestToken')" />
+        <LoginDemo
+          :token="token"
+          :bruger="bruger"
+          :is-logged-in="isLoggedIn"
+          :hash-before-login="hashBeforeLogin"
+          @requestToken="$emit('requestToken')"
+        />
         <hr />
         <StorageAPI
           :tekstnoegle-bundt-id="tekstnoegleBundtId"
@@ -106,6 +112,10 @@ const props = defineProps({
   allowPassivToken: {
     type: Boolean,
     default: false
+  },
+  hashBeforeLogin: {
+    type: String,
+    default: ''
   }
 });
 

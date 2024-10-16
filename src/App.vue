@@ -12,6 +12,7 @@
           :tekstnoegle-bundt-id="TEKSTNOEGLE_BUNDT_ID"
           :tekstnoegle-cvr-nummer="TEKSTNOEGLE_CVR_NUMMER"
           :allow-passiv-token="false"
+          :hash-before-login="hashBeforeLogin"
           @piwikPageView="onPiwikPageView"
           @piwikDownloadEvent="onPiwikDownloadEvent"
           @piwikCTAClickEvent="onPiwikCTAClickEvent"
@@ -63,9 +64,10 @@ import { TokenStatus } from './enums/tokenStatus.enum';
 import { TEKSTNOEGLE_BUNDT_ID, TEKSTNOEGLE_CVR_NUMMER } from './main';
 import { DEMO_ACCESS_TOKEN } from './utils/jwt-util';
 
-// Hash værdi som VG sætter når login flow initieres, og når leverandør-applikationen vises igen efter successfuldt login
-const HASH_LOGIN_STRING = 'login_for_app';
+// Key som VG sætter i sessionStorage når login flow initieres, og når leverandør-applikationen vises igen efter successfuldt login
+const VG_BEFORE_LOGIN_HASH = 'vg_before_login_hash';
 
+const hashBeforeLogin = ref('');
 const loaded = ref(false);
 const token = ref('');
 const modal: Ref<DKFDSModal | undefined> = ref();
@@ -107,8 +109,8 @@ onMounted(() => {
   loaded.value = true;
 
   // Simulér bruger er kommet tilbage efter login, og derfor skal vise rumlerille modal
-  const { hash } = window.location;
-  if (hash?.replaceAll('#', '') === HASH_LOGIN_STRING) {
+  const hash = sessionStorage.getItem(VG_BEFORE_LOGIN_HASH);
+  if (hash) {
     modal.value!.show();
   }
 });
@@ -116,12 +118,18 @@ onMounted(() => {
 // Brugeren har accepteret rumlerille modal og leverandør-applikation modtager en JWT token
 const accept = () => {
   token.value = DEMO_ACCESS_TOKEN;
+  const hash = sessionStorage.getItem(VG_BEFORE_LOGIN_HASH);
+  if (hash) {
+    hashBeforeLogin.value = hash;
+    sessionStorage.removeItem(VG_BEFORE_LOGIN_HASH);
+  }
   modal.value!.hide();
 };
 
 // Brugeren har ikke accepteret rumlerille modal, så leverandør-applikation modtager en annulleret token
 const cancelTokenRequest = () => {
   token.value = TokenStatus.CANCELLED;
+  sessionStorage.removeItem(VG_BEFORE_LOGIN_HASH);
   modal.value!.hide();
 };
 
@@ -157,7 +165,7 @@ const onRequestToken = () => {
   // Simulér login flow hvis bruger ikke er logget ind når der anmodes efter token
   if (!isLoggedIn.value) {
     const { location } = window;
-    location.hash = HASH_LOGIN_STRING;
+    sessionStorage.setItem(VG_BEFORE_LOGIN_HASH, location.hash);
     location.reload();
   }
 };
