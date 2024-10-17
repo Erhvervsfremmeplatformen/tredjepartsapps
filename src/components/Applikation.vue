@@ -116,6 +116,10 @@ const props = defineProps({
   hashBeforeLogin: {
     type: String,
     default: ''
+  },
+  ydelsesId: {
+    type: String,
+    required: true
   }
 });
 
