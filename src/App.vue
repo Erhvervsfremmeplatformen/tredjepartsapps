@@ -13,6 +13,7 @@
           :tekstnoegle-cvr-nummer="TEKSTNOEGLE_CVR_NUMMER"
           :allow-passiv-token="false"
           :hash-before-login="hashBeforeLogin"
+          :applikation-id="applikationId"
           :ydelses-id="ydelsesId"
           @piwikPageView="onPiwikPageView"
           @piwikDownloadEvent="onPiwikDownloadEvent"
@@ -82,8 +83,11 @@ const variant = ref({
     }
   ]
 });
-// ydelsesId bliver sat med fra VG, så denne kan bruges i applikationen
-const ydelsesId = ref('ydelse-123');
+
+// ID på ydelsen, som viser leverandør-applikationen. VG sørger for denne værdi
+const ydelsesId = ref('968f4e4f-b782-52ab-9e12-955de4d2b92a');
+// ID på leverandør-applikation. VG sørger for denne værdi
+const applikationId = ref('6aede1a8-d2fd-51b0-8f4a-29cf6b5f530f');
 
 const isLoggedIn = computed(() => !!token.value && !isTokenRequestCancelled.value);
 

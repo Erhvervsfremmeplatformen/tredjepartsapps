@@ -11,6 +11,12 @@
           information om forskellige aspekter af en leverandør-applikation. Se <strong>README.md</strong> for instruktioner. Der henvises desuden til
           den tekniske vejledning og design-vejledningen, som er blevet udleveret, for yderligere information.
         </p>
+        <div>
+          Applikation ID: <code>{{ applikationId }}</code>
+        </div>
+        <div>
+          Ydelse ID: <code>{{ ydelsesId }}</code>
+        </div>
         <hr />
         <VgMode :is-virksomhedsguiden="isVirksomhedsguiden" />
         <hr />
@@ -118,6 +124,10 @@ const props = defineProps({
     default: ''
   },
   ydelsesId: {
+    type: String,
+    required: true
+  },
+  applikationId: {
     type: String,
     required: true
   }
