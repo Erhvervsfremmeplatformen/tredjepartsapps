@@ -1,68 +1,74 @@
 <!-- Indgangspunktet for leverandør-applikationen. Direkte og indirekte importering af komponenter og stylesheets i denne klasse vil blive inkluderet i den endelig applikation. -->
 <template>
-  <div class="row">
-    <div class="col-12 col-md-10">
-      <div class="applikation-container">
-        <SvgIcons />
-        <h1>Demo leverandør-applikation</h1>
-        <p class="my-5">
-          Denne applikation kan bruges som skabelon til udvikling af leverandør-applikation, der kan integreres i
-          <a href="https://www.virksomhedsguiden.dk" target="_blank">Virksomhedsguiden</a> som Vue 3 komponenter. Siden indeholder desuden teknisk
-          information om forskellige aspekter af en leverandør-applikation. Se <strong>README.md</strong> for instruktioner. Der henvises desuden til
-          den tekniske vejledning og design-vejledningen, som er blevet udleveret, for yderligere information.
-        </p>
-        <div>
-          Applikation ID: <code>{{ applikationId }}</code>
+  <VgDesignWrapper>
+    <div class="row">
+      <div class="col-12 col-md-10">
+        <div class="applikation-container">
+          <SvgIcons />
+          <h1>Demo leverandør-applikation</h1>
+          <p class="my-5">
+            Denne applikation kan bruges som skabelon til udvikling af leverandør-applikation, der kan integreres i
+            <a href="https://www.virksomhedsguiden.dk" target="_blank">Virksomhedsguiden</a> som Vue 3 komponenter. Siden indeholder desuden teknisk
+            information om forskellige aspekter af en leverandør-applikation. Se <strong>README.md</strong> for instruktioner. Der henvises desuden
+            til den tekniske vejledning og design-vejledningen, som er blevet udleveret, for yderligere information.
+          </p>
+          <div>
+            Applikation ID: <code>{{ applikationId }}</code>
+          </div>
+          <div>
+            Ydelse ID: <code>{{ ydelsesId }}</code>
+          </div>
+          <hr />
+          <VgMode :is-virksomhedsguiden="isVirksomhedsguiden" />
+          <hr />
+          <LoginDemo
+            :token="token"
+            :bruger="bruger"
+            :is-logged-in="isLoggedIn"
+            :hash-before-login="hashBeforeLogin"
+            @requestToken="$emit('requestToken')"
+          />
+          <hr />
+          <StorageAPI
+            :tekstnoegle-bundt-id="tekstnoegleBundtId"
+            :tekstnoegle-cvr-nummer="tekstnoegleCvrNummer"
+            :token="token"
+            :bruger="bruger"
+            @requestToken="$emit('requestToken')"
+          />
+          <hr />
+          <Navigation :step="step" :max-step="maxStep" @decreaseStep="decreaseStep" @increaseStep="increaseStep" />
+          <hr />
+          <LoginComponent />
+          <hr />
+          <ExternalAPI />
+          <hr />
+          <ParameterVariant :variant="variant" />
+          <hr />
+          <Responsive />
+          <hr />
+          <Icons />
+          <hr />
+          <DKFDSComponent />
+          <hr />
+          <CustomMultiselect />
+          <hr />
+          <StateComponent />
+          <hr />
+          <DataCollector />
+          <hr />
+          <!-- TODO: SFT udstil alle komponenter som kan bruges fra VG design wrapper -->
+          <VgDesignComponent />
         </div>
-        <div>
-          Ydelse ID: <code>{{ ydelsesId }}</code>
-        </div>
-        <hr />
-        <VgMode :is-virksomhedsguiden="isVirksomhedsguiden" />
-        <hr />
-        <LoginDemo
-          :token="token"
-          :bruger="bruger"
-          :is-logged-in="isLoggedIn"
-          :hash-before-login="hashBeforeLogin"
-          @requestToken="$emit('requestToken')"
-        />
-        <hr />
-        <StorageAPI
-          :tekstnoegle-bundt-id="tekstnoegleBundtId"
-          :tekstnoegle-cvr-nummer="tekstnoegleCvrNummer"
-          :token="token"
-          :bruger="bruger"
-          @requestToken="$emit('requestToken')"
-        />
-        <hr />
-        <Navigation :step="step" :max-step="maxStep" @decreaseStep="decreaseStep" @increaseStep="increaseStep" />
-        <hr />
-        <LoginComponent />
-        <hr />
-        <ExternalAPI />
-        <hr />
-        <ParameterVariant :variant="variant" />
-        <hr />
-        <Responsive />
-        <hr />
-        <Icons />
-        <hr />
-        <DKFDSComponent />
-        <hr />
-        <CustomMultiselect />
-        <hr />
-        <StateComponent />
-        <hr />
-        <DataCollector />
       </div>
     </div>
-  </div>
+  </VgDesignWrapper>
 </template>
 
 <script setup lang="ts">
 import { DataEvents, piwikService } from '@erst-vg/piwik-event-wrapper';
 import { DataEmits } from '@erst-vg/piwik-event-wrapper/lib/models/emits.model';
+import { VgDesignWrapper } from '@erst-vg/vg-design-wrapper';
 import { PropType, onMounted, onUnmounted, provide, ref } from 'vue';
 import { Bruger } from '../models/bruger.model';
 import { Variant } from '../models/variant.model';
@@ -81,6 +87,7 @@ import StateComponent from './StateComponent.vue';
 import StorageAPI from './StorageAPI.vue';
 import SvgIcons from './SvgIcons.vue';
 import VgMode from './VgMode.vue';
+import VgDesignComponent from './VgDesignComponent.vue';
 
 const props = defineProps({
   variant: {
