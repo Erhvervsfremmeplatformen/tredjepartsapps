@@ -48,7 +48,7 @@
           <hr />
           <DKFDSComponent />
           <hr />
-          <CustomMultiselect />
+          <ScopedStyling />
           <hr />
           <StateComponent />
           <hr />
@@ -69,7 +69,6 @@ import { PropType, inject, onMounted, onUnmounted, provide, ref } from 'vue';
 import { Bruger } from '../models/bruger.model';
 import { Variant } from '../models/variant.model';
 import * as slugUtil from '../utils/slug.util';
-import CustomMultiselect from './CustomMultiselect.vue';
 import DKFDSComponent from './DKFDSComponent.vue';
 import DataCollector from './DataCollector.vue';
 import ExternalAPI from './ExternalAPI.vue';
@@ -78,10 +77,11 @@ import LoginDemo from './LoginDemo.vue';
 import Navigation from './Navigation.vue';
 import ParameterVariant from './ParameterVariant.vue';
 import Responsive from './Responsive.vue';
+import ScopedStyling from './ScopedStyling.vue';
 import StateComponent from './StateComponent.vue';
 import StorageAPI from './StorageAPI.vue';
-import VgMode from './VgMode.vue';
 import VgDesignComponent from './VgDesignComponent.vue';
+import VgMode from './VgMode.vue';
 
 const props = defineProps({
   variant: {
