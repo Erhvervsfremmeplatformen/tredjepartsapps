@@ -8,7 +8,7 @@
     <div class="mt-8">
       <h3>Knapper</h3>
       <p>
-        I VgButtons vises styling for de forskellige eksempler på styling af kanpper og link. For at vise et enkelt ikon, bruges komponenetet
+        I VgButtons vises styling for de forskellige eksempler på styling af knapper og link. For at vise et enkelt ikon, bruges komponenetet
         VgButton.
       </p>
       <VgButtons />
