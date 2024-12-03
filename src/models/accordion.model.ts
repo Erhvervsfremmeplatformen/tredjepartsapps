@@ -1,4 +1,4 @@
-export interface Accordion {
+export interface AccordionElementModel {
   titel: string;
   indhold: string;
 }
