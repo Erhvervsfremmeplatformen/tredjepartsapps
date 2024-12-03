@@ -11,6 +11,7 @@
   "dependencies": {
     "@erst-vg/bucket-json-client": "1.0.3",
     "@erst-vg/piwik-event-wrapper": "2.0.3",
+    "@erst-vg/vg-design-wrapper": "^1.0.6",
     "dkfds": "8.0.1",
     "graphql-tag": "2.12.6",
     "miragejs": "0.1.48",
@@ -20,7 +21,8 @@
     "vue": "3.3.4",
     "vue-axios": "3.4.1",
     "vue-multiselect": "3.0.0-alpha.2",
-    "vuex": "4.0.2"
+    "vuex": "4.0.2",
+    "vue-inline-svg": "3.1.2"
   },
   "devDependencies": {
     "@babel/core": "7.23.9",

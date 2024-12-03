@@ -59,7 +59,7 @@
 <script setup lang="ts">
 // INFO: Bemærk ændringer til denne fil, vil ikke blive inkluderet i den endelige applikation
 import * as DKFDS from 'dkfds';
-import { Ref, computed, onMounted, ref } from 'vue';
+import { Ref, computed, onMounted, provide, ref } from 'vue';
 import Applikation from './components/Applikation.vue';
 import { Role } from './enums/role.enum';
 import { TokenStatus } from './enums/tokenStatus.enum';
@@ -83,6 +83,17 @@ const variant = ref({
     }
   ]
 });
+
+// Map oversættelse af tekstnøgler som bruges i komponenter med $t
+const tekstnoeglerMap: Ref<{ [key: string]: string }> = ref({
+  'content.applikation.cardliste.results.text': 'Viser 5 af 10 resultater',
+  'content.application.emnelandningside.button.visflere': 'Vis flere'
+});
+
+// Det er nøvendigt at provide $t, som bliver brugt i VgDesign komponenter
+provide('$t', (key: string) => tekstnoeglerMap.value[key] ?? key);
+
+provide('siteIkoner', {});
 
 // ID på ydelsen, som viser leverandør-applikationen. VG sørger for denne værdi
 const ydelsesId = ref('968f4e4f-b782-52ab-9e12-955de4d2b92a');
