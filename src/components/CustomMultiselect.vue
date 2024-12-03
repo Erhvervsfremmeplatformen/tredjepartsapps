@@ -22,7 +22,7 @@ const options = ['Danmark', 'Sverige', 'Norge'];
 
 <style lang="scss" scoped>
 // Deep selector er nødvendig her når style er scoped
-:deep() {
+:deep(.custom-multiselect) {
   // Kopieret fra vue-multiselect/dist/vue-multiselect.css siden det ikke er muligt at bruge @import direktiv inde i deep selector
   fieldset[disabled] .multiselect {
     pointer-events: none;
