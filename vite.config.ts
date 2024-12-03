@@ -6,6 +6,10 @@ import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
 // https://vite.dev/config/
 export default defineConfig({
+  server: {
+    hmr: true,
+    port: 8080
+  },
   plugins: [
     vue(),
     checker({ vueTsc: true }),
@@ -24,8 +28,14 @@ export default defineConfig({
       }
     }
   },
-  server: {
-    hmr: true,
-    port: 8080
+  build: {
+    rollupOptions: {
+      external: ['vue'],
+      output: {
+        globals: {
+          vue: 'Vue'
+        }
+      }
+    }
   }
 });
