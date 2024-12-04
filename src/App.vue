@@ -60,7 +60,7 @@
 // INFO: Bemærk ændringer til denne fil, vil ikke blive inkluderet i den endelige applikation
 import * as DKFDS from 'dkfds';
 import { Ref, computed, onMounted, provide, ref } from 'vue';
-import Applikation from './components/Applikation.vue';
+import Applikation, { LOG_PREFIX } from './components/Applikation.vue';
 import { Role } from './enums/role.enum';
 import { TokenStatus } from './enums/tokenStatus.enum';
 import { TEKSTNOEGLE_BUNDT_ID, TEKSTNOEGLE_CVR_NUMMER } from './main';
@@ -157,32 +157,32 @@ const cancelTokenRequest = () => {
 // Dummy metoder til at teste dataopsamling events. Disse events vil blive håndteret af Virksomhedsguiden.
 const onPiwikPageView = () => {
   // eslint-disable-next-line no-console
-  console.log('EVENT: page view');
+  console.log(`${LOG_PREFIX}EVENT page view`);
 };
 
 function onPiwikDownloadEvent() {
   // eslint-disable-next-line no-console
-  console.log('EVENT: download', arguments);
+  console.log(`${LOG_PREFIX}EVENT: download`, arguments);
 }
 
 function onPiwikCTAClickEvent() {
   // eslint-disable-next-line no-console
-  console.log('EVENT: CTA', arguments);
+  console.log(`${LOG_PREFIX}EVENT: CTA`, arguments);
 }
 
 function handlePiwikStartEvent() {
   // eslint-disable-next-line no-console
-  console.log('EVENT: Start', arguments);
+  console.log(`${LOG_PREFIX}EVENT: Start`, arguments);
 }
 
 function handlePiwikSlutEvent() {
   // eslint-disable-next-line no-console
-  console.log('EVENT: Slut', arguments);
+  console.log(`${LOG_PREFIX}EVENT: Slut`, arguments);
 }
 
 const onRequestToken = () => {
   // eslint-disable-next-line no-console
-  console.log('Request token er blevet kaldt');
+  console.log(`${LOG_PREFIX}Request token er blevet kaldt`);
   // Simulér login flow hvis bruger ikke er logget ind når der anmodes efter token
   if (!isLoggedIn.value) {
     const { location } = window;

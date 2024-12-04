@@ -36,6 +36,7 @@
 import { VgCard, VgCardGroup } from '@erst-vg/vg-design-wrapper';
 import { computed } from 'vue';
 import { CardElementModel } from '../../models/card.model';
+import { LOG_PREFIX } from '../Applikation.vue';
 
 const elementer = computed((): CardElementModel[] => [
   {
@@ -73,6 +74,6 @@ const elementer = computed((): CardElementModel[] => [
 
 const onCardClick = (index: number): void => {
   // eslint-disable-next-line no-console
-  console.log(`Card klik #${index}`);
+  console.log(`${LOG_PREFIX}Card klik #${index}`);
 };
 </script>

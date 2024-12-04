@@ -17,6 +17,7 @@
 <script setup lang="ts">
 import { VgListe, VgListeCard } from '@erst-vg/vg-design-wrapper';
 import { ref } from 'vue';
+import { LOG_PREFIX } from '../Applikation.vue';
 
 const total = 3;
 const pagination = 2;
@@ -30,7 +31,7 @@ const cards = ref(
 
 const onListeCard = (index: number): void => {
   // eslint-disable-next-line no-console
-  console.log(`Liste card klik for position ${index}`);
+  console.log(`${LOG_PREFIX}Liste card klik for position ${index}`);
 };
 
 const onLoadSlice = (): void => {

@@ -30,6 +30,7 @@
 import { VgAccordion } from '@erst-vg/vg-design-wrapper';
 import { computed } from 'vue';
 import { AccordionElementModel } from '../../models/accordion.model';
+import { LOG_PREFIX } from '../Applikation.vue';
 
 const elementer = computed((): AccordionElementModel[] => [
   {
@@ -48,6 +49,6 @@ const elementer = computed((): AccordionElementModel[] => [
 
 const onToggle = (status: boolean, accordionId: string, index: number): void => {
   // eslint-disable-next-line no-console
-  console.log(`Toggle accordion for ID: ${accordionId} for position ${index} med status ${status}`);
+  console.log(`${LOG_PREFIX}Toggle accordion for ID: ${accordionId} for position ${index} med status ${status}`);
 };
 </script>

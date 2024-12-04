@@ -121,6 +121,7 @@ import { Role } from '../enums/role.enum';
 import { Bruger } from '../models/bruger.model';
 import { TekstData, Tekster } from '../models/tekster.model';
 import { DEMO_ACCESS_TOKEN } from '../utils/jwt-util';
+import { LOG_PREFIX } from './Applikation.vue';
 
 const isVirksomhedsguiden = inject('isVirksomhedsguiden');
 const emit = defineEmits(['requestToken']);
@@ -178,7 +179,7 @@ const hentData = async () => {
     })
     .catch(e => {
       // eslint-disable-next-line no-console
-      console.error(e);
+      console.error(LOG_PREFIX, e);
       error.value = true;
     })
     .finally(() => {
@@ -197,7 +198,7 @@ const gemData = async (payload: TekstData = data.value!) => {
     })
     .catch(e => {
       // eslint-disable-next-line no-console
-      console.error(e);
+      console.error(LOG_PREFIX, e);
       error.value = true;
     })
     .finally(() => {
