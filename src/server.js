@@ -27,6 +27,12 @@ export default function () {
             // Tillad kald til eksterne domæner. Tilføj for hvert eksternt domæne
             this.passthrough('https://jsonplaceholder.typicode.com/*');
 
+            // Tillad SVG site specifikke ikoner
+            this.pretender.get('data:image/*', this.pretender.passthrough);
+            // Tillad SVG custom ikoner
+            this.pretender.get('/img/*', this.pretender.passthrough);
+
+
             // Mock Erhvervsstyrelsens API
             this.post(DEFAULT_ENDPOINT, (schema, request) => {
                 const { requestBody } = request;
