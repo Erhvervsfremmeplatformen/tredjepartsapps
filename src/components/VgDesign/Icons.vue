@@ -19,7 +19,7 @@
       Hvis der er behov for at anvende SVG ikoner, som ikke er tilgængelige i Virksomhedsguiden, så er det muligt anvende egne ikoner. Se
       <strong>src/components/Applikation.vue</strong> hvordan ikonet <i>share</i> bliver tilføjet som ikon.
     </p>
-    <VgIcon icon="share" class="mr-3" />
+    <VgIcon icon="bell" class="mr-3" />
     <p>Eksempel viser et custom ikon</p>
   </div>
 </template>
