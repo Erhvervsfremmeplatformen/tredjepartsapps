@@ -57,13 +57,6 @@
   </VgDesignWrapper>
 </template>
 
-<script lang="ts">
-export const LOG_PREFIX = 'Demo applikation: ';
-export default {
-  LOG_PREFIX
-};
-</script>
-
 <script setup lang="ts">
 import { DataEvents, piwikService } from '@erst-vg/piwik-event-wrapper';
 import { DataEmits } from '@erst-vg/piwik-event-wrapper/lib/models/emits.model';

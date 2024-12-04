@@ -36,7 +36,7 @@
 import { VgCard, VgCardGroup } from '@erst-vg/vg-design-wrapper';
 import { computed } from 'vue';
 import { CardElementModel } from '../../models/card.model';
-import { LOG_PREFIX } from '../Applikation.vue';
+import { LOG_PREFIX } from '../../utils/log-util';
 
 const elementer = computed((): CardElementModel[] => [
   {

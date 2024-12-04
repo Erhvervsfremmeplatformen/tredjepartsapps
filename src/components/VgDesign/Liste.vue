@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import { VgListe, VgListeCard } from '@erst-vg/vg-design-wrapper';
 import { ref } from 'vue';
-import { LOG_PREFIX } from '../Applikation.vue';
+import { LOG_PREFIX } from '../../utils/log-util';
 
 const total = 3;
 const pagination = 2;

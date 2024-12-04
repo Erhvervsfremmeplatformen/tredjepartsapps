@@ -121,7 +121,7 @@ import { Role } from '../enums/role.enum';
 import { Bruger } from '../models/bruger.model';
 import { TekstData, Tekster } from '../models/tekster.model';
 import { DEMO_ACCESS_TOKEN } from '../utils/jwt-util';
-import { LOG_PREFIX } from './Applikation.vue';
+import { LOG_PREFIX } from '../utils/log-util';
 
 const isVirksomhedsguiden = inject('isVirksomhedsguiden');
 const emit = defineEmits(['requestToken']);

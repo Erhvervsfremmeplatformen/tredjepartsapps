@@ -30,7 +30,7 @@
 import { VgAccordion } from '@erst-vg/vg-design-wrapper';
 import { computed } from 'vue';
 import { AccordionElementModel } from '../../models/accordion.model';
-import { LOG_PREFIX } from '../Applikation.vue';
+import { LOG_PREFIX } from '../../utils/log-util';
 
 const elementer = computed((): AccordionElementModel[] => [
   {

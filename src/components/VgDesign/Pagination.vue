@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import { VgPagination } from '@erst-vg/vg-design-wrapper';
-import { LOG_PREFIX } from '../Applikation.vue';
+import { LOG_PREFIX } from '../../utils/log-util';
 
 const onPage = (page: number): void => {
   // eslint-disable-next-line no-console

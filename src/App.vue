@@ -60,11 +60,12 @@
 // INFO: Bemærk ændringer til denne fil, vil ikke blive inkluderet i den endelige applikation
 import * as DKFDS from 'dkfds';
 import { Ref, computed, onMounted, provide, ref } from 'vue';
-import Applikation, { LOG_PREFIX } from './components/Applikation.vue';
+import Applikation from './components/Applikation.vue';
 import { Role } from './enums/role.enum';
 import { TokenStatus } from './enums/tokenStatus.enum';
 import { TEKSTNOEGLE_BUNDT_ID, TEKSTNOEGLE_CVR_NUMMER } from './main';
 import { DEMO_ACCESS_TOKEN } from './utils/jwt-util';
+import { LOG_PREFIX } from './utils/log-util';
 
 // Key som VG sætter i sessionStorage når login flow initieres, og når leverandør-applikationen vises igen efter successfuldt login
 const VG_BEFORE_LOGIN_HASH = 'vg_before_login_hash';
