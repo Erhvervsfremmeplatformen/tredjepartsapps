@@ -3,8 +3,8 @@
     <h2>Design</h2>
     <p>
       Leverandør-applikationens design skal baseres på <a href="https://designsystem.dk/kode/implementering/" target="_blank">DKFDS</a>.
-      Virksomhedsguiden er generelt også baseret på DKFDS, men nogle komponenter afviger. Disse afvigelser i design skal også gælde
-      leverandør-applikationen, så brugeren oplever leverandør-applikation som en sømløs del af Virksomhedsguiden.
+      Virksomhedsguiden er generelt også baseret på DKFDS, men nogle komponenter afviger. Disse design afvigelser skal også gælde
+      leverandør-applikationen, så brugeren oplever leverandør-applikationen som en sømløs del af Virksomhedsguiden.
     </p>
     <p>Se den udleveret design-vejledningen for mere information.</p>
     <h3>Design wrapper</h3>

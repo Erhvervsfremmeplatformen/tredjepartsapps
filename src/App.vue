@@ -84,7 +84,7 @@ const variant = ref({
   ]
 });
 
-// Det er nøvendigt at provide $t, som bliver brugt i VgDesign komponenter
+// Det er nøvendigt at provide $t, som bliver brugt i VgDesign komponenter til opslag af tekstnøgler. Denne vil normalt blive provided af Virksomhedsguiden
 provide('$t', (key: string, params: string[] = []) => {
   const tekstnoeglerMap: Ref<{ [key: string]: string }> = ref({
     'content.applikation.cardliste.results.text': `Viser ${params[0]} af ${params[1]} resultater`,
