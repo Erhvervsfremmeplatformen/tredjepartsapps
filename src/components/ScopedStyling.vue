@@ -7,7 +7,7 @@
       &lt;style&gt; tags bruge <strong>scoped</strong> attributten. Dette gælder naturligvis også stylesheets, der importeres fra NPM moduler.
     </p>
     <div class="custom-multiselect">
-      <multiselect v-model="value" :options="options" class="mt-5" placeholder="Vælg et land"></multiselect>
+      <multiselect v-model="value" :options="options" class="mt-5" placeholder="Vælg et land" />
     </div>
   </div>
 </template>
