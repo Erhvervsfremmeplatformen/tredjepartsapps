@@ -14,7 +14,7 @@
   "dependencies": {
     "@erst-vg/bucket-json-client": "1.0.3",
     "@erst-vg/piwik-event-wrapper": "2.0.3",
-    "@erst-vg/vg-design-wrapper": "1.0.6",
+    "@erst-vg/vg-design-wrapper": "1.0.7",
     "graphql-tag": "2.12.6",
     "miragejs": "0.1.48",
     "mitt": "3.0.0",
@@ -22,16 +22,17 @@
     "slugify": "1.6.5",
     "vue": "3.3.4",
     "vue-axios": "3.4.1",
+    "vue-inline-svg": "3.1.2",
     "vue-multiselect": "3.0.0-alpha.2",
-    "vuex": "4.0.2",
-    "vue-inline-svg": "3.1.2"
+    "vuex": "4.0.2"
   },
   "devDependencies": {
     "@babel/core": "7.23.9",
     "@babel/traverse": "7.23.2",
+    "@typescript-eslint/eslint-plugin": "8.1.0",
+    "@vitejs/plugin-vue": "5.1.2",
     "cross-env": "7.0.3",
     "eslint": "8.57.0",
-    "@typescript-eslint/eslint-plugin": "8.1.0",
     "eslint-config-prettier": "8.0.0",
     "eslint-formatter-pretty": "5.0.0",
     "eslint-import-resolver-typescript": "3.6.1",
@@ -43,13 +44,12 @@
     "schema-dts": "1.1.0",
     "style-resources-loader": "1.5.0",
     "typescript": "5.5.4",
+    "vite": "5.4.0",
+    "vite-plugin-checker": "0.7.2",
     "vite-plugin-css-injected-by-js": "^3.5.1",
     "vite-require": "0.2.3",
-    "@vitejs/plugin-vue": "5.1.2",
-    "vite": "5.4.0",
     "vitest": "2.0.5",
-    "vue-tsc": "2.0.29",
-    "vite-plugin-checker": "0.7.2"
+    "vue-tsc": "2.0.29"
   },
   "overrides": {
     "node-ipc@>9.2.1 <10": "9.2.1",

@@ -84,14 +84,17 @@ const variant = ref({
   ]
 });
 
-// Map oversættelse af tekstnøgler som bruges i komponenter med $t
-const tekstnoeglerMap: Ref<{ [key: string]: string }> = ref({
-  'content.applikation.cardliste.results.text': 'Viser 5 af 10 resultater',
-  'content.application.emnelandningside.button.visflere': 'Vis flere'
-});
-
 // Det er nøvendigt at provide $t, som bliver brugt i VgDesign komponenter
-provide('$t', (key: string) => tekstnoeglerMap.value[key] ?? key);
+provide('$t', (key: string, params: string[] = []) => {
+  const tekstnoeglerMap: Ref<{ [key: string]: string }> = ref({
+    'content.applikation.cardliste.results.text': `Viser ${params[0]} af ${params[1]} resultater`,
+    'content.application.emnelandningside.button.visflere': 'Vis flere',
+    'erhvervsfremme.content.application.pagination.forwards.button': 'Næste',
+    'erhvervsfremme.content.application.pagination.backwards.button': 'Forrige',
+    'erhvervsfremme.content.application.pagination.goto': 'Gå til side:'
+  });
+  return tekstnoeglerMap.value[key] ?? key;
+});
 
 provide('siteIkoner', {});
 
