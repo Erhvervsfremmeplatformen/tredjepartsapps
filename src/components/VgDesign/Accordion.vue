@@ -9,7 +9,7 @@
     <VgAccordion id="vg-accordion" :accordions="elementer" />
     <p>Eksempel viser en simpel accordion hvor kun titel og indhold angives</p>
     <h4>Advanceret accordion</h4>
-    <VgAccordion id="vg-accordion-control" :accordions="elementer" :bulk="true" heading="h4" @toggle="onToggle">
+    <VgAccordion id="vg-accordion-control" :accordions="elementer" :bulk="true" heading="h2" @toggle="onToggle">
       <template #before="{ index }">{{ elementer[index].overskrift }}</template>
       <template #titel="{ data }">
         {{ data.titel }}
