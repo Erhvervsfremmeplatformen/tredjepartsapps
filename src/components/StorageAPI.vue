@@ -56,7 +56,7 @@
       <div class="alert-body">
         <div class="alert-text">
           <div><strong>TekstnoegleBundtId: </strong>{{ tekstnoegleBundtId }}</div>
-          <div><strong>Ejes af CVR-nummre: </strong>{{ tekstnoegleCvrNummre }}</div>
+          <div><strong>Ejes af CVR-numre: </strong>{{ tekstnoegleCvrNummre }}</div>
           <div>
             <strong>Token: </strong
             ><span>
