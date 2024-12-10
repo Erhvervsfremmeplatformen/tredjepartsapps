@@ -56,9 +56,15 @@
       <div class="alert-body">
         <div class="alert-text">
           <div><strong>TekstnoegleBundtId: </strong>{{ tekstnoegleBundtId }}</div>
-          <div><strong>Ejes af CVR-nummer: </strong>{{ tekstnoegleCvrNummer }}</div>
+          <div><strong>Ejes af CVR-nummre: </strong>{{ tekstnoegleCvrNummre }}</div>
           <div>
-            <strong>Token: </strong><span>{{ accessToken ? 'Har angivet token' : 'Har ikke anmodet om token' }}</span>
+            <strong>Token: </strong
+            ><span>
+              <template v-if="token === TokenStatus.CANCELLED"> Token anmodning blev annulleret </template>
+              <template v-else>
+                {{ accessToken ? 'Har angivet token' : 'Har ikke anmodet om token' }}
+              </template>
+            </span>
           </div>
         </div>
       </div>
@@ -70,7 +76,8 @@
           <div class="alert-text">
             <p>
               Brugeren med rollerne: '<strong>{{ bruger.roller.join(', ') }}</strong
-              >' og CVR-nummer: <strong>{{ bruger.cvr }}</strong> har ikke rettighed til at redigere data
+              >' og CVR-nummer: <strong>{{ bruger.cvr }}</strong> har ikke rettighed til at redigere data. Data (tekstnoegleBundtId) ejes af
+              CVR-numre: {{ props.tekstnoegleCvrNummre }}
             </p>
           </div>
         </div>
@@ -118,9 +125,9 @@
 import { bucketClientService } from '@erst-vg/bucket-json-client';
 import { PropType, Ref, computed, inject, ref, watch } from 'vue';
 import { Role } from '../enums/role.enum';
+import { TokenStatus } from '../enums/tokenStatus.enum';
 import { Bruger } from '../models/bruger.model';
 import { TekstData, Tekster } from '../models/tekster.model';
-import { DEMO_ACCESS_TOKEN } from '../utils/jwt-util';
 import { LOG_PREFIX } from '../utils/log-util';
 
 const isVirksomhedsguiden = inject('isVirksomhedsguiden');
@@ -130,8 +137,8 @@ const props = defineProps({
     type: String,
     default: ''
   },
-  tekstnoegleCvrNummer: {
-    type: String,
+  tekstnoegleCvrNummre: {
+    type: Array as PropType<String[]>,
     default: ''
   },
   token: {
@@ -150,7 +157,10 @@ const pending = ref(false);
 const error = ref(false);
 const redigeringsmode = ref(false);
 
-const accessToken = computed(() => (isVirksomhedsguiden ? props.token : DEMO_ACCESS_TOKEN));
+const accessToken = computed((): string => {
+  const { token } = props;
+  return token === TokenStatus.CANCELLED ? '' : token;
+});
 
 const tekstFromTekstnoegle = computed(() => (data.value?.tekster?.faelles as Tekster)?.eksempel);
 
@@ -161,8 +171,9 @@ const allowJsonEdit = computed(() => {
     const { bruger } = props;
     if (bruger) {
       const { roller, cvr } = bruger;
-      // Kun ejeren af tekstnøgle bundt ID og specifikke roller har adgang til redigering
-      hasAccess = cvr === props.tekstnoegleCvrNummer || roller.includes(Role.ERF_ADMIN);
+      // Kun ejerne af tekstnøgle bundt ID og specifikke roller har adgang til redigering
+      const isOwner = !!props.tekstnoegleCvrNummre.find(c => c.trim() === cvr);
+      hasAccess = isOwner || roller.includes(Role.ERF_ADMIN);
     }
   }
   return hasAccess;

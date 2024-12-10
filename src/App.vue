@@ -10,7 +10,7 @@
           :bruger="bruger"
           :is-virksomhedsguiden="false"
           :tekstnoegle-bundt-id="TEKSTNOEGLE_BUNDT_ID"
-          :tekstnoegle-cvr-nummer="TEKSTNOEGLE_CVR_NUMMER"
+          :tekstnoegle-cvr-numre="[TEKSTNOEGLE_CVR_NUMMER_1, TEKSTNOEGLE_CVR_NUMMER_2]"
           :allow-passiv-token="false"
           :hash-before-login="hashBeforeLogin"
           :applikation-id="applikationId"
@@ -63,7 +63,7 @@ import { Ref, computed, onMounted, provide, ref } from 'vue';
 import Applikation from './components/Applikation.vue';
 import { Role } from './enums/role.enum';
 import { TokenStatus } from './enums/tokenStatus.enum';
-import { TEKSTNOEGLE_BUNDT_ID, TEKSTNOEGLE_CVR_NUMMER } from './main';
+import { TEKSTNOEGLE_BUNDT_ID, TEKSTNOEGLE_CVR_NUMMER_1, TEKSTNOEGLE_CVR_NUMMER_2 } from './main';
 import { DEMO_ACCESS_TOKEN } from './utils/jwt-util';
 import { LOG_PREFIX } from './utils/log-util';
 
@@ -115,7 +115,7 @@ const bruger = computed(() =>
         navn: 'Jens Hansen',
         organisation: 'Demo Nation',
         virksomhedsnavn: 'Business Demo',
-        cvr: TEKSTNOEGLE_CVR_NUMMER,
+        cvr: TEKSTNOEGLE_CVR_NUMMER_1,
         entityId: 'eid-CVR:12345678-RID:e4f13c3b-3c5a-459d-90a9-847ab9596157',
         roller: [Role.ERF_LEVERANDOER]
       }
