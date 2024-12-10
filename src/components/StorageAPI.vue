@@ -58,8 +58,8 @@
           <div><strong>TekstnoegleBundtId: </strong>{{ tekstnoegleBundtId }}</div>
           <div><strong>Ejes af CVR-numre: </strong>{{ tekstnoegleCvrNummre }}</div>
           <div>
-            <strong>Token: </strong
-            ><span>
+            <strong>Token: </strong>
+            <span>
               <template v-if="token === TokenStatus.CANCELLED"> Token anmodning blev annulleret </template>
               <template v-else>
                 {{ accessToken ? 'Har angivet token' : 'Har ikke anmodet om token' }}
