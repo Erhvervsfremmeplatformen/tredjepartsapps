@@ -139,7 +139,7 @@ const props = defineProps({
   },
   tekstnoegleCvrNummre: {
     type: Array as PropType<String[]>,
-    default: ''
+    default: () => []
   },
   token: {
     type: String,
