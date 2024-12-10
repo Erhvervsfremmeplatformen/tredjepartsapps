@@ -31,7 +31,7 @@
         <hr />
         <StorageAPI
           :tekstnoegle-bundt-id="tekstnoegleBundtId"
-          :tekstnoegle-cvr-nummer="tekstnoegleCvrNummer"
+          :tekstnoegle-cvr-nummre="tekstnoegleCvrNumre"
           :token="token"
           :bruger="bruger"
           @requestToken="$emit('requestToken')"
@@ -107,9 +107,9 @@ const props = defineProps({
     type: String,
     default: ''
   },
-  tekstnoegleCvrNummer: {
-    type: String,
-    default: ''
+  tekstnoegleCvrNumre: {
+    type: Array as PropType<string[]>,
+    default: () => []
   },
   allowPassivToken: {
     type: Boolean,
