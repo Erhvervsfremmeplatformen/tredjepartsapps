@@ -8,9 +8,11 @@ import { TEKSTNOEGLE_BUNDT_ID } from '@/main';
  */
 export default function () {
 
+    let version = 42;
+
     const stubbedResponse = {
         id: TEKSTNOEGLE_BUNDT_ID,
-        version: 1,
+        version,
         jsonindhold: {
             tekster: {
                 faelles: {
@@ -41,6 +43,7 @@ export default function () {
                         data: {
                             bucketTekstnoegleGetJsonindhold: {
                                 ...stubbedResponse,
+                                version
                             }
                         }
                     };
@@ -48,6 +51,7 @@ export default function () {
                 else if (requestBody.includes('bucketTekstnoeglePutJsonindhold')) {
                     const response = stubbedResponse;
                     const { jsonindhold } = response;
+                    version++;
                     const payload = extractTekstnoegle(requestBody);
                     if (payload) {
                         jsonindhold.tekster.faelles.eksempel = payload;
@@ -56,6 +60,7 @@ export default function () {
                         data: {
                             bucketTekstnoeglePutJsonindhold: {
                                 ...response,
+                                version
                             }
                         }
                     };
