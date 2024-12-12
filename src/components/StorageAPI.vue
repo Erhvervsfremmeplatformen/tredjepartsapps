@@ -150,7 +150,7 @@ const props = defineProps({
 
 const data: Ref<TekstData | null> = ref(null);
 const apiResponse: Ref<any> = ref('');
-// Indholder seneste versionsnummer for data i Storage API. Denne skal opdateres når Storage API returnerer data
+// Indholder seneste versionsnummer for data i Storage API. Denne bliver opdateret når Storage API returnerer data
 const dataVersion = ref(0);
 const pending = ref(false);
 const error = ref(false);
