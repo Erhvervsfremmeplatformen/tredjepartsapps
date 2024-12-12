@@ -43,6 +43,8 @@
         <StateComponent />
         <hr />
         <DataCollector />
+        <hr />
+        <DownloadComponent />
       </div>
     </div>
   </div>
@@ -58,6 +60,7 @@ import * as slugUtil from '../utils/slug.util';
 import CustomMultiselect from './CustomMultiselect.vue';
 import DKFDSComponent from './DKFDSComponent.vue';
 import DataCollector from './DataCollector.vue';
+import DownloadComponent from './DownloadComponent.vue';
 import ExternalAPI from './ExternalAPI.vue';
 import Icons from './Icons.vue';
 import LoginComponent from './LoginComponent.vue';
