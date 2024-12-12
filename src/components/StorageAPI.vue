@@ -118,7 +118,7 @@
 </template>
 
 <script setup lang="ts">
-import { bucketClientService } from '@erst-vg/bucket-json-client-v2';
+import { bucketClientService } from '@erst-vg/bucket-json-client';
 import { PropType, Ref, computed, inject, ref, watch } from 'vue';
 import { Role } from '../enums/role.enum';
 import { TokenStatus } from '../enums/tokenStatus.enum';
