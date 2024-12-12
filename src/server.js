@@ -1,6 +1,5 @@
 import { createServer, Response } from 'miragejs';
-import { DEFAULT_ENDPOINT } from '@erst-vg/bucket-json-client';
-import { HttpStatusCode } from 'axios';
+import { DEFAULT_ENDPOINT } from '@erst-vg/bucket-json-client-v2';
 import { TEKSTNOEGLE_BUNDT_ID } from '@/main';
 
 /**
