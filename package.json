@@ -12,7 +12,7 @@
     "transpile-test": "cross-env TRANSPILE_SHA=f957085aeab09f8d18000e98508c85b95655da84 TRANSPILE_DEST=build/f957085aeab09f8d18000e98508c85b95655da84/transpiled TRANSPILE_ENTRY=src/components/Applikation.vue npx vite build"
   },
   "dependencies": {
-    "@erst-vg/bucket-json-client": "1.0.3",
+    "@erst-vg/bucket-json-client": "2.0.0",
     "@erst-vg/piwik-event-wrapper": "2.0.3",
     "@erst-vg/vg-design-wrapper": "1.0.8",
     "graphql-tag": "2.12.6",

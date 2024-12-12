@@ -47,11 +47,7 @@
       </div>
     </div>
     <h4>Eksempel</h4>
-    <p>
-      Sålænge data kan serialiseres som JSON, er det op til leverandør-applikationen hvilke data der skal gemmes. I denne leverandør-applikation
-      anvendes Storage API til opbevaring og redigering af tekstnøgler, så det ikke kræver en ny release hver gang tekster skal ændres. Dette eksempel
-      er kraftigt simplificeret, og i en realistisk version ville hentede data være gemt et centralt sted fx. Pinia store.
-    </p>
+    <p>Dette eksempel er kraftigt simplificeret, og i en realistisk version ville hentede data være gemt et centralt sted fx. Pinia store.</p>
     <div class="alert alert-info">
       <div class="alert-body">
         <div class="alert-text">
@@ -115,7 +111,7 @@
             <p class="alert-text">Storage API request failed</p>
           </div>
         </div>
-        <pre v-else>{{ data }}</pre>
+        <pre v-else>{{ apiResponse }}</pre>
       </template>
     </template>
   </div>
@@ -153,6 +149,9 @@ const props = defineProps({
 });
 
 const data: Ref<TekstData | null> = ref(null);
+const apiResponse: Ref<any> = ref('');
+// Indholder seneste versionsnummer for data i Storage API. Denne bliver opdateret når Storage API returnerer data
+const dataVersion = ref(0);
 const pending = ref(false);
 const error = ref(false);
 const redigeringsmode = ref(false);
@@ -172,7 +171,7 @@ const allowJsonEdit = computed(() => {
     if (bruger) {
       const { roller, cvr } = bruger;
       // Kun ejerne af tekstnøgle bundt ID og specifikke roller har adgang til redigering
-      const isOwner = !!props.tekstnoegleCvrNummre.find(c => c.trim() === cvr);
+      const isOwner = !!props.tekstnoegleCvrNummre.find(c => c === cvr);
       hasAccess = isOwner || roller.includes(Role.ERF_ADMIN);
     }
   }
@@ -185,8 +184,15 @@ const hentData = async () => {
   error.value = false;
   bucketClientService
     .hentData<TekstData>()
-    .then(tekster => {
-      data.value = tekster;
+    .then(response => {
+      const { errors } = response;
+      if (errors && errors?.length > 0) {
+        throw Error('graphQL fejl');
+      }
+      const { jsonindhold, version } = response.data!;
+      data.value = jsonindhold;
+      apiResponse.value = response.data;
+      dataVersion.value = version;
     })
     .catch(e => {
       // eslint-disable-next-line no-console
@@ -203,9 +209,21 @@ const gemData = async (payload: TekstData = data.value!) => {
   pending.value = true;
   error.value = false;
   bucketClientService
-    .gemData<TekstData>(payload)
-    .then(tekster => {
-      data.value = tekster;
+    .gemData<TekstData>({
+      data: payload,
+      // send data versionen med, så API kan kontrollere for versionskonflikt
+      version: dataVersion.value
+    })
+    .then(response => {
+      const { errors } = response;
+      if (errors && errors?.length > 0) {
+        // Hvis API fx. kaldes med et forældet versionsnummer (versionskonflikt), så kan det håndteres her.
+        throw Error('graphQL fejl');
+      }
+      const { jsonindhold, version } = response.data!;
+      apiResponse.value = response.data;
+      data.value = jsonindhold;
+      dataVersion.value = version;
     })
     .catch(e => {
       // eslint-disable-next-line no-console
