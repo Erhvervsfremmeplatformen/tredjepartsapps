@@ -42,6 +42,7 @@ const metaTitle = computed((): string => 'Demoapplikation download eksempel');
 
 const contentHtml = computed(
   (): string => `
+  <!DOCTYPE html>
   <html lang="da">
     <head>
       <meta charset="utf-8" />
@@ -86,9 +87,10 @@ const styles = computed(
 
 const footerHtml = computed(
   (): string => `
-  <div>
-    <span>Side</span>
-    <span class="pageNumber"/>
+  <div style="text-align: right; width: 297mm; margin-bottom: 1.5cm">
+    <span style="margin-right: 2cm">
+      <span class="pageNumber" style="font-family: 'IBM Plex Sans', 'IBM Plex', sans-serif; font-size: 16px;" />
+    </span>
   </div>
 `
 );
