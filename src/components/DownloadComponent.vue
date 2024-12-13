@@ -1,7 +1,22 @@
 <template>
   <div>
     <h2 class="mt-5">Download af PDF</h2>
-    <p>Erhvervsfremmeplatformen udstiller et API til generation af PDF-filer, som er hostet af Erhvervsstyrelsen.</p>
+    <p>Følgende er et eksempel på at downloade noget HTML som en PDF, og kan findes i <strong>src/components/DownloadComponent.vue</strong>.</p>
+    <p>
+      Erhvervsfremmeplatformen udstiller et API til generation af PDF-filer, som er hostet af Erhvervsstyrelsen. Servicen er baseret på Puppeteer, som
+      er et Node.js API til at styre Chrome/Chromium, og som kan bruges til at indlæse et HTML-dokument i en browser, som derefter kan eksportere der
+      renderede dokument som en PDF-fil.
+    </p>
+    <p>Puppeteer har nogle tekniske begrænsninger ift. billeder og andet. Se den tekniske vejledning for detaljer om dette.</p>
+    <div v-if="!isVirksomhedsguiden" class="alert alert-warning">
+      <div class="alert-body">
+        <p class="alert-heading">Kørsel som selvstændig applikation</p>
+        <p class="alert-text">
+          Da kald til PDF-servicen fejler på grund af CORS, når man kører applikation selvstændigt, vil download-knappen altid resultere i en fejl.
+          Transpilér applikation på Virksomhedsguiden for at bruge PDF-servicen.
+        </p>
+      </div>
+    </div>
     <div class="mt-5">
       <div v-if="pending" class="spinner" aria-label="Henter indhold" />
       <div v-if="error" class="alert alert-error my-5" role="alert" aria-atomic="true">
@@ -17,17 +32,97 @@
 
 <script setup lang="ts">
 import axios from 'axios';
-import { inject, ref } from 'vue';
+import { computed, inject, ref } from 'vue';
 
 const isVirksomhedsguiden = inject('isVirksomhedsguiden');
 const error = ref(false);
 const pending = ref(false);
 
+const metaTitle = computed((): string => 'Demoapplikation download eksempel');
+
+const contentHtml = computed(
+  (): string => `
+  <html lang="da">
+    <head>
+      <meta charset="utf-8" />
+      <title>${metaTitle.value}</title>
+      <style>
+        ${styles.value}
+      </style>
+    </head>
+    <body>
+      <div class="content">
+        <div class="break-after">
+          Indhold på forsiden
+        </div>
+        <div>
+          Indhold på næste side
+        </div>
+      </div>
+    </body>
+  </html>
+`
+);
+
+// Fælles styles som bliver brugt i PDF'ens indhold kan angives her. Slår ikke igennem i header og footer.
+const styles = computed(
+  (): string => `
+  @page{
+    size:A4;
+    margin: 18mm;
+    margin-bottom: 36mm;
+  }
+
+  .content {
+    font-family: 'IBM Plex Sans', 'IBM Plex', sans-serif;
+    font-size: 20px;
+  }
+
+  .break-after {
+    break-after: page;
+  }
+`
+);
+
+const footerHtml = computed(
+  (): string => `
+  <div>
+    <span>Side</span>
+    <span class="pageNumber"/>
+  </div>
+`
+);
+
+const downloadPdf = (): void => {
+  pending.value = true;
+  error.value = false;
+  const html = contentHtml.value;
+  const headerTemplate = ''; // Templates kan være tomme, hvis man ikke ønsker at inkludere dele af PDF'en
+  const footerTemplate = footerHtml.value;
+  postPdfRequest({ html, headerTemplate, footerTemplate, title: metaTitle.value, language: 'da' })
+    .then(blob => {
+      // Omdanner blob-data til et link som klikkes på, så filen downloades automatisk
+      const blobUrl = URL.createObjectURL(blob);
+      const pdfLink = document.createElement('a');
+      pdfLink.download = 'demoapplikation.pdf';
+      pdfLink.href = blobUrl;
+      pdfLink.target = '_self';
+      pdfLink.click();
+    })
+    .catch(() => {
+      // Viser fejlbesked, hvis kaldet til backenden gik galt
+      error.value = true;
+    })
+    .finally(() => {
+      // Spinner skjules
+      pending.value = false;
+    });
+};
+
+// Opsætter Axios request til PDF-servicen
 const postPdfRequest = async (request: PDFRequest): Promise<Blob> => {
-  const path = '/api/bucket/pdf/generer/';
-  const url = isVirksomhedsguiden ? path : `https://www.virksomhedsguiden.dk${path}`;
   return (
-    await axios.post<Blob>(url, request, {
+    await axios.post<Blob>('/api/bucket/pdf/generer/', request, {
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
         'Cache-Control': 'no-cache',
@@ -36,25 +131,5 @@ const postPdfRequest = async (request: PDFRequest): Promise<Blob> => {
       responseType: 'blob'
     })
   ).data;
-};
-
-const downloadPdf = (): void => {
-  pending.value = true;
-  error.value = false;
-  postPdfRequest({ html: '<div>Indhold</div>', headerTemplate: '', footerTemplate: '', title: 'Metatitel på dokumentet', language: 'da' })
-    .then(data => {
-      const blobUrl = URL.createObjectURL(data);
-      const pdfLink = document.createElement('a');
-      pdfLink.download = 'filnavn.pdf';
-      pdfLink.href = blobUrl;
-      pdfLink.target = '_self';
-      pdfLink.click();
-    })
-    .catch(() => {
-      error.value = true;
-    })
-    .finally(() => {
-      pending.value = false;
-    });
 };
 </script>
