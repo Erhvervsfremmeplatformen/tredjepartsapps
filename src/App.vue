@@ -63,9 +63,9 @@ import { Ref, computed, onMounted, provide, ref } from 'vue';
 import Applikation from './components/Applikation.vue';
 import { Role } from './enums/role.enum';
 import { TokenStatus } from './enums/tokenStatus.enum';
-import { TEKSTNOEGLE_BUNDT_ID, TEKSTNOEGLE_CVR_NUMMER_1, TEKSTNOEGLE_CVR_NUMMER_2 } from './main';
 import { DEMO_ACCESS_TOKEN } from './utils/jwt-util';
 import { LOG_PREFIX } from './utils/log-util';
+import { TEKSTNOEGLE_BUNDT_ID, TEKSTNOEGLE_CVR_NUMMER_1, TEKSTNOEGLE_CVR_NUMMER_2 } from './utils/tekstnoegle-util';
 
 // Key som VG sætter i sessionStorage når login flow initieres, og når leverandør-applikationen vises igen efter successfuldt login
 const VG_BEFORE_LOGIN_HASH = 'vg_before_login_hash';
