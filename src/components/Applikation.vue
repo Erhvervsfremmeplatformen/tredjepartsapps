@@ -52,6 +52,8 @@
         <StateComponent />
         <hr />
         <DataCollector />
+        <hr />
+        <DownloadComponent />
       </div>
     </div>
   </VgDesignWrapper>
@@ -67,6 +69,7 @@ import { Variant } from '../models/variant.model';
 import * as slugUtil from '../utils/slug.util';
 import DataCollector from './DataCollector.vue';
 import Design from './Design.vue';
+import DownloadComponent from './DownloadComponent.vue';
 import ExternalAPI from './ExternalAPI.vue';
 import LoginComponent from './LoginComponent.vue';
 import LoginDemo from './LoginDemo.vue';
