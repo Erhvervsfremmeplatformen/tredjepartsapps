@@ -65,8 +65,6 @@ export default function () {
                     };
                 }
             });
-
-            this.post('/api/bucket/pdf/generer/', () => new Response(400, { some: 'header' }, { errors: ['error'] }));
         }
     });
 

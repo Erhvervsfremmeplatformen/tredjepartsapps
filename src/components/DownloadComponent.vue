@@ -1,16 +1,13 @@
 <template>
   <div>
     <h2 class="mt-5">Download af PDF</h2>
-    <p class="mb-5">
-      Eksempel på at downloade noget HTML som en PDF. Når applikationen afvikles uden for Virksomhedsguiden, vil kaldet altid fejle, da det ikke er
-      muligt at komme i kontakt med backenden.
-    </p>
-    <div>
+    <p>Erhvervsfremmeplatformen udstiller et API til generation af PDF-filer, som er hostet af Erhvervsstyrelsen.</p>
+    <div class="mt-5">
       <div v-if="pending" class="spinner" aria-label="Henter indhold" />
       <div v-if="error" class="alert alert-error my-5" role="alert" aria-atomic="true">
         <div class="alert-body">
           <p class="alert-heading">Fejl</p>
-          <p class="alert-text">Kald til backend-service fejlede (fejler altid når applikation kører selvstændigt).</p>
+          <p class="alert-text">Kald til backend-service fejlede.</p>
         </div>
       </div>
       <button class="button button-primary" @click="downloadPdf()">Download PDF</button>
@@ -20,14 +17,17 @@
 
 <script setup lang="ts">
 import axios from 'axios';
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 
+const isVirksomhedsguiden = inject('isVirksomhedsguiden');
 const error = ref(false);
 const pending = ref(false);
 
-const postPdfRequest = async (request: PDFRequest): Promise<Blob> =>
-  (
-    await axios.post<Blob>('/api/bucket/pdf/generer/', request, {
+const postPdfRequest = async (request: PDFRequest): Promise<Blob> => {
+  const path = '/api/bucket/pdf/generer/';
+  const url = isVirksomhedsguiden ? path : `https://www.virksomhedsguiden.dk${path}`;
+  return (
+    await axios.post<Blob>(url, request, {
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
         'Cache-Control': 'no-cache',
@@ -36,6 +36,7 @@ const postPdfRequest = async (request: PDFRequest): Promise<Blob> =>
       responseType: 'blob'
     })
   ).data;
+};
 
 const downloadPdf = (): void => {
   pending.value = true;
