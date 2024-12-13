@@ -99,7 +99,7 @@ const downloadPdf = (): void => {
   pending.value = true;
   error.value = false;
   const html = contentHtml.value;
-  const headerTemplate = ''; // Templates kan være tomme, hvis man ikke ønsker at inkludere dele af PDF'en
+  const headerTemplate = '<div />';
   const footerTemplate = footerHtml.value;
   postPdfRequest({ html, headerTemplate, footerTemplate, title: metaTitle.value, language: 'da' })
     .then(blob => {
