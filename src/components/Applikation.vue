@@ -53,7 +53,7 @@
         <hr />
         <DataCollector />
         <hr />
-        <DownloadComponent />
+        <DownloadComponent :is-virksomhedsguiden="isVirksomhedsguiden" />
       </div>
     </div>
   </VgDesignWrapper>

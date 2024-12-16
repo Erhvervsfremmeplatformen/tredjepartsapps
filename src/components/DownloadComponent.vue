@@ -32,9 +32,15 @@
 
 <script setup lang="ts">
 import axios from 'axios';
-import { computed, inject, ref } from 'vue';
+import { computed, ref } from 'vue';
 
-const isVirksomhedsguiden = inject('isVirksomhedsguiden');
+defineProps({
+  isVirksomhedsguiden: {
+    type: Boolean,
+    required: true
+  }
+});
+
 const error = ref(false);
 const pending = ref(false);
 
@@ -101,7 +107,14 @@ const downloadPdf = (): void => {
   const html = contentHtml.value;
   const headerTemplate = '<div />';
   const footerTemplate = footerHtml.value;
-  postPdfRequest({ html, headerTemplate, footerTemplate, title: metaTitle.value, language: 'da' })
+  const pdfRequestPayload = {
+    html,
+    headerTemplate,
+    footerTemplate,
+    title: metaTitle.value,
+    language: 'da'
+  };
+  postPdfRequest(pdfRequestPayload)
     .then(blob => {
       // Omdanner blob-data til et link som klikkes på, så filen downloades automatisk
       const blobUrl = URL.createObjectURL(blob);
