@@ -121,7 +121,7 @@ const downloadPdf = (): void => {
       const pdfLink = document.createElement('a');
       pdfLink.download = 'demoapplikation.pdf';
       pdfLink.href = blobUrl;
-      pdfLink.target = '_self';
+      pdfLink.target = '_blank';
       pdfLink.click();
     })
     .catch(() => {
