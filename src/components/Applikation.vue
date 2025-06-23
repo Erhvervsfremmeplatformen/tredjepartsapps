@@ -86,23 +86,19 @@ import VgMode from './VgMode.vue';
 const props = defineProps({
   variant: {
     type: Object as PropType<Variant>,
-    default: null,
-    required: false
+    default: null
   },
   token: {
     type: String,
-    default: '',
-    required: false
+    default: ''
   },
   isLoggedIn: {
     type: Boolean,
-    default: false,
-    required: false
+    default: false
   },
   bruger: {
     type: Object as PropType<Bruger | null>,
-    default: null,
-    required: false
+    default: null
   },
   isVirksomhedsguiden: {
     type: Boolean,
