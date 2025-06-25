@@ -48,7 +48,7 @@
     <div v-if="!token || isTokenRequestCancelled" class="my-5">
       <p>
         Hvis brugeren ikke er logget ind i platformen, er det muligt at benytte <strong>VgLoginButton.vue</strong> som følger det officielle
-        MitID-design. Vær dog opmærksom på, at kun er tilladt at benytte denne komponent hvis <strong>isLoggedIn:</strong> er <i>false</i>. Hvis denne
+        MitID-design. Vær dog opmærksom på, at det kun er tilladt at benytte denne komponent hvis <strong>isLoggedIn:</strong> er <i>false</i>. Hvis denne
         værdi er <i>true</i> er brugeren allerede logget ind i Virksomhedsguiden, og klik på knappen vil derved ikke føre dem til MitID godkendelse.
         Applikationen skal derfor vise sin egen knap, eksempelvis en almindelig primærknap, hvis man ønsker at anmode om en token.
       </p>
