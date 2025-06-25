@@ -18,15 +18,16 @@
       <h4>Tertiærknapper</h4>
       <div>Anvendes ikke</div>
       <h4>Link knap</h4>
-
       <VgButton icon="arrowLeft" class="button-link">Tilbage</VgButton>
-
       <h4>Knap med ikon</h4>
       <VgButton icon="arrowLeft" class="button-primary">Knap med ikon</VgButton>
+      <h4>Login-knap med MitID branding</h4>
+      <p>NPM komponent: <strong>node_modules/@erst-vg/vg-design-wrapper/src/components/VgLoginButton.vue</strong></p>
+      <VgLoginButton />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { VgButton } from '@erst-vg/vg-design-wrapper';
+import { VgButton, VgLoginButton } from '@erst-vg/vg-design-wrapper';
 </script>

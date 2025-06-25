@@ -82,7 +82,8 @@
     <template v-else>
       <div v-if="!accessToken">
         <p>Klik på knappen for at anmode om token, så <strong>bucketClientService</strong> initialiseres</p>
-        <button class="button button-primary" @click="$emit('requestToken')">Anmod om token</button>
+        <button v-if="isLoggedIn" class="button button-primary" @click="$emit('requestToken')">Anmod om token</button>
+        <VgLoginButton v-else @click="$emit('requestToken')" />
       </div>
       <template v-else>
         <div v-if="data" class="my-5">
@@ -119,6 +120,7 @@
 
 <script setup lang="ts">
 import { bucketClientService } from '@erst-vg/bucket-json-client';
+import { VgLoginButton } from '@erst-vg/vg-design-wrapper';
 import { PropType, Ref, computed, inject, ref, watch } from 'vue';
 import { Role } from '../enums/role.enum';
 import { TokenStatus } from '../enums/tokenStatus.enum';
@@ -145,6 +147,10 @@ const props = defineProps({
     type: Object as PropType<Bruger | null>,
     default: null,
     required: false
+  },
+  isLoggedIn: {
+    type: Boolean,
+    default: false
   }
 });
 

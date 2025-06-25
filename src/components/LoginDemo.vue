@@ -44,14 +44,27 @@
         </p>
       </div>
     </div>
+
     <div v-if="!token || isTokenRequestCancelled" class="my-5">
-      <button class="button button-primary" @click="$emit('requestToken')">Anmod om token</button>
+      <p>
+        Hvis brugeren ikke er logget ind i platformen, er det muligt at benytte <strong>VgLoginButton.vue</strong> som følger det officielle
+        MitID-design. Vær dog opmærksom på, at det kun er tilladt at benytte denne komponent hvis <strong>isLoggedIn:</strong> er <i>false</i>. Hvis denne
+        værdi er <i>true</i> er brugeren allerede logget ind i Virksomhedsguiden, og klik på knappen vil derved ikke føre dem til MitID godkendelse.
+        Applikationen skal derfor vise sin egen knap, eksempelvis en almindelig primærknap, hvis man ønsker at anmode om en token.
+      </p>
+      <input v-model="mockedIsLoggedIn" id="mock-login-checkbox" type="checkbox" class="form-checkbox checkbox" />
+      <label for="mock-login-checkbox" class="checkbox-label">Mock login i VG</label>
+      <p><strong>mockedIsLoggedIn:</strong> {{ mockedIsLoggedIn }}</p>
+      <p>NPM komponent: <strong>node_modules/@erst-vg/vg-design-wrapper/src/components/VgLoginButton.vue</strong></p>
+      <button v-if="mockedIsLoggedIn" class="button button-primary" @click="$emit('requestToken')">Anmod om token</button>
+      <VgLoginButton v-else @click="$emit('requestToken')" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { PropType, computed } from 'vue';
+import { VgLoginButton } from '@erst-vg/vg-design-wrapper';
+import { PropType, computed, ref } from 'vue';
 import { TokenStatus } from '../enums/tokenStatus.enum';
 import { Bruger } from '../models/bruger.model';
 
@@ -75,6 +88,8 @@ const props = defineProps({
     default: ''
   }
 });
+
+const mockedIsLoggedIn = ref(false);
 
 const isTokenRequestCancelled = computed(() => props.token === TokenStatus.CANCELLED);
 </script>
