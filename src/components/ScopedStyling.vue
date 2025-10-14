@@ -21,8 +21,5 @@ const options = ['Danmark', 'Sverige', 'Norge'];
 </script>
 
 <style lang="scss" scoped>
-// Deep selector er nødvendig her når style er scoped
-:deep(.custom-multiselect) {
-  @import '../styles/components/_multiselect.scss';
-}
+@use '../styles/components/_multiselect.scss';
 </style>

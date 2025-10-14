@@ -207,5 +207,5 @@ window.addEventListener('hashchange', updateStepFromHash);
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/components/_applikation.scss';
+@use '../styles/components/_applikation.scss';
 </style>

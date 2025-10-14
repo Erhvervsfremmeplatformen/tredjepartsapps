@@ -194,5 +194,5 @@ const onRequestToken = () => {
 </script>
 
 <style scoped lang="scss">
-@import 'styles/_app.scss';
+@use 'styles/_app.scss';
 </style>

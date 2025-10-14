@@ -29,7 +29,7 @@ export default defineConfig(({ mode }) => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@import "@/styles/global.scss";'
+          api: 'modern'
         }
       }
     },

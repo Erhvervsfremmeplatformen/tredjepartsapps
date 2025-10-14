@@ -1,17 +1,19 @@
+@use '@erst-vg/vg-design-wrapper/styles/utility' as *;
+
 // Eksempel på brug af den tilgængelige media query mixin til håndtering af styles for forskellige breakpoints.
 .responsive-class {
   color: white;
   padding: 24px;
 
   @include media-breakpoint-down(sm) {
-    background-color: green;
+    background-color: $color-green;
   }
 
   @include media-breakpoint-up(md) {
-    background-color: red;
+    background-color: $color-red;
   }
 
   @include media-breakpoint-up(lg) {
-    background-color: blue;
+    background-color: $color-blue;
   }
 }
