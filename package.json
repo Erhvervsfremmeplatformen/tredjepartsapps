@@ -32,7 +32,7 @@
     "cross-env": "7.0.3",
     "eslint": "9.37.0",
     "eslint-config-prettier": "10.1.8",
-    "eslint-formatter-pretty": "^7.0.0",
+    "eslint-formatter-pretty": "7.0.0",
     "eslint-import-resolver-typescript": "4.4.4",
     "eslint-plugin-import": "2.32.0",
     "postcss": "8.4.31",
@@ -44,7 +44,7 @@
     "typescript": "5.9.3",
     "vite": "5.4.20",
     "vite-plugin-checker": "0.7.2",
-    "vite-plugin-css-injected-by-js": "^3.5.1",
+    "vite-plugin-css-injected-by-js": "3.5.1",
     "vite-require": "0.2.3",
     "vitest": "3.2.4",
     "vue-tsc": "2.0.29"
