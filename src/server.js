@@ -1,4 +1,4 @@
-import { createServer, Response } from 'miragejs';
+import { createServer } from 'miragejs';
 import { DEFAULT_ENDPOINT } from '@erst-vg/bucket-json-client';
 import { TEKSTNOEGLE_BUNDT_ID } from '@/utils/tekstnoegle-util.ts';
 

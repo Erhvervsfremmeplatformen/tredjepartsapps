@@ -17,21 +17,21 @@
 
     <h4>AppDownload</h4>
     <p class="my-5">Dette event bruges ved tryk på en download-knap eller tilsvarende.</p>
-    <button class="button button-primary" @click="piwikService.emitDownloadEvent('download', 'doc.pfd')">Download event</button>
+    <button type="button" class="button button-primary" @click="piwikService.emitDownloadEvent('download', 'doc.pfd')">Download event</button>
     <h4>AppCTAClick</h4>
     <p class="my-5">
       Dette event bruges ved tryk på andre knapper end ovenstående - fx "åben accordion". Det anbefales som udgangspunkt, at man begrænser brugen af
       denne event-type.
     </p>
-    <button class="button button-primary" @click="piwikService.emitCTAClickEvent('cTAClick', 'eventType')">Call to action event</button>
+    <button type="button" class="button button-primary" @click="piwikService.emitCTAClickEvent('cTAClick', 'eventType')">Call to action event</button>
     <h4>AppStart</h4>
     <p class="my-5">Denne event bruges til at angive man har startet et forløb i applikationen fx. startet en guide med trin.</p>
-    <button class="button button-primary" @click="piwikService.emitStartEvent()">Start event</button>
+    <button type="button" class="button button-primary" @click="piwikService.emitStartEvent()">Start event</button>
     <h4>AppSlut</h4>
     <p class="my-5">
       Denne event bruges til at angive man har afsluttet et forløb i applikationen fx. afsluttet en guide med trin, og nu er kommet til resultatsiden.
     </p>
-    <button class="button button-primary" @click="piwikService.emitSlutEvent()">Slut event</button>
+    <button type="button" class="button button-primary" @click="piwikService.emitSlutEvent()">Slut event</button>
   </div>
 </template>
 

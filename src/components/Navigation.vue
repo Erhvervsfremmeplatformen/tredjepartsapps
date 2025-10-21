@@ -26,8 +26,8 @@
       </div>
     </div>
     <div>
-      <button class="button button-primary" @click="$emit('decreaseStep')">Forrige</button>
-      <button class="button button-primary" @click="$emit('increaseStep')">Næste</button>
+      <button type="button" class="button button-primary" @click="$emit('decreaseStep')">Forrige</button>
+      <button type="button" class="button button-primary" @click="$emit('increaseStep')">Næste</button>
     </div>
     <p class="mt-5">
       Bemærk hvis hash (#) indholder flere ord eller specielle karakterer, og sendes til dataopsamling via
@@ -44,7 +44,7 @@
 <script setup lang="ts">
 import * as slugUtil from '../utils/slug.util';
 
-const props = defineProps({
+defineProps({
   step: {
     type: Number,
     required: true
@@ -54,7 +54,7 @@ const props = defineProps({
     required: true
   }
 });
-const emits = defineEmits(['decreaseStep', 'increaseStep']);
+defineEmits(['decreaseStep', 'increaseStep']);
 const langHash = 'flere ord med specielle karakterer kødpålæg!';
 
 const slugify = (hash: string) => slugUtil.slugify(hash);
