@@ -28,7 +28,7 @@
           :bruger="bruger"
           :is-logged-in="isLoggedIn"
           :hash-before-login="hashBeforeLogin"
-          @requestToken="$emit('requestToken')"
+          @request-token="$emit('requestToken')"
         />
         <hr />
         <StorageAPI
@@ -36,10 +36,10 @@
           :tekstnoegle-cvr-nummre="tekstnoegleCvrNumre"
           :token="token"
           :bruger="bruger"
-          @requestToken="$emit('requestToken')"
+          @request-token="$emit('requestToken')"
         />
         <hr />
-        <Navigation :step="step" :max-step="maxStep" @decreaseStep="decreaseStep" @increaseStep="increaseStep" />
+        <Navigation :step="step" :max-step="maxStep" @decrease-step="decreaseStep" @increase-step="increaseStep" />
         <hr />
         <LoginComponent />
         <hr />
@@ -207,5 +207,5 @@ window.addEventListener('hashchange', updateStepFromHash);
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/components/_applikation.scss';
+@use '../styles/components/_applikation.scss';
 </style>

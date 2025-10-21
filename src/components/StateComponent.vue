@@ -14,7 +14,7 @@
     <p>Følgende NPM moduler understøttes til state management i leverandør-applikationer.</p>
     <PiniaCounter />
     <div class="mt-5">
-      <button class="button button-primary" @click="incrementPinia">Opdater tæller i Pinia</button>
+      <button type="button" class="button button-primary" @click="incrementPinia">Opdater tæller i Pinia</button>
     </div>
     <VuexCounter />
   </div>

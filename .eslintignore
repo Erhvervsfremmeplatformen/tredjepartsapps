@@ -1,8 +1,0 @@
-# ignore all config and third-party scripts
-.eslintrc.js
-babel.config.js
-postcss.config.js
-vue.config.js
-node_modules
-.history
-tmp

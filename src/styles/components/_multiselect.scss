@@ -1,4 +1,4 @@
-// Kopieret fra vue-multiselect/dist/vue-multiselect.css siden det ikke er muligt at bruge @import direktiv for css filer inde i deep selector. Det er dog tilladt for SCSS filer
+// Kopieret fra vue-multiselect/dist/vue-multiselect.css siden det ikke er muligt at bruge @use direktiv for css filer inde i deep selector. Det er dog tilladt for SCSS filer
 fieldset[disabled] .multiselect {
   pointer-events: none;
 }

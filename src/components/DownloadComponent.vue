@@ -25,7 +25,7 @@
           <p class="alert-text">Kald til backend-service fejlede.</p>
         </div>
       </div>
-      <button class="button button-primary" @click="downloadPdf()">Download PDF</button>
+      <button type="button" class="button button-primary" @click="downloadPdf()">Download PDF</button>
     </div>
   </div>
 </template>
@@ -33,6 +33,7 @@
 <script setup lang="ts">
 import axios from 'axios';
 import { computed, ref } from 'vue';
+import { PDFRequest } from '../models/pdfRequest.model';
 
 defineProps({
   isVirksomhedsguiden: {
@@ -135,8 +136,8 @@ const downloadPdf = (): void => {
 };
 
 // Opsætter Axios request til PDF-servicen
-const postPdfRequest = async (request: PDFRequest): Promise<Blob> => {
-  return (
+const postPdfRequest = async (request: PDFRequest): Promise<Blob> =>
+  (
     await axios.post<Blob>('/api/bucket/pdf/generer/', request, {
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
@@ -146,5 +147,4 @@ const postPdfRequest = async (request: PDFRequest): Promise<Blob> => {
       responseType: 'blob'
     })
   ).data;
-};
 </script>

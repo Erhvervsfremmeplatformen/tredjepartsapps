@@ -15,12 +15,12 @@
           :hash-before-login="hashBeforeLogin"
           :applikation-id="applikationId"
           :ydelses-id="ydelsesId"
-          @piwikPageView="onPiwikPageView"
-          @piwikDownloadEvent="onPiwikDownloadEvent"
-          @piwikCTAClickEvent="onPiwikCTAClickEvent"
-          @piwikStartEvent="handlePiwikStartEvent"
-          @piwikSlutEvent="handlePiwikSlutEvent"
-          @requestToken="onRequestToken"
+          @piwik-page-view="onPiwikPageView"
+          @piwik-download-event="onPiwikDownloadEvent"
+          @piwik-c-t-a-click-event="onPiwikCTAClickEvent"
+          @piwik-start-event="handlePiwikStartEvent"
+          @piwik-slut-event="handlePiwikSlutEvent"
+          @request-token="onRequestToken"
         />
       </div>
       <div
@@ -47,8 +47,8 @@
             </p>
           </div>
           <div class="modal-footer">
-            <button id="button-modal-accept" class="button button-primary" @click="accept">Fortsæt</button>
-            <button id="button-modal-cancel" class="button button-secondary" @click="cancelTokenRequest">Fortryd</button>
+            <button id="button-modal-accept" type="button" class="button button-primary" @click="accept">Fortsæt</button>
+            <button id="button-modal-cancel" type="button" class="button button-secondary" @click="cancelTokenRequest">Fortryd</button>
           </div>
         </div>
       </div>
@@ -63,6 +63,7 @@ import { Ref, computed, onMounted, provide, ref } from 'vue';
 import Applikation from './components/Applikation.vue';
 import { Role } from './enums/role.enum';
 import { TokenStatus } from './enums/tokenStatus.enum';
+import { DKFDSModal } from './models/dKFDSModal.model';
 import { DEMO_ACCESS_TOKEN } from './utils/jwt-util';
 import { LOG_PREFIX } from './utils/log-util';
 import { TEKSTNOEGLE_BUNDT_ID, TEKSTNOEGLE_CVR_NUMMER_1, TEKSTNOEGLE_CVR_NUMMER_2 } from './utils/tekstnoegle-util';
@@ -194,5 +195,5 @@ const onRequestToken = () => {
 </script>
 
 <style scoped lang="scss">
-@import 'styles/_app.scss';
+@use 'styles/_app.scss';
 </style>

@@ -27,8 +27,8 @@
           <p class="alert-text">API request failed</p>
         </div>
       </div>
-      <button class="button button-primary" @click="callAPI()">API kald</button>
-      <button class="button button-primary" @click="callAPI(true)">API kald med fejl</button>
+      <button type="button" class="button button-primary" @click="callAPI()">API kald</button>
+      <button type="button" class="button button-primary" @click="callAPI(true)">API kald med fejl</button>
     </div>
   </div>
 </template>
@@ -59,7 +59,7 @@ async function callAPI(fail = false) {
     } else {
       data.value = await response.json();
     }
-  } catch (e) {
+  } catch {
     // vil sørge for fejlbeskeder vises i DOM
     error.value = true;
   } finally {

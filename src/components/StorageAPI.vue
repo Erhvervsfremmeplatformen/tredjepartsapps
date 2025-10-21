@@ -82,7 +82,7 @@
     <template v-else>
       <div v-if="!accessToken">
         <p>Klik på knappen for at anmode om token, så <strong>bucketClientService</strong> initialiseres</p>
-        <button v-if="isLoggedIn" class="button button-primary" @click="$emit('requestToken')">Anmod om token</button>
+        <button v-if="isLoggedIn" type="button" class="button button-primary" @click="$emit('requestToken')">Anmod om token</button>
         <VgLoginButton v-else @click="$emit('requestToken')" />
       </div>
       <template v-else>
@@ -129,14 +129,14 @@ import { TekstData, Tekster } from '../models/tekster.model';
 import { LOG_PREFIX } from '../utils/log-util';
 
 const isVirksomhedsguiden = inject('isVirksomhedsguiden');
-const emit = defineEmits(['requestToken']);
+
 const props = defineProps({
   tekstnoegleBundtId: {
     type: String,
     default: ''
   },
   tekstnoegleCvrNummre: {
-    type: Array as PropType<String[]>,
+    type: Array as PropType<string[]>,
     default: () => []
   },
   token: {
@@ -153,6 +153,8 @@ const props = defineProps({
     default: false
   }
 });
+
+defineEmits(['requestToken']);
 
 const data: Ref<TekstData | null> = ref(null);
 const apiResponse: Ref<any> = ref('');

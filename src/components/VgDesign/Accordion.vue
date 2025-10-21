@@ -4,7 +4,6 @@
     <p>DKFDS: <a href="https://designsystem.dk/komponenter/accordions/" target="_blank">Accordions</a></p>
     <p>Eksempel komponent: <strong>src/components/VgDesign/Accordion.vue</strong></p>
     <p>NPM komponent: <strong>node_modules/@erst-vg/vg-design-wrapper/src/components/VgAccordion.vue</strong></p>
-
     <h4>Simpel accordion</h4>
     <VgAccordion id="vg-accordion" :accordions="elementer" />
     <p>Eksempel viser en simpel accordion hvor kun titel og indhold angives</p>
