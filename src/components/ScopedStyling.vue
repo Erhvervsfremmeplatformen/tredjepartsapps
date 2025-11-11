@@ -6,7 +6,7 @@
       Det er vigtigt alt styling i leverandør-applikationen ikke påvirker Virksomhedsguiden eller andre leverandør-applikationer. Derfor skal alle
       &lt;style&gt; tags bruge <strong>scoped</strong> attributten. Dette gælder naturligvis også stylesheets, der importeres fra NPM moduler.
     </p>
-    <div class="custom-multiselect">
+    <div class="custom_multiselect">
       <multiselect v-model="value" :options="options" class="mt-5" placeholder="Vælg et land" />
     </div>
   </div>
@@ -22,4 +22,5 @@ const options = ['Danmark', 'Sverige', 'Norge'];
 
 <style lang="scss" scoped>
 @use '../styles/components/_multiselect.scss';
+@use '../styles/components/_customMultiselector.scss';
 </style>
