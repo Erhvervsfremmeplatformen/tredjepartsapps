@@ -116,6 +116,7 @@ export default [
       '@typescript-eslint/no-unsafe-argument': 'off',
       'vue/one-component-per-file': 'off',
       'vue/multi-word-component-names': 'off',
+      'vue/no-v-html': 'error',
       'import/no-unresolved': 'off',
       '@typescript-eslint/no-non-null-assertion': 'off',
       '@typescript-eslint/unbound-method': 'off',
