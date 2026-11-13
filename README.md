@@ -20,6 +20,8 @@ npm run serve
 
 Start udvikling/test af applikation i _src/components/Applikation.vue_
 
+HTML skal indsættes med `v-sanitize-html` (se _src/directives/sanitizeHtml.ts_) i stedet for `v-html`, så den renses inden den vises. `v-html` er ikke tilladt (ESLint-reglen `vue/no-v-html`).
+
 ## Kode oprydning
 
 ```
@@ -51,6 +53,7 @@ Nuværende NPM moduler og versioner, som kan bruges af leverandør-applikationer
 - "@contentful/rich-text-html-renderer": "15.13.1"
 - "@contentful/rich-text-types": "15.13.2"
 - "humps": "2.0.1"
+- "isomorphic-dompurify": "4.7.0"
 - "ol": "6.13.0"
 - "tippy.js": "6.3.7"
 - "zod": "3.22.4"
