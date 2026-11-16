@@ -56,6 +56,8 @@
         <DataCollector />
         <hr />
         <DownloadComponent :is-virksomhedsguiden="isVirksomhedsguiden" />
+        <hr />
+        <HtmlSanitizing />
       </div>
     </div>
   </VgDesignWrapper>
@@ -73,6 +75,7 @@ import DataCollector from './DataCollector.vue';
 import Design from './Design.vue';
 import DownloadComponent from './DownloadComponent.vue';
 import ExternalAPI from './ExternalAPI.vue';
+import HtmlSanitizing from './HtmlSanitizing.vue';
 import LoginComponent from './LoginComponent.vue';
 import LoginDemo from './LoginDemo.vue';
 import Navigation from './Navigation.vue';
